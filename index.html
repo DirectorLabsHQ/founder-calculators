@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Founder Calculators | Startup Runway & Burn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #f8fafc; color: #1e293b; }
+        .finance-card { border-top: 4px solid #2563eb; transition: transform 0.2s ease; }
+        .finance-card:hover { transform: translateY(-2px); }
+        .data-label { color: #64748b; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-results { animation: fadeIn 0.4s ease-out forwards; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans">
+
+    <header class="bg-white border-b border-slate-200 p-6 shadow-sm">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-black text-slate-800 tracking-tighter italic">FOUNDER<span class="text-blue-600 not-italic">CALCS</span></h1>
+            <div class="flex items-center gap-4">
+                <span class="flex items-center gap-1.5 text-[10px] font-bold text-green-600 bg-green-50 px-2 py-1 rounded border border-green-100">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> LOCAL & PRIVATE
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-5xl mx-auto p-8 w-full">
+        
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-2">Startup Runway Calculator</h2>
+            <p class="text-slate-500 max-w-2xl text-lg italic leading-relaxed">Quantify your burn rate and identify your "Zero Cash" date. All calculations are performed in-browser for total privacy.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 finance-card">
+                    <h2 class="text-xs font-bold mb-6 text-slate-400 uppercase tracking-widest border-b border-slate-50 pb-2">Financial Matrix</h2>
+                    
+                    <div class="space-y-5">
+                        <div>
+                            <label for="cash" class="data-label">Total Cash on Hand ($)</label>
+                            <input type="number" id="cash" oninput="calculateRunway()" placeholder="e.g. 250000" 
+                                   class="w-full mt-1.5 p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all font-mono">
+                        </div>
+                        <div>
+                            <label for="revenue" class="data-label">Monthly Revenue ($)</label>
+                            <input type="number" id="revenue" oninput="calculateRunway()" placeholder="e.g. 12000" 
+                                   class="w-full mt-1.5 p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all font-mono">
+                        </div>
+                        <div>
+                            <label for="expenses" class="data-label">Monthly Expenses ($)</label>
+                            <input type="number" id="expenses" oninput="calculateRunway()" placeholder="e.g. 35000" 
+                                   class="w-full mt-1.5 p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all font-mono">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-blue-50 border border-blue-100 rounded-lg">
+                    <p class="text-[11px] text-blue-800 leading-relaxed italic">
+                        <strong>Insight:</strong> "Default Alive" is achieved when your revenue exceeds your expenses. This is the ultimate goal of every sustainable startup.
+                    </p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                <div class="bg-white p-10 rounded-xl shadow-md border border-slate-200 h-full flex flex-col justify-center min-h-[400px]">
+                    
+                    <div id="placeholder" class="text-center py-12">
+                        <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
+                            <svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <p class="text-slate-400 font-medium italic">Enter financials to generate runway model...</p>
+                    </div>
+
+                    <div id="results-area" class="hidden text-center animate-results">
+                        <h3 class="data-label mb-2">Runway Remaining</h3>
+                        <div id="months-out" class="text-9xl font-black text-slate-800 mb-2 tracking-tighter">--</div>
+                        <div class="text-sm font-bold text-slate-400 mb-12 uppercase tracking-[0.3em]">Months of Operations</div>
+                        
+                        <div class="grid grid-cols-2 gap-8 border-t border-slate-100 pt-10">
+                            <div>
+                                <div class="data-label">Net Monthly Burn</div>
+                                <div id="net-burn" class="text-3xl font-bold">$--</div>
+                            </div>
+                            <div>
+                                <div class="data-label">Exhaustion Date</div>
+                                <div id="zero-date" class="text-3xl font-bold text-slate-800 uppercase">--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="p-8 text-center text-slate-400 text-[10px] tracking-widest uppercase mt-auto">
+        &copy; 2026 FOUNDER CALCULATORS | STRATEGIC FINANCIAL INTELLIGENCE
+    </footer>
+
+    <script>
+        function calculateRunway() {
+            const cash = parseFloat(document.getElementById('cash').value);
+            const rev = parseFloat(document.getElementById('revenue').value) || 0;
+            const exp = parseFloat(document.getElementById('expenses').value);
+
+            const resultsArea = document.getElementById('results-area');
+            const placeholder = document.getElementById('placeholder');
+
+            // Form Validation
+            if (isNaN(cash) || isNaN(exp) || cash < 0 || exp < 0) {
+                resultsArea.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+                return;
+            }
+
+            resultsArea.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+
+            const netBurn = exp - rev;
+            const netBurnEl = document.getElementById('net-burn');
+            const monthsEl = document.getElementById('months-out');
+            const dateEl = document.getElementById('zero-date');
+
+            if (netBurn <= 0) {
+                netBurnEl.innerText = "PROFITABLE";
+                netBurnEl.className = "text-3xl font-bold text-green-500 tracking-tight";
+                monthsEl.innerText = "∞";
+                dateEl.innerText = "DEFAULT ALIVE";
+                dateEl.classList.add('text-green-600');
+                return;
+            } else {
+                dateEl.classList.remove('text-green-600');
+            }
+
+            const runway = cash / netBurn;
+            
+            netBurnEl.innerText = "$" + Math.round(netBurn).toLocaleString();
+            netBurnEl.className = "text-3xl font-bold text-red-500 tracking-tight";
+            
+            // Show decimals for runways under 1 month, whole numbers otherwise
+            monthsEl.innerText = runway < 1 ? runway.toFixed(1) : Math.floor(runway);
+
+            // Exhaustion Date Logic
+            const today = new Date();
+            today.setMonth(today.getMonth() + Math.floor(runway));
+            dateEl.innerText = today.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        }
+    </script>
+</body>
+</html>
