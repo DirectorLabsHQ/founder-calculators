@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://foundercalculators.com/debt-repayment.html">
+    <meta name="robots" content="index, follow">
+    <title>Startup Loan Repayment Calculator (2026) | FounderCalculators</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .calc-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .btn-primary { background: #2563eb; color: white; transition: all 0.2s; cursor: pointer; }
+        .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+    <nav class="border-b bg-white py-4">
+        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
+            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Startup Loan Repayment</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Calculate monthly payments and total interest for venture debt or business loans.</p>
+        </div>
+
+        <div class="calc-card p-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Loan Amount ($)</label>
+                        <input type="number" id="amount" value="50000" class="w-full p-3 border rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Annual Interest Rate (%)</label>
+                        <input type="number" id="rate" value="8" class="w-full p-3 border rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Loan Term (Months)</label>
+                        <input type="number" id="term" value="36" class="w-full p-3 border rounded-lg">
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 rounded-xl p-8 flex flex-col justify-center items-center text-center">
+                    <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">Monthly Payment</span>
+                    <div class="text-4xl font-black text-slate-900 mb-4" id="main-result">$1,566</div>
+                    <p class="text-sm text-slate-500" id="result-description">Total Interest: $6,376</p>
+                </div>
+            </div>
+            <button onclick="calculate()" class="w-full mt-8 py-4 btn-primary rounded-lg font-bold text-lg">Calculate Payment</button>
+        </div>
+
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-2xl font-bold mb-4">Venture Debt vs. Equity</h2>
+            <p>Loans are "non-dilutive" capital. Unlike VC funding, you don't give up ownership, but you do take on <strong>repayment risk</strong>. If your startup fails to meet revenue targets, debt can be a heavy anchor.</p>
+            <p><strong>Note for 2026:</strong> Interest rates have stabilized, but lenders are looking for stronger "Debt-Service Coverage Ratios" (DSCR). Use this tool to ensure your monthly cash flow can comfortably cover these payments before signing a term sheet.</p>
+        </article>
+    </main>
+
+    <footer class="bg-white border-t py-12 mt-12 text-center text-slate-400 text-sm">
+        <p>&copy; 2026 FounderCalculators.com</p>
+    </footer>
+
+    <script>
+        function calculate() {
+            const principal = parseFloat(document.getElementById('amount').value) || 0;
+            const annualRate = parseFloat(document.getElementById('rate').value) / 100 || 0;
+            const months = parseFloat(document.getElementById('term').value) || 1;
+            
+            const monthlyRate = annualRate / 12;
+            const payment = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
+            const totalRepaid = payment * months;
+            const totalInterest = totalRepaid - principal;
+
+            document.getElementById('main-result').innerText = "$" + payment.toLocaleString(undefined, {maximumFractionDigits: 0});
+            document.getElementById('result-description').innerText = "Total Interest: $" + totalInterest.toLocaleString(undefined, {maximumFractionDigits: 0});
+        }
+        window.onload = calculate;
+    </script>
+</body>
+</html>

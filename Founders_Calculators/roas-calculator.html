@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROAS Calculator (Return on Ad Spend) | FounderCalculators</title>
+    <meta name="description" content="Calculate your Return on Ad Spend (ROAS). Determine the profitability of your paid marketing campaigns on Google, Meta, and LinkedIn.">
+    <link rel="canonical" href="https://foundercalculators.com/roas-calculator.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+    <nav class="border-b bg-white py-4">
+        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
+            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">ROAS Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Measure the effectiveness of your advertising spend to ensure your campaigns are profitable.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Total Ad Spend ($)</label>
+                        <input type="number" id="adSpend" value="5000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Revenue from Ads ($)</label>
+                        <input type="number" id="adRev" value="20000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="bg-orange-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-orange-100">
+                    <span class="text-sm font-semibold text-orange-600 uppercase tracking-wider mb-2">Campaign ROAS</span>
+                    <div class="text-5xl font-black text-slate-900 mb-4" id="roas-result">4.0x</div>
+                    <p class="text-sm text-slate-500">400% Return on Spend</p>
+                </div>
+            </div>
+            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg">Calculate ROAS</button>
+        </div>
+
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-2xl font-bold mb-4">What is a Good ROAS in 2026?</h2>
+            <p>ROAS (Return on Ad Spend) measures how much gross revenue you earn for every dollar spent on advertising. <strong>For most venture-backed startups, a 4:1 ROAS is considered a healthy baseline</strong> for scaling paid acquisition channels.</p>
+
+            <h3>The ROAS Formula</h3>
+            <p class="bg-slate-100 p-4 rounded-lg font-mono text-center">ROAS = Total Revenue from Ads / Total Ad Spend</p>
+
+            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
+                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
+                <ul class="mb-0">
+                    <li><a href="cac-ltv-ratio.html" class="text-blue-600 hover:underline">CAC to LTV Ratio</a></li>
+                    <li><a href="email-roi.html" class="text-blue-600 hover:underline">Email Marketing ROI</a></li>
+                    <li><a href="unit-economics.html" class="text-blue-600 hover:underline">Unit Margin Calculator</a></li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function calculate() {
+            const spend = parseFloat(document.getElementById('adSpend').value) || 1;
+            const rev = parseFloat(document.getElementById('adRev').value) || 0;
+            document.getElementById('roas-result').innerText = (rev / spend).toFixed(1) + "x";
+        }
+        window.onload = calculate;
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulting & Freelance Rate Calculator | FounderCalculators</title>
+    <meta name="description" content="Calculate your ideal hourly or project consulting rate. Account for taxes, business overhead, and desired annual income.">
+    <link rel="canonical" href="https://foundercalculators.com/consulting-rate.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+    <nav class="border-b bg-white py-4">
+        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
+            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Consulting Rate Tool</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Don't underprice your time. Calculate the rate you need to cover taxes and business costs.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Target Annual Salary ($)</label>
+                        <input type="number" id="targetSalary" value="150000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Billable Hours per Week</label>
+                        <input type="number" id="billableHours" value="25" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Business Overhead (%) <span class="text-slate-400">(Taxes, Software)</span></label>
+                        <input type="number" id="overhead" value="30" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 rounded-xl p-8 flex flex-col justify-center items-center text-center text-white">
+                    <span class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Ideal Hourly Rate</span>
+                    <div class="text-5xl font-black mb-4" id="rate-result">$150</div>
+                    <p class="text-sm text-slate-400" id="weekly-rev">Weekly Target: $3,750</p>
+                </div>
+            </div>
+            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg">Set Your Rate</button>
+        </div>
+
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-2xl font-bold mb-4">Pricing Your Expertise</h2>
+            <p>Hourly rates for consultants must account for "unbillable" time spent on sales and admin. <strong>In 2026, professional consultants typically multiply their desired "corporate salary" hourly equivalent by 2x or 3x</strong> to ensure business viability.</p>
+
+            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
+                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
+                <ul class="mb-0">
+                    <li><a href="freelance-to-agency.html" class="text-blue-600 hover:underline">Agency Scaler Tool</a></li>
+                    <li><a href="employee-cost.html" class="text-blue-600 hover:underline">Burdened Employee Cost</a></li>
+                    <li><a href="unit-economics.html" class="text-blue-600 hover:underline">Unit Economics Tool</a></li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function calculate() {
+            const salary = parseFloat(document.getElementById('targetSalary').value) || 0;
+            const hours = parseFloat(document.getElementById('billableHours').value) || 1;
+            const oh = parseFloat(document.getElementById('overhead').value) / 100 || 0;
+            const totalNeeded = salary * (1 + oh);
+            const hourly = totalNeeded / (hours * 52);
+            document.getElementById('rate-result').innerText = "$" + Math.round(hourly).toLocaleString();
+            document.getElementById('weekly-rev').innerText = "Weekly Target: $" + Math.round(hourly * hours).toLocaleString();
+        }
+        window.onload = calculate;
+    </script>
+</body>
+</html>

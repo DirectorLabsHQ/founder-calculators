@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Burn Rate & Runway Calculator (2026) | FounderCalculators</title>
+    <meta name="description" content="Calculate your startup's monthly burn rate and cash runway. Forecast how many months of survival you have left based on 2026 venture benchmarks.">
+    <link rel="canonical" href="https://foundercalculators.com/burn-rate-runway.html">
+    
+    <meta property="og:title" content="Startup Burn Rate & Runway Calculator">
+    <meta property="og:description" content="Forecast your startup survival timeline with our free burn rate tool.">
+    <meta property="og:url" content="https://foundercalculators.com/burn-rate-runway.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .calc-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .btn-primary { background: #2563eb; color: white; transition: all 0.2s; cursor: pointer; }
+        .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+    <nav class="border-b bg-white py-4">
+        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
+            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Burn Rate & Runway Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Determine exactly how much time your startup has to reach profitability or raise your next round.</p>
+        </div>
+
+        <div class="calc-card p-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Current Cash Balance ($)</label>
+                        <input type="number" id="cash" value="500000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Monthly Expenses ($)</label>
+                        <input type="number" id="expenses" value="50000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Monthly Revenue ($)</label>
+                        <input type="number" id="revenue" value="10000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-blue-100">
+                    <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">Estimated Runway</span>
+                    <div class="text-5xl font-black text-slate-900 mb-4" id="runway-result">12.5</div>
+                    <p class="text-lg font-medium text-slate-700">Months Remaining</p>
+                    <p class="text-sm text-slate-500 mt-2" id="burn-result">Net Burn: $40,000 / mo</p>
+                </div>
+            </div>
+            <button onclick="calculate()" class="w-full mt-8 py-4 btn-primary rounded-lg font-bold text-lg shadow-lg">Calculate Survival Timeline</button>
+        </div>
+
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-2xl font-bold mb-4">How to Calculate Startup Runway</h2>
+            <p>Startup runway is the number of months your business can survive before running out of cash. This calculation is vital for timing your next fundraise or pivot. <strong>Early-stage SaaS startups typically burn between $30,000 and $150,000 per month</strong> depending on headcount and growth stage.</p>
+            
+            
+
+            <h3>The Startup Burn Rate Formula</h3>
+            <p>To calculate runway, you simply divide your total cash balance by your Net Monthly Burn Rate:</p>
+            <p class="bg-slate-100 p-4 rounded-lg font-mono text-center">Net Burn = Total Monthly Expenses - Total Monthly Revenue</p>
+            <p class="bg-slate-100 p-4 rounded-lg font-mono text-center">Runway = Total Cash / Net Burn</p>
+
+            <h3>What is a "Safe" Runway in 2026?</h3>
+            <p>In the current venture capital landscape, investors typically look for companies to have <strong>18 to 24 months</strong> of runway after a funding round. If your runway falls below 6 months, it is generally considered the "danger zone."</p>
+            
+            <ul>
+                <li><strong>Gross Burn:</strong> Total cash leaving your bank account each month.</li>
+                <li><strong>Net Burn:</strong> Your actual monthly loss (Expenses minus Revenue).</li>
+                <li><strong>Default Alive:</strong> You are "Default Alive" if you will reach profitability before running out of cash.</li>
+            </ul>
+
+            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
+                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
+                <ul class="mb-0">
+                    <li><a href="saas-valuation.html" class="text-blue-600 hover:underline">SaaS Valuation Calculator</a></li>
+                    <li><a href="equity-dilution.html" class="text-blue-600 hover:underline">Equity Dilution Calculator</a></li>
+                    <li><a href="breakeven-analysis.html" class="text-blue-600 hover:underline">Breakeven Analysis Calculator</a></li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <footer class="bg-white border-t py-12 mt-12 text-center text-slate-400 text-sm">
+        <p>&copy; 2026 FounderCalculators.com | Practical Tools for Modern Founders</p>
+    </footer>
+
+    <script>
+        function calculate() {
+            const cash = parseFloat(document.getElementById('cash').value) || 0;
+            const exp = parseFloat(document.getElementById('expenses').value) || 0;
+            const rev = parseFloat(document.getElementById('revenue').value) || 0;
+            
+            const netBurn = exp - rev;
+            
+            if (netBurn <= 0) {
+                document.getElementById('runway-result').innerText = "∞";
+                document.getElementById('burn-result').innerText = "You are Profit-Positive";
+            } else {
+                const runway = (cash / netBurn).toFixed(1);
+                document.getElementById('runway-result').innerText = runway;
+                document.getElementById('burn-result').innerText = "Net Burn: $" + netBurn.toLocaleString() + " / mo";
+            }
+        }
+        window.onload = calculate;
+    </script>
+</body>
+</html>
