@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS Valuation Calculator (2026 Benchmarks) | FounderCalculators</title>
+    <meta name="description" content="Estimate your SaaS company's valuation based on ARR, growth rate, and 2026 market multiples. Benchmarked for seed to Series B stages.">
+    <link rel="canonical" href="https://foundercalculators.com/saas-valuation.html">
+    <meta property="og:title" content="SaaS Valuation Calculator">
+    <meta property="og:description" content="Estimate your ARR valuation based on 2026 market multiples.">
+    <meta property="og:url" content="https://foundercalculators.com/saas-valuation.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+    <nav class="border-b bg-white py-4">
+        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
+            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">SaaS Valuation Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Calculate your company worth using modern revenue multiples and growth adjustments.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Annual Recurring Revenue (ARR) ($)</label>
+                        <input type="number" id="arr" value="1000000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Growth Rate (Year-over-Year %)</label>
+                        <input type="number" id="growth" value="100" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-blue-100">
+                    <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">Estimated Valuation</span>
+                    <div class="text-5xl font-black text-slate-900 mb-4" id="val-result">$10.0M</div>
+                    <p class="text-sm text-slate-500" id="multiple-label">Based on a 10.0x multiple</p>
+                </div>
+            </div>
+            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg hover:bg-blue-700 transition-all">Estimate Worth</button>
+        </div>
+
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-2xl font-bold mb-4">Understanding SaaS Valuation Multiples</h2>
+            <p>Valuing a SaaS business is primarily driven by its revenue quality and growth trajectory. <strong>In 2026, healthy early-stage SaaS startups typically command multiples between 6x and 12x ARR</strong>, though "outliers" with 100%+ growth can still see higher premiums.</p>
+
+            
+
+            <h3>The Valuation Formula</h3>
+            <p>Our calculator applies a baseline multiple and adjusts it based on your growth rate:</p>
+            <ul>
+                <li><strong>Baseline:</strong> 5x ARR for stable growth (20-40%).</li>
+                <li><strong>Growth Bonus:</strong> Additional 1x-5x added for high-growth tiers (50% to 200%+).</li>
+            </ul>
+
+            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
+                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
+                <ul class="mb-0">
+                    <li><a href="burn-rate-runway.html" class="text-blue-600 hover:underline">Burn Rate & Runway Calculator</a></li>
+                    <li><a href="equity-dilution.html" class="text-blue-600 hover:underline">Equity Dilution Calculator</a></li>
+                    <li><a href="mrr-projector.html" class="text-blue-600 hover:underline">MRR Growth Projector</a></li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function calculate() {
+            const arr = parseFloat(document.getElementById('arr').value) || 0;
+            const growth = parseFloat(document.getElementById('growth').value) || 0;
+            let multiple = 5; 
+            if (growth >= 200) multiple = 15;
+            else if (growth >= 100) multiple = 10;
+            else if (growth >= 50) multiple = 7;
+            const val = arr * multiple;
+            document.getElementById('val-result').innerText = "$" + (val / 1000000).toFixed(1) + "M";
+            document.getElementById('multiple-label').innerText = "Based on a " + multiple.toFixed(1) + "x multiple";
+        }
+        window.onload = calculate;
+    </script>
+</body>
+</html>

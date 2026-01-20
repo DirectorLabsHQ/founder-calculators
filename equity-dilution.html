@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equity Dilution Calculator (Pre-Seed to Series A) | FounderCalculators</title>
+    <meta name="description" content="Model how much of your company you will own after your next funding round. Calculate post-money valuation and founder dilution.">
+    <link rel="canonical" href="https://foundercalculators.com/equity-dilution.html">
+    <meta property="og:title" content="Equity Dilution Calculator">
+    <meta property="og:description" content="See how much ownership you keep after a new investment.">
+    <meta property="og:url" content="https://foundercalculators.com/equity-dilution.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+    <nav class="border-b bg-white py-4">
+        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
+            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Equity Dilution Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Model your ownership stake after a new investment round or option pool creation.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Pre-Money Valuation ($)</label>
+                        <input type="number" id="preMoney" value="4000000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Investment Amount ($)</label>
+                        <input type="number" id="investment" value="1000000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Your Current Ownership (%)</label>
+                        <input type="number" id="currentOwn" value="100" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="bg-purple-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-purple-100">
+                    <span class="text-sm font-semibold text-purple-600 uppercase tracking-wider mb-2">New Ownership stake</span>
+                    <div class="text-5xl font-black text-slate-900 mb-4" id="own-result">80%</div>
+                    <p class="text-sm text-slate-500" id="post-money-label">Post-money: $5,000,000</p>
+                </div>
+            </div>
+            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg hover:bg-blue-700 transition-all">Model Dilution</button>
+        </div>
+
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-2xl font-bold mb-4">How Fundraising Dilution Works</h2>
+            <p>Every time you raise capital, you are issuing new shares, which reduces the percentage of the company owned by existing shareholders. <strong>Standard startup dilution for a Seed or Series A round typically falls between 15% and 25%</strong>.</p>
+
+            
+
+            <h3>The Post-Money Formula</h3>
+            <p>Your ownership is calculated based on the post-money valuation:</p>
+            <p class="bg-slate-100 p-4 rounded-lg font-mono text-center">Post-Money Valuation = Pre-Money Valuation + Investment</p>
+            <p class="bg-slate-100 p-4 rounded-lg font-mono text-center">New Ownership = (Pre-Money / Post-Money) * Old Ownership</p>
+
+            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
+                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
+                <ul class="mb-0">
+                    <li><a href="convertible-note.html" class="text-blue-600 hover:underline">Convertible Note (SAFE) Calculator</a></li>
+                    <li><a href="saas-valuation.html" class="text-blue-600 hover:underline">SaaS Valuation Calculator</a></li>
+                    <li><a href="employee-cost.html" class="text-blue-600 hover:underline">Employee Burdened Cost Tool</a></li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function calculate() {
+            const pre = parseFloat(document.getElementById('preMoney').value) || 0;
+            const invest = parseFloat(document.getElementById('investment').value) || 0;
+            const current = parseFloat(document.getElementById('currentOwn').value) || 0;
+            const post = pre + invest;
+            const newOwn = (pre / post) * current;
+            document.getElementById('own-result').innerText = newOwn.toFixed(1) + "%";
+            document.getElementById('post-money-label').innerText = "Post-money: $" + post.toLocaleString();
+        }
+        window.onload = calculate;
+    </script>
+</body>
+</html>

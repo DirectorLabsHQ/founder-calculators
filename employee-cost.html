@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Fully Burdened Cost Calculator | FounderCalculators</title>
+    <meta name="description" content="Calculate the true cost of an employee including taxes, benefits, and overhead. Go beyond base salary to understand your real hiring burn.">
+    <link rel="canonical" href="https://foundercalculators.com/employee-cost.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+    <nav class="border-b bg-white py-4">
+        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
+            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Fully Burdened Cost Tool</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Understand the true cost of a new hire once benefits and taxes are included.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Annual Base Salary ($)</label>
+                        <input type="number" id="salary" value="120000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Benefits & Taxes (%) <span class="text-slate-400">(Avg: 20-30%)</span></label>
+                        <input type="number" id="burden" value="25" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="bg-slate-100 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-slate-200">
+                    <span class="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-2">Total Annual Cost</span>
+                    <div class="text-4xl font-black text-slate-900 mb-4" id="total-cost">$150,000</div>
+                    <p class="text-sm text-slate-500" id="monthly-cost">Monthly Burn: $12,500</p>
+                </div>
+            </div>
+            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg">Calculate Real Cost</button>
+        </div>
+
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-2xl font-bold mb-4">The "Hidden" Cost of Hiring</h2>
+            <p>Founders often overlook the overhead of a new team member. <strong>In 2026, the "burden" rate for US-based employees typically ranges from 25% to 40%</strong> of the base salary once payroll taxes, insurance, and equipment are factored in.</p>
+
+            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
+                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
+                <ul class="mb-0">
+                    <li><a href="burn-rate-runway.html" class="text-blue-600 hover:underline">Burn Rate & Runway Calculator</a></li>
+                    <li><a href="freelance-to-agency.html" class="text-blue-600 hover:underline">Agency Scaler Tool</a></li>
+                    <li><a href="consulting-rate.html" class="text-blue-600 hover:underline">Consulting Rate Tool</a></li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function calculate() {
+            const salary = parseFloat(document.getElementById('salary').value) || 0;
+            const burden = parseFloat(document.getElementById('burden').value) / 100 || 0;
+            const total = salary * (1 + burden);
+            document.getElementById('total-cost').innerText = "$" + Math.round(total).toLocaleString();
+            document.getElementById('monthly-cost').innerText = "Monthly Burn: $" + Math.round(total/12).toLocaleString();
+        }
+        window.onload = calculate;
+    </script>
+</body>
+</html>

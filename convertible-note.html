@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertible Note & SAFE Calculator | FounderCalculators</title>
+    <meta name="description" content="Calculate the impact of SAFE notes and convertible notes on your cap table. Model valuation caps and discounts.">
+    <link rel="canonical" href="https://foundercalculators.com/convertible-note.html">
+    <meta property="og:title" content="SAFE & Convertible Note Calculator">
+    <meta property="og:description" content="Calculate dilution from SAFE notes with valuation caps.">
+    <meta property="og:url" content="https://foundercalculators.com/convertible-note.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+    <nav class="border-b bg-white py-4">
+        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
+            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">SAFE / Convertible Note Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Model the conversion of notes into equity during your next priced round.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Note Principal ($)</label>
+                        <input type="number" id="principal" value="250000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Valuation Cap ($)</label>
+                        <input type="number" id="cap" value="5000000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Priced Round Valuation ($)</label>
+                        <input type="number" id="roundVal" value="8000000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-indigo-100">
+                    <span class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-2">Effective Ownership</span>
+                    <div class="text-5xl font-black text-slate-900 mb-4" id="result-own">5.0%</div>
+                    <p class="text-sm text-slate-500" id="result-desc">Note converts at the Cap</p>
+                </div>
+            </div>
+            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg hover:bg-blue-700 transition-all">Calculate Conversion</button>
+        </div>
+
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-2xl font-bold mb-4">SAFEs vs. Convertible Notes</h2>
+            <p>A SAFE (Simple Agreement for Future Equity) is a popular instrument for early-stage funding. <strong>Valuation caps on 2026 pre-seed SAFEs typically range from $4M to $8M</strong> depending on the founder's track record and traction.</p>
+
+            
+
+            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
+                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
+                <ul class="mb-0">
+                    <li><a href="equity-dilution.html" class="text-blue-600 hover:underline">Equity Dilution Calculator</a></li>
+                    <li><a href="berkus-valuation.html" class="text-blue-600 hover:underline">Berkus Method Valuation</a></li>
+                    <li><a href="burn-rate-runway.html" class="text-blue-600 hover:underline">Burn Rate & Runway Calculator</a></li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function calculate() {
+            const principal = parseFloat(document.getElementById('principal').value) || 0;
+            const cap = parseFloat(document.getElementById('cap').value) || 0;
+            const roundVal = parseFloat(document.getElementById('roundVal').value) || 0;
+            const conversionVal = Math.min(cap, roundVal);
+            const own = (principal / (conversionVal + principal)) * 100;
+            document.getElementById('result-own').innerText = own.toFixed(1) + "%";
+            document.getElementById('result-desc').innerText = roundVal > cap ? "Converts at the Cap" : "Converts at the Round Price";
+        }
+        window.onload = calculate;
+    </script>
+</body>
+</html>
