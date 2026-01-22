@@ -3,21 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equity Dilution Calculator (Pre-Seed to Series A) | FounderCalculators</title>
-    <meta name="description" content="Model how much of your company you will own after your next funding round. Calculate post-money valuation and founder dilution.">
+    <title>Equity Dilution Calculator | Post-Money Valuation Modeler (2026)</title>
+    <meta name="description" content="Calculate founder dilution for Seed and Series A rounds. Model post-money valuation, investment stakes, and option pool expansion effects on ownership.">
     <link rel="canonical" href="https://foundercalculators.com/equity-dilution.html">
-    <meta property="og:title" content="Equity Dilution Calculator">
-    <meta property="og:description" content="See how much ownership you keep after a new investment.">
-    <meta property="og:url" content="https://foundercalculators.com/equity-dilution.html">
-    <meta property="og:site_name" content="FounderCalculators">
-    <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+        #ownership-bar { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#finance" class="standard-link">Finance</a>
+                <a href="index.html#growth" class="standard-link">Growth</a>
+                <a href="index.html#ops" class="standard-link">Operations</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">About</a>
+                <a href="contact.html" class="standard-link">Contact</a>
+            </div>
         </div>
     </nav>
 
@@ -27,63 +38,147 @@
             <p class="text-lg text-slate-600 max-w-2xl mx-auto">Model your ownership stake after a new investment round or option pool creation.</p>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Pre-Money Valuation ($)</label>
-                        <input type="number" id="preMoney" value="4000000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-5">
+                    <div class="input-card border rounded-xl p-3 bg-slate-50/50">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pre-Money Valuation ($)</label>
+                        <input type="number" id="preMoney" value="8000000" oninput="calculate()" class="w-full bg-transparent text-lg font-semibold outline-none">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Investment Amount ($)</label>
-                        <input type="number" id="investment" value="1000000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">New Investment ($)</label>
+                        <input type="number" id="investment" value="2000000" oninput="calculate()" class="w-full bg-transparent text-lg font-semibold outline-none">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Your Current Ownership (%)</label>
-                        <input type="number" id="currentOwn" value="100" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-card border rounded-xl p-3">
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Current Ownership (%)</label>
+                            <input type="number" id="currentOwn" value="100" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        </div>
+                        <div class="input-card border rounded-xl p-3">
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">New Option Pool (%)</label>
+                            <input type="number" id="pool" value="10" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        </div>
                     </div>
+                    <p class="text-[11px] text-slate-400 italic leading-tight">Note: New Option Pool percentages are typically calculated on a **post-money** basis, diluting existing shareholders before the new investor. This tool models that "top-off" effect.</p>
                 </div>
 
-                <div class="bg-purple-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-purple-100">
-                    <span class="text-sm font-semibold text-purple-600 uppercase tracking-wider mb-2">New Ownership stake</span>
-                    <div class="text-5xl font-black text-slate-900 mb-4" id="own-result">80%</div>
-                    <p class="text-sm text-slate-500" id="post-money-label">Post-money: $5,000,000</p>
+                <div class="bg-indigo-950 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10">
+                        <span class="text-xs font-bold text-indigo-300 uppercase tracking-widest mb-2 block">Post-Round Ownership</span>
+                        <div class="text-6xl font-black mb-2 text-white" id="own-result">72.0%</div>
+                        <p class="text-indigo-200 font-medium mb-6" id="post-money-label">Post-money: $10,000,000</p>
+                        
+                        <div class="w-full bg-indigo-900 h-4 rounded-full overflow-hidden flex border border-indigo-800">
+                            <div id="ownership-bar" class="bg-blue-500 h-full" style="width: 72%;"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] mt-2 text-indigo-300 font-bold">
+                            <span>YOU</span>
+                            <span>OTHERS</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg hover:bg-blue-700 transition-all">Model Dilution</button>
+            <button onclick="calculate()" class="w-full mt-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Update Dilution Model</button>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">How Fundraising Dilution Works</h2>
-            <p>Every time you raise capital, you are issuing new shares, which reduces the percentage of the company owned by existing shareholders. <strong>Standard startup dilution for a Seed or Series A round typically falls between 15% and 25%</strong>.</p>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">How Fundraising Dilution Works</h2>
+            <p>
+                Every time you raise capital, you issue new shares. This increases the total number of shares in the company, meaning your "slice of the pie" becomes a smaller percentage of a (hopefully) much larger pie.
+            </p>
 
             
 
-            <h3>The Post-Money Formula</h3>
-            <p>Your ownership is calculated based on the post-money valuation:</p>
-            <p class="bg-slate-100 p-4 rounded-lg font-mono text-center">Post-Money Valuation = Pre-Money Valuation + Investment</p>
-            <p class="bg-slate-100 p-4 rounded-lg font-mono text-center">New Ownership = (Pre-Money / Post-Money) * Old Ownership</p>
+            <h3 class="text-2xl font-bold mt-8">Pre-Money vs. Post-Money</h3>
+            <p>
+                The <strong>Pre-Money Valuation</strong> is what the company is worth before the check hits the bank. The <strong>Post-Money Valuation</strong> is simply that value plus the new cash. 
+            </p>
+            <div class="bg-slate-100 p-6 rounded-xl font-mono text-sm space-y-2 border-l-4 border-indigo-500">
+                <p>Post-Money = Pre-Money + Investment</p>
+                <p>Investor Stake = Investment / Post-Money</p>
+            </div>
 
-            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
-                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
-                <ul class="mb-0">
-                    <li><a href="convertible-note.html" class="text-blue-600 hover:underline">Convertible Note (SAFE) Calculator</a></li>
-                    <li><a href="saas-valuation.html" class="text-blue-600 hover:underline">SaaS Valuation Calculator</a></li>
-                    <li><a href="employee-cost.html" class="text-blue-600 hover:underline">Employee Burdened Cost Tool</a></li>
-                </ul>
+            <h3 class="text-2xl font-bold mt-10">The "Hidden" Dilution: Option Pool Shuffle</h3>
+            <p>
+                Most lead investors require an <strong>Employee Stock Option Pool (ESOP)</strong> to be created or increased <em>before</em> they invest. This is often referred to as the "Option Pool Shuffle." 
+            </p>
+            <p>
+                Because the pool is created from the "Pre-money" cap table, the dilution falls entirely on the founders, not the new investor. For example, if an investor asks for a 10% post-money pool, your ownership might drop by 12-13% once the investment is also factored in.
+            </p>
+
+            <h3 class="text-2xl font-bold mt-10">Typical Dilution by Round</h3>
+            <table class="min-w-full text-sm">
+                <thead>
+                    <tr class="border-b">
+                        <th class="text-left py-2">Funding Stage</th>
+                        <th class="text-left py-2">Typical Dilution</th>
+                        <th class="text-left py-2">Investor Target Stake</th>
+                    </tr>
+                </thead>
+                <tbody class="text-slate-600">
+                    <tr class="border-b">
+                        <td class="py-2 font-bold text-slate-900">Pre-Seed</td>
+                        <td class="py-2">5% - 10%</td>
+                        <td class="py-2">Accelerators / Angels</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="py-2 font-bold text-slate-900">Seed Round</td>
+                        <td class="py-2">15% - 25%</td>
+                        <td class="py-2">Lead Seed Funds</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 font-bold text-slate-900">Series A</td>
+                        <td class="py-2">20% - 30%</td>
+                        <td class="py-2">Venture Capital firms</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-12 p-8 bg-indigo-50 rounded-2xl border border-indigo-100">
+                <h4 class="text-indigo-900 font-bold mt-0 italic text-lg text-center">"It's better to own 10% of a unicorn than 100% of a zero."</h4>
+                <p class="text-indigo-800 mb-0 text-sm text-center">
+                    Dilution is a natural part of scaling. Focus on the <strong>Value of your Stake</strong> (Post-Money × Ownership %) rather than just the percentage itself.
+                </p>
             </div>
         </article>
     </main>
 
+    <footer class="bg-white border-t py-16 text-slate-500 text-center">
+        <p class="font-bold text-slate-900">FounderCalculators.com</p>
+        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    </footer>
+
     <script>
         function calculate() {
-            const pre = parseFloat(document.getElementById('preMoney').value) || 0;
-            const invest = parseFloat(document.getElementById('investment').value) || 0;
-            const current = parseFloat(document.getElementById('currentOwn').value) || 0;
-            const post = pre + invest;
-            const newOwn = (pre / post) * current;
+            const preMoney = parseFloat(document.getElementById('preMoney').value) || 0;
+            const investment = parseFloat(document.getElementById('investment').value) || 0;
+            const currentOwn = parseFloat(document.getElementById('currentOwn').value) || 0;
+            const optionPool = parseFloat(document.getElementById('pool').value) / 100 || 0;
+
+            const postMoney = preMoney + investment;
+            
+            // Investor stake
+            const investorStake = postMoney > 0 ? (investment / postMoney) : 0;
+            
+            // The founder dilution happens in two steps in a typical term sheet:
+            // 1. Investor takes their cut of the post-money
+            // 2. Option pool is carved out of the pre-money but expressed as % of post-money
+            // New Founder Ownership = Current % * (1 - Investor Stake - Option Pool Stake)
+            
+            let newOwn = currentOwn * (1 - investorStake - optionPool);
+            if (newOwn < 0) newOwn = 0;
+
+            // Formatter
+            const currencyFormatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            });
+
+            // UI Updates
             document.getElementById('own-result').innerText = newOwn.toFixed(1) + "%";
-            document.getElementById('post-money-label').innerText = "Post-money: $" + post.toLocaleString();
+            document.getElementById('post-money-label').innerText = "Post-money: " + currencyFormatter.format(postMoney);
+            document.getElementById('ownership-bar').style.width = newOwn + "%";
         }
         window.onload = calculate;
     </script>
