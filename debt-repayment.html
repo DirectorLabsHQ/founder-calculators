@@ -3,65 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Loan Repayment Calculator | Venture Debt Modeling (2026)</title>
+    <meta name="description" content="Calculate monthly startup loan payments, total interest costs, and amortization. Evaluate venture debt vs. equity dilution for your 2026 business funding strategy.">
     <link rel="canonical" href="https://foundercalculators.com/debt-repayment.html">
-    <meta name="robots" content="index, follow">
-    <title>Startup Loan Repayment Calculator (2026) | FounderCalculators</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .calc-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .btn-primary { background: #2563eb; color: white; transition: all 0.2s; cursor: pointer; }
-        .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        #interest-bar { transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s; }
+        .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.2); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#finance" class="standard-link">Finance</a>
+                <a href="index.html#growth" class="standard-link">Growth</a>
+                <a href="index.html#ops" class="standard-link">Operations</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">About</a>
+                <a href="contact.html" class="standard-link">Contact</a>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Startup Loan Repayment</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Calculate monthly payments and total interest for venture debt or business loans.</p>
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Startup Loan Repayment Tool</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Analyze the monthly cash flow impact of venture debt, SBA loans, or bridge financing.</p>
+            
+            <div class="bg-amber-50 border border-amber-100 rounded-xl p-4 text-sm text-amber-800 max-w-2xl mx-auto text-left leading-relaxed">
+                <strong>Founder's Note:</strong> Debt is non-dilutive but carries <em>repayment risk</em>. Unlike equity, lenders expect payment regardless of your pivot, churn, or market conditions.
+            </div>
         </div>
 
-        <div class="calc-card p-8 mb-12">
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Loan Amount ($)</label>
-                        <input type="number" id="amount" value="50000" class="w-full p-3 border rounded-lg">
+                    <div class="input-card">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Loan Principal ($)</label>
+                        <input type="number" id="amount" value="100000" oninput="calculate()" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Annual Interest Rate (%)</label>
-                        <input type="number" id="rate" value="8" class="w-full p-3 border rounded-lg">
+                    <div class="input-card">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Annual Interest Rate (%)</label>
+                        <input type="number" id="rate" value="9" oninput="calculate()" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Loan Term (Months)</label>
-                        <input type="number" id="term" value="36" class="w-full p-3 border rounded-lg">
+                    <div class="input-card">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Loan Term (Months)</label>
+                        <input type="number" id="term" value="36" oninput="calculate()" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
                 </div>
 
-                <div class="bg-blue-50 rounded-xl p-8 flex flex-col justify-center items-center text-center">
-                    <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">Monthly Payment</span>
-                    <div class="text-4xl font-black text-slate-900 mb-4" id="main-result">$1,566</div>
-                    <p class="text-sm text-slate-500" id="result-description">Total Interest: $6,376</p>
+                <div class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white relative overflow-hidden shadow-2xl">
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2 z-10">Monthly Repayment</span>
+                    <div class="text-5xl font-black mb-2 z-10" id="main-result" aria-label="Calculated monthly payment">$0</div>
+                    <p class="text-lg font-medium text-slate-400 z-10" id="result-description">Total Interest: $0</p>
+                    
+                    <div class="w-full mt-6 z-10">
+                        <div class="flex justify-between text-[10px] uppercase font-bold tracking-tighter mb-1 text-slate-500">
+                            <span>Interest vs Principal</span>
+                            <span id="interest-ratio">0% Interest</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                            <div id="interest-bar" class="h-full bg-blue-500" style="width: 0%;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 btn-primary rounded-lg font-bold text-lg">Calculate Payment</button>
+            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-lg shadow-lg transition">Update Loan Amortization</button>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">Venture Debt vs. Equity</h2>
-            <p>Loans are "non-dilutive" capital. Unlike VC funding, you don't give up ownership, but you do take on <strong>repayment risk</strong>. If your startup fails to meet revenue targets, debt can be a heavy anchor.</p>
-            <p><strong>Note for 2026:</strong> Interest rates have stabilized, but lenders are looking for stronger "Debt-Service Coverage Ratios" (DSCR). Use this tool to ensure your monthly cash flow can comfortably cover these payments before signing a term sheet.</p>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Venture Debt vs. Equity Dilution</h2>
+            <p>
+                For founders in 2026, debt is a strategic alternative to mid-stage equity rounds. By taking a loan instead of selling another 5% of the company, you preserve upside for yourself and your team. However, the <strong>Cost of Capital</strong> is more than just the interest rate.
+            </p>
+
+            <h3 class="text-2xl font-bold mt-8">The "DSCR" Factor: Can You Afford It?</h3>
+            <p>
+                Lenders look at your <strong>Debt Service Coverage Ratio (DSCR)</strong>, your Net Operating Income divided by total debt service (principal + interest). 
+            </p>
+            <ul>
+                <li><strong>Safe Zone (DSCR > 1.5):</strong> Revenue easily covers debt, leaving room for operational growth.</li>
+                <li><strong>Danger Zone (DSCR < 1.1):</strong> A single bad month or high churn spike could prevent repayment, potentially triggering default.</li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mt-10">Types of Startup Loans in 2026</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                <div class="p-6 border border-slate-200 rounded-xl bg-white shadow-sm">
+                    <h4 class="font-bold text-blue-600 mt-0">Venture Debt</h4>
+                    <p class="text-sm text-slate-600">Typically available to VC-backed companies. Often includes <strong>warrants</strong> (lender equity rights), lowering interest but adding minor dilution.</p>
+                </div>
+                <div class="p-6 border border-slate-200 rounded-xl bg-white shadow-sm">
+                    <h4 class="font-bold text-blue-600 mt-0">Revenue-Based Financing</h4>
+                    <p class="text-sm text-slate-600">Repayments scale with monthly revenue. Slow months reduce payment. Ideal for SaaS with predictable but fluctuating growth.</p>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-10">Hidden Costs to Watch</h3>
+            <ul>
+                <li><strong>Origination Fees:</strong> 1–3% of loan, deducted upfront.</li>
+                <li><strong>Prepayment Penalties:</strong> Fees if repaid early.</li>
+                <li><strong>Warrant Coverage:</strong> Hidden dilution in exchange for lower interest.</li>
+            </ul>
+
+            <div class="my-10 p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                <h3 class="text-xl font-bold mb-6 text-slate-900 uppercase tracking-wide">Loan Repayment FAQ</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-blue-600">What is an "Interest-Only" period?</h4>
+                        <p class="text-slate-600 text-sm">Many loans offer 6–12 months where you only pay interest. Preserves cash during scaling, but later payments increase.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blue-600">How do covenants work?</h4>
+                        <p class="text-slate-600 text-sm">Covenants are rules you must follow (e.g., cash balance minimum). Breaking them may trigger full repayment demand.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 p-6 bg-slate-900 text-white rounded-2xl">
+                <h3 class="text-lg font-bold mb-3 text-blue-400">Related Finance Tools</h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
+                    <li><a href="burn-rate-runway.html" class="text-white hover:text-blue-400 transition">Burn Rate & Runway Tool →</a></li>
+                    <li><a href="convertible-note.html" class="text-white hover:text-blue-400 transition">SAFE & Note Calculator →</a></li>
+                    <li><a href="cac-ltv-ratio.html" class="text-white hover:text-blue-400 transition">SaaS Unit Economics →</a></li>
+                    <li><a href="equity-dilution.html" class="text-white hover:text-blue-400 transition">Dilution Modeler →</a></li>
+                </ul>
+            </div>
         </article>
     </main>
 
-    <footer class="bg-white border-t py-12 mt-12 text-center text-slate-400 text-sm">
-        <p>&copy; 2026 FounderCalculators.com</p>
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div>
+                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+                <p class="text-sm">Helping founders make data-driven decisions about capital and growth.</p>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="about.html" class="standard-link">About Us</a></li>
+                    <li><a href="contact.html" class="standard-link">Contact</a></li>
+                    <li><a href="index.html#finance" class="standard-link">Finance Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script>
@@ -69,15 +170,41 @@
             const principal = parseFloat(document.getElementById('amount').value) || 0;
             const annualRate = parseFloat(document.getElementById('rate').value) / 100 || 0;
             const months = parseFloat(document.getElementById('term').value) || 1;
-            
+
             const monthlyRate = annualRate / 12;
-            const payment = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
+            
+            let payment = 0;
+            if (monthlyRate > 0) {
+                payment = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+            } else {
+                payment = principal / months;
+            }
+
             const totalRepaid = payment * months;
             const totalInterest = totalRepaid - principal;
+            const interestPercent = totalInterest > 0 ? (totalInterest / totalRepaid) * 100 : 0;
 
-            document.getElementById('main-result').innerText = "$" + payment.toLocaleString(undefined, {maximumFractionDigits: 0});
-            document.getElementById('result-description').innerText = "Total Interest: $" + totalInterest.toLocaleString(undefined, {maximumFractionDigits: 0});
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            });
+
+            document.getElementById('main-result').innerText = formatter.format(payment);
+            document.getElementById('result-description').innerText = "Total Interest: " + formatter.format(totalInterest);
+
+            const bar = document.getElementById('interest-bar');
+            const ratioLabel = document.getElementById('interest-ratio');
+            
+            bar.style.width = interestPercent + "%";
+            ratioLabel.innerText = Math.round(interestPercent) + "% Interest Cost";
+
+            // Color coding
+            if (interestPercent > 25) bar.style.backgroundColor = "#ef4444"; // Red
+            else if (interestPercent > 15) bar.style.backgroundColor = "#f59e0b"; // Amber
+            else bar.style.backgroundColor = "#3b82f6"; // Blue
         }
+
         window.onload = calculate;
     </script>
 </body>
