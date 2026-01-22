@@ -3,71 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>12-Month MRR Growth Projector | FounderCalculators</title>
-    <meta name="description" content="Project your SaaS revenue growth over the next 12 months. Model compounding MRR based on monthly growth rates and churn.">
+    <title>12-Month MRR Growth Projector | SaaS Revenue Modeler (2026)</title>
+    <meta name="description" content="Project your SaaS MRR and ARR over 12 months. Model compounding growth, account for churn, and visualize your startup's revenue trajectory.">
     <link rel="canonical" href="https://foundercalculators.com/mrr-projector.html">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+        .table-row:nth-child(even) { background-color: #f8fafc; }
+        #growth-trend-bar { transition: width 0.8s ease-in-out; }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#finance" class="standard-link">Finance</a>
+                <a href="index.html#growth" class="standard-link">Growth</a>
+                <a href="index.html#ops" class="standard-link">Operations</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">About</a>
+                <a href="contact.html" class="standard-link">Contact</a>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">12-Mo MRR Projector</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Model the compounding power of your SaaS growth engine over the next year.</p>
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">12-Month MRR Growth Projector</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Visualize the compounding power of your SaaS growth engine and the impact of churn.</p>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Starting MRR ($)</label>
-                        <input type="number" id="startMrr" value="10000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-8 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-5">
+                    <div class="input-card border rounded-xl p-4 bg-slate-50/50">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Starting MRR ($)</label>
+                        <input type="number" id="startMrr" value="10000" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Monthly Growth Rate (%)</label>
-                        <input type="number" id="growthRate" value="15" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-card border rounded-xl p-3">
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase">Monthly Growth (%)</label>
+                            <input type="number" id="growthRate" value="15" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        </div>
+                        <div class="input-card border rounded-xl p-3">
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase">Monthly Churn (%)</label>
+                            <input type="number" id="churnRate" value="3" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        </div>
                     </div>
+                    <p class="text-[11px] text-slate-400 italic">Net Monthly Growth: <span id="net-growth-display" class="font-bold">12%</span></p>
                 </div>
 
-                <div class="bg-blue-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-blue-100">
-                    <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">Year 1 Ending MRR</span>
-                    <div class="text-5xl font-black text-slate-900 mb-4" id="mrr-result">$53,502</div>
-                    <p class="text-sm text-slate-500">ARR: $642,024</p>
+                <div class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white relative overflow-hidden shadow-2xl">
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2 z-10">Year 1 Ending MRR</span>
+                    <div class="text-5xl font-black mb-2 z-10" id="mrr-result">$0</div>
+                    <p class="text-lg font-medium text-slate-400 z-10" id="arr-result">ARR: $0</p>
+                    
+                    <div class="w-full mt-6 z-10">
+                        <div class="flex justify-between text-[10px] uppercase font-bold tracking-tighter mb-1 text-slate-500">
+                            <span>Growth Multiplier</span>
+                            <span id="multiplier-display">1.0x</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                            <div id="growth-trend-bar" class="h-full bg-blue-500" style="width: 20%;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg">Project Growth</button>
+            <button onclick="calculate()" class="w-full mt-10 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Generate Projection Table</button>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-2xl shadow-sm mb-12 overflow-hidden">
+            <div class="p-6 border-b flex justify-between items-center bg-slate-50">
+                <h2 class="text-lg font-bold text-slate-800">Month-by-Month Forecast</h2>
+                <span class="text-xs font-medium text-slate-500 uppercase tracking-widest">Compounding MRR</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-white">
+                            <th class="p-4 text-xs font-bold text-slate-500 uppercase border-b">Month</th>
+                            <th class="p-4 text-xs font-bold text-slate-500 uppercase border-b">Growth</th>
+                            <th class="p-4 text-xs font-bold text-slate-500 uppercase border-b">Churn Loss</th>
+                            <th class="p-4 text-xs font-bold text-slate-500 uppercase border-b text-right">Ending MRR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projection-body" class="text-sm">
+                        </tbody>
+                </table>
+            </div>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">The Magic of Compounding Growth</h2>
-            <p>In SaaS, small monthly improvements compound into massive annual results. <strong>In 2026, a 15% monthly growth rate is considered "world-class"</strong> for early-stage startups, leading to a 5x increase in MRR over 12 months.</p>
-            
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">The SaaS "Leaky Bucket" Phenomenon</h2>
+            <p>
+                Projecting SaaS revenue isn't just about how many new customers you can acquire. It's about the relationship between your <strong>Monthly Growth Rate</strong> and your <strong>Gross Churn</strong>.
+            </p>
+
             
 
-            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
-                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
-                <ul class="mb-0">
-                    <li><a href="saas-valuation.html" class="text-blue-600 hover:underline">SaaS Valuation Calculator</a></li>
-                    <li><a href="churn-impact.html" class="text-blue-600 hover:underline">Churn Impact Tool</a></li>
-                    <li><a href="rule-of-40.html" class="text-blue-600 hover:underline">Rule of 40 Score</a></li>
-                </ul>
+            <h3 class="text-2xl font-bold mt-8">What is a Good Growth Rate?</h3>
+            <p>
+                In 2026, venture capital expectations have shifted toward sustainable growth. However, the "T2D3" (Triple, Triple, Double, Double, Double) path still dictates the milestones for high-growth startups:
+            </p>
+            <ul>
+                <li><strong>Early Stage:</strong> 15-20% month-over-month growth.</li>
+                <li><strong>Growth Stage:</strong> 100% year-over-year growth.</li>
+                <li><strong>Mature SaaS:</strong> 30-40% year-over-year growth (Rule of 40).</li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mt-10">Why Churn is the Silent Killer</h3>
+            <p>
+                A 5% monthly churn rate might seem small, but it means you lose <strong>46% of your customers every year</strong>. To simply stay flat, you have to replace half your business annually. This makes "Negative Churn" (where expansion revenue from existing customers outweighs lost revenue) the holy grail of SaaS unit economics.
+            </p>
+
+            <div class="bg-blue-50 p-8 rounded-2xl border-l-4 border-blue-500 my-10">
+                <h4 class="text-blue-900 font-bold mt-0">Strategic Insight: ARR vs. MRR</h4>
+                <p class="text-blue-800 mb-0">
+                    While MRR helps you manage day-to-day operations, <strong>Annual Recurring Revenue (ARR)</strong> is the metric used for valuation. Most SaaS companies in 2026 are valued at a multiple of their year-end ARR.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Financial Planning Tools</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="saas-valuation.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    SaaS Valuation Tool →
+                </a>
+                <a href="burn-rate-runway.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    Runway & Burn Rate →
+                </a>
             </div>
         </article>
     </main>
 
+    <footer class="bg-white border-t py-16 text-slate-500 text-center">
+        <p class="font-bold text-slate-900">FounderCalculators.com</p>
+        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    </footer>
+
     <script>
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        });
+
         function calculate() {
-            const start = parseFloat(document.getElementById('startMrr').value) || 0;
+            const startMrr = parseFloat(document.getElementById('startMrr').value) || 0;
             const growth = parseFloat(document.getElementById('growthRate').value) / 100 || 0;
-            const ending = start * Math.pow(1 + growth, 12);
-            document.getElementById('mrr-result').innerText = "$" + Math.round(ending).toLocaleString();
+            const churn = parseFloat(document.getElementById('churnRate').value) / 100 || 0;
+            const netGrowth = growth - churn;
+
+            document.getElementById('net-growth-display').innerText = (netGrowth * 100).toFixed(1) + "%";
+
+            const tbody = document.getElementById('projection-body');
+            tbody.innerHTML = '';
+
+            let currentMrr = startMrr;
+            
+            for (let i = 1; i <= 12; i++) {
+                const growthAmount = currentMrr * growth;
+                const churnAmount = currentMrr * churn;
+                currentMrr = currentMrr + growthAmount - churnAmount;
+
+                const row = document.createElement('tr');
+                row.className = 'table-row border-b border-slate-100';
+                row.innerHTML = `
+                    <td class="p-4 font-medium text-slate-600">Month ${i}</td>
+                    <td class="p-4 text-green-600">+${formatter.format(growthAmount)}</td>
+                    <td class="p-4 text-red-500">-${formatter.format(churnAmount)}</td>
+                    <td class="p-4 text-slate-900 font-bold text-right">${formatter.format(currentMrr)}</td>
+                `;
+                tbody.appendChild(row);
+            }
+
+            // Update Header Results
+            document.getElementById('mrr-result').innerText = formatter.format(currentMrr);
+            document.getElementById('arr-result').innerText = "ARR: " + formatter.format(currentMrr * 12);
+
+            // Update Progress/Multiplier
+            const multiplier = startMrr > 0 ? (currentMrr / startMrr).toFixed(1) : 0;
+            document.getElementById('multiplier-display').innerText = multiplier + "x Growth";
+            
+            const barWidth = Math.min(100, (multiplier / 5) * 100);
+            document.getElementById('growth-trend-bar').style.width = barWidth + "%";
         }
+
         window.onload = calculate;
     </script>
 </body>
