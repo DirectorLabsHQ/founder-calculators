@@ -20,6 +20,7 @@
         .calc-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
         .btn-primary { background: #2563eb; color: white; transition: all 0.2s; cursor: pointer; }
         .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+        #runway-progress { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
@@ -46,7 +47,7 @@
             <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Determine exactly how much time your startup has to reach profitability or raise your next round.</p>
             
             <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm text-slate-700 max-w-2xl mx-auto text-left leading-relaxed">
-                <strong>Disclaimer:</strong> This <strong>burn rate calculator</strong> is for educational and modeling purposes only. It does not constitute financial or investment advice. Cash runway is a snapshot in time; real-world expenses and revenues often fluctuate.
+                <strong>Disclaimer:</strong> This tool is for educational purposes and does not constitute financial or investment advice. Cash runway is a snapshot in time; real-world expenses often fluctuate based on seasonal costs and hiring.
             </div>
         </div>
 
@@ -73,8 +74,8 @@
                     <p class="text-lg font-medium text-slate-300 z-10">Months Remaining</p>
                     <p class="text-sm text-slate-400 mt-4 z-10 font-mono" id="burn-result">Net Burn: $40,000 / mo</p>
                     
-                    <div class="absolute bottom-0 left-0 w-full h-2 bg-slate-800">
-                        <div id="runway-progress" class="h-full bg-blue-500 transition-all duration-500" style="width: 50%;"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-3 bg-slate-800" role="progressbar" aria-label="Runway Survival Progress" aria-valuenow="12.5" aria-valuemin="0" aria-valuemax="24">
+                        <div id="runway-progress" class="h-full bg-blue-500" style="width: 50%;"></div>
                     </div>
                 </div>
             </div>
@@ -82,73 +83,78 @@
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-3xl font-extrabold text-slate-900 mb-6">How to Manage Startup Runway in 2026</h2>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6">Mastering the Startup Survival Timeline</h2>
             <p>
-                Startup runway is the number of months your business can survive before running out of cash. In the current economic climate, understanding your <strong>Net Burn Rate</strong> is vital for timing your next fundraise or strategic pivot.
+                In the 2026 venture capital landscape, <strong>runway management</strong> is the ultimate differentiator between founders who survive and those who stall. By understanding your net burn rate, you gain the clarity needed to make difficult decisions about hiring, marketing, and pivot strategies.
             </p>
 
             
 
-            <h3 class="text-2xl font-bold mt-8">The Calculation Example</h3>
+            <h3 class="text-2xl font-bold mt-8">Strategic Scenario Planning</h3>
             <p>
-                To calculate runway, you divide your total cash balance by your Net Monthly Burn Rate. 
-                For example: If you have <strong>$500,000</strong> in the bank, monthly expenses of <strong>$50,000</strong>, and monthly revenue of <strong>$10,000</strong>:
+                Calculators only show you where you are today. Professional founders use <strong>scenario planning</strong> to look ahead. Ask yourself:
             </p>
-            <ul class="bg-slate-100 p-6 rounded-xl list-none">
-                <li><strong>Net Burn:</strong> $50,000 (Expenses) - $10,000 (Revenue) = <strong>$40,000</strong></li>
-                <li><strong>Runway:</strong> $500,000 / $40,000 = <strong>12.5 Months</strong></li>
+            <ul>
+                <li><strong>Growth Scenario:</strong> What if our revenue grows by 20% next quarter? How many additional months does that buy us?</li>
+                <li><strong>The Worst Case:</strong> If our top three clients churn, how quickly does our runway shrink to the "Danger Zone"?</li>
+                <li><strong>Efficiency Gains:</strong> Can we use automated expense tracking to spot 5-10% in overspending? In a high-burn environment, that 10% could add two extra months of life.</li>
             </ul>
 
             <h3 class="text-2xl font-bold mt-10">Runway "Danger Zones" Benchmark</h3>
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto my-6">
                 <table class="min-w-full bg-white border border-slate-200 rounded-lg text-sm">
                     <thead>
                         <tr class="bg-slate-50">
                             <th class="px-4 py-3 border-b text-left">Runway Left</th>
                             <th class="px-4 py-3 border-b text-left">Status</th>
-                            <th class="px-4 py-3 border-b text-left">Action Required</th>
+                            <th class="px-4 py-3 border-b text-left">Strategic Action Required</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="px-4 py-3 border-b font-bold text-red-600">0 - 6 Months</td>
-                            <td class="px-4 py-3 border-b italic text-red-500 font-bold">Danger Zone</td>
-                            <td class="px-4 py-3 border-b">Immediate aggressive cost-cutting or bridge funding.</td>
+                            <td class="px-4 py-3 border-b font-bold">Danger Zone</td>
+                            <td class="px-4 py-3 border-b">Immediate cost-cutting. Pivot to revenue-first.</td>
                         </tr>
                         <tr class="bg-amber-50">
                             <td class="px-4 py-3 border-b font-bold text-amber-600">6 - 12 Months</td>
-                            <td class="px-4 py-3 border-b italic">Fundraising Zone</td>
-                            <td class="px-4 py-3 border-b">Start pitching investors now; cycles take 4-6 months.</td>
+                            <td class="px-4 py-3 border-b">Fundraising Zone</td>
+                            <td class="px-4 py-3 border-b">Begin pitching. VC cycles now take 18-24 weeks.</td>
                         </tr>
                         <tr>
                             <td class="px-4 py-3 border-b font-bold text-green-600">18+ Months</td>
-                            <td class="px-4 py-3 border-b italic text-green-600 font-bold">Healthy</td>
-                            <td class="px-4 py-3 border-b">Focus on product-market fit and growth execution.</td>
+                            <td class="px-4 py-3 border-b">Healthy / Scale</td>
+                            <td class="px-4 py-3 border-b">Focus on product-market fit and aggressive hiring.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
+            <h3 class="text-2xl font-bold mt-8 text-slate-900">Practical Example of Burn Math</h3>
+            <p>
+                Consider a SaaS company with a cash balance of <strong>$500,000</strong>. Their monthly payroll and AWS costs (Expenses) total <strong>$50,000</strong>, while their recurring subscriptions (Revenue) total <strong>$10,000</strong>.
+            </p>
+            <p class="bg-slate-100 p-6 rounded-xl border-l-4 border-blue-500 italic">
+                <strong>Net Burn:</strong> $50,000 - $10,000 = $40,000 per month.<br>
+                <strong>Total Runway:</strong> $500,000 / $40,000 = 12.5 Months of life.
+            </p>
+
             <div class="my-10 p-8 bg-white border border-slate-200 rounded-2xl">
-                <h3 class="text-xl font-bold mb-6 text-slate-900 uppercase tracking-wide">Survival FAQs</h3>
+                <h3 class="text-xl font-bold mb-6 text-slate-900 uppercase tracking-wide">Survival & Burn FAQs</h3>
                 <div class="space-y-6">
                     <div>
-                        <h4 class="font-bold text-blue-600">What is the difference between Gross Burn and Net Burn?</h4>
-                        <p class="text-slate-600 text-sm"><strong>Gross Burn</strong> is the total amount of cash leaving your bank account each month (Rent + Salaries + AWS). <strong>Net Burn</strong> is your actual loss (Gross Burn minus Revenue). Runway is always calculated using Net Burn.</p>
+                        <h4 class="font-bold text-blue-600">How do I extend my runway without new capital?</h4>
+                        <p class="text-slate-600 text-sm">Focus on "Efficiency Gains." Review your SaaS stack for redundant tools, renegotiate annual contracts for discounts, and pause experimental marketing channels that aren't yielding a 2x ROI.</p>
                     </div>
                     <div>
-                        <h4 class="font-bold text-blue-600">How can I extend my runway without raising money?</h4>
-                        <p class="text-slate-600 text-sm">The fastest ways to extend runway are reducing non-essential headcount, renegotiating software contracts, and focusing on high-margin customer segments to increase revenue immediately.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-blue-600">What does "Default Alive" mean?</h4>
-                        <p class="text-slate-600 text-sm">Coined by Paul Graham, you are "Default Alive" if your current trajectory (growth and expenses) leads you to profitability before you run out of cash. Use our <a href="breakeven-analysis.html" class="text-blue-600 underline">Breakeven Tool</a> to verify this.</p>
+                        <h4 class="font-bold text-blue-600">What is "Default Alive"?</h4>
+                        <p class="text-slate-600 text-sm">You are "Default Alive" if your current cash plus your growth rate leads to profitability before zero. If your expenses are growing faster than revenue, you are "Default Dead" and must raise or cut. Use our <a href="breakeven-analysis.html" class="text-blue-600 underline">Breakeven Tool</a> to check your status.</p>
                     </div>
                 </div>
             </div>
 
             <div class="mt-12 p-6 bg-slate-900 text-white rounded-2xl">
-                <h3 class="text-lg font-bold mb-3 text-blue-400">Related Startup Resources</h3>
+                <h3 class="text-lg font-bold mb-3 text-blue-400">Essential Startup Tools</h3>
                 <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
                     <li><a href="breakeven-analysis.html" class="text-white hover:text-blue-400 transition">Breakeven Analysis Tool →</a></li>
                     <li><a href="saas-valuation.html" class="text-white hover:text-blue-400 transition">SaaS Valuation Calculator →</a></li>
@@ -197,16 +203,19 @@
             const resultEl = document.getElementById('runway-result');
             const burnEl = document.getElementById('burn-result');
             const progressEl = document.getElementById('runway-progress');
+            const progressContainer = progressEl.parentElement;
 
             if (netBurn <= 0) {
                 resultEl.innerText = "∞";
                 burnEl.innerText = "You are Profit-Positive";
                 progressEl.style.width = "100%";
                 progressEl.style.backgroundColor = "#10b981"; // Green
+                progressContainer.setAttribute('aria-valuenow', 24);
             } else {
                 const runway = (cash / netBurn).toFixed(1);
                 resultEl.innerText = runway;
                 burnEl.innerText = "Net Burn: $" + netBurn.toLocaleString() + " / mo";
+                progressContainer.setAttribute('aria-valuenow', runway);
                 
                 // Visual progress: 24 months is considered "100%" for indicator
                 let percentage = (parseFloat(runway) / 24) * 100;
