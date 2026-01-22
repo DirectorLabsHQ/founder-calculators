@@ -3,75 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agency Scaling & Contractor ROI Calculator | FounderCalculators</title>
-    <meta name="description" content="Calculate the number of contractors needed to hit your agency revenue goals. Model profit margins when scaling from a solo freelancer to a boutique agency.">
+    <title>Agency Scaling & Contractor ROI Calculator | Freelance Growth Model</title>
+    <meta name="description" content="Calculate the number of hires needed to hit agency revenue goals. Model profit margins, billable hour capacity, and contractor costs for scaling 2026 boutique agencies.">
     <link rel="canonical" href="https://foundercalculators.com/freelance-to-agency.html">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+        #profit-accent { transition: background-color 0.4s; }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#finance" class="standard-link">Finance</a>
+                <a href="index.html#growth" class="standard-link">Growth</a>
+                <a href="index.html#ops" class="standard-link">Operations</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">About</a>
+                <a href="contact.html" class="standard-link">Contact</a>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Agency Scaler Tool</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Model your agency's growth: How many people do you need to hire to hit your targets?</p>
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Agency Scaler & ROI Tool</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Model your transition from solo freelancer to boutique agency. Map out your hires, margins, and capacity.</p>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Target Monthly Revenue ($)</label>
-                        <input type="number" id="target" value="50000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-5">
+                    <div class="input-card border rounded-xl p-4 bg-slate-50/50">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Target Monthly Revenue ($)</label>
+                        <input type="number" id="target" value="50000" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Avg Billable Rate per Hour ($)</label>
-                        <input type="number" id="rate" value="100" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-card border rounded-xl p-3">
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase">Avg Billable Rate ($)</label>
+                            <input type="number" id="rate" value="150" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        </div>
+                        <div class="input-card border rounded-xl p-3">
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase">Contractor Cost (%)</label>
+                            <input type="number" id="cost" value="50" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Contractor Pay (%) <span class="text-slate-400">(Avg: 50-70%)</span></label>
-                        <input type="number" id="cost" value="60" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Target Billable Hours per Staff <span class="text-slate-400 font-normal">(Monthly)</span></label>
+                        <input type="number" id="utilization" value="120" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        <p class="text-[10px] text-slate-400 mt-1">120 hrs/mo allows for 25% non-billable time (admin/learning).</p>
                     </div>
                 </div>
 
-                <div class="bg-blue-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-blue-100">
-                    <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">Monthly Net Profit</span>
-                    <div class="text-5xl font-black text-slate-900 mb-4" id="profit-result">$20,000</div>
-                    <p class="text-sm text-slate-500" id="hours-needed">Billable Hours Needed: 500</p>
+                <div id="profit-accent" class="bg-blue-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10">
+                        <span class="text-xs font-bold text-blue-100 uppercase tracking-widest mb-2 block">Monthly Gross Profit</span>
+                        <div class="text-6xl font-black mb-2" id="profit-result">$25,000</div>
+                        
+                        <div class="mt-6 pt-6 border-t border-blue-500/50 space-y-3">
+                            <div class="flex justify-between items-center space-x-8">
+                                <span class="text-blue-100 text-sm">Billable Hours Needed</span>
+                                <span class="font-bold text-white" id="hours-needed">333</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-blue-100 text-sm">Required Delivery Staff</span>
+                                <span class="bg-white text-blue-600 px-3 py-1 rounded-full font-bold text-sm" id="staff-needed">2.8 People</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg">Project Agency Growth</button>
+            <button onclick="calculate()" class="w-full mt-10 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Project Agency Capacity</button>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">Scaling Beyond Yourself</h2>
-            <p>Moving from freelance to an agency requires managing margins. <strong>In 2026, sustainable boutique agencies typically aim for a 30-40% net profit margin</strong> after paying all delivery costs and overhead.</p>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">The Math of Scaling an Agency</h2>
+            <p>
+                Scaling an agency is essentially a game of **capacity management**. As a freelancer, you sell your own time. As an agency owner, you sell the time of others and keep the spread (margin) between what you charge the client and what you pay the talent.
+            </p>
 
-            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
-                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
-                <ul class="mb-0">
-                    <li><a href="consulting-rate.html" class="text-blue-600 hover:underline">Consulting Rate Tool</a></li>
-                    <li><a href="employee-cost.html" class="text-blue-600 hover:underline">Burdened Employee Cost</a></li>
-                    <li><a href="breakeven-analysis.html" class="text-blue-600 hover:underline">Breakeven Analysis</a></li>
-                </ul>
+            
+
+            <h3 class="text-2xl font-bold mt-8">The 50/25/25 Rule for Agencies</h3>
+            <p>Sustainable boutique agencies in 2026 often follow this financial blueprint:</p>
+            <ul>
+                <li><strong>50% Cost of Goods Sold (COGS):</strong> Half of your revenue should go directly to the people doing the work.</li>
+                <li><strong>25% Operating Expenses:</strong> Sales, marketing, software, and your own base salary.</li>
+                <li><strong>25% Net Profit:</strong> The "owner's take" and cash reserve for the business.</li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mt-10">Understanding Utilization Rates</h3>
+            <p>
+                You cannot expect a staff member or contractor to be billable 160 hours a month (40 hours/week). Meetings, internal training, and administrative tasks take up time. 
+            </p>
+            <p>
+                A healthy target for a delivery-focused hire is <strong>120 billable hours per month</strong>. This ensures they don't burn out while maintaining a high ROI for the agency. If your model requires 150+ hours per person to be profitable, you are likely underpricing your services.
+            </p>
+
+            <div class="bg-blue-50 p-8 rounded-2xl border-l-4 border-blue-500 my-10">
+                <h4 class="text-blue-900 font-bold mt-0">Growth Tip: The "Delivery Lead"</h4>
+                <p class="text-blue-800 mb-0">
+                    Once your model shows you need more than 3 full-time equivalent (FTE) contractors, your own time will shift from "doing work" to "managing people." Factor in a 10% management overhead cost for your next hire.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Related Tools</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="consulting-rate.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    Consulting Rate Tool →
+                </a>
+                <a href="employee-cost.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    Employee Cost (Full Burden) →
+                </a>
             </div>
         </article>
     </main>
+
+    <footer class="bg-white border-t py-16 text-slate-500 text-center">
+        <p class="font-bold text-slate-900">FounderCalculators.com</p>
+        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    </footer>
 
     <script>
         function calculate() {
             const target = parseFloat(document.getElementById('target').value) || 0;
             const rate = parseFloat(document.getElementById('rate').value) || 1;
-            const cost = parseFloat(document.getElementById('cost').value) / 100 || 0;
-            const profit = target * (1 - cost);
-            const hours = target / rate;
-            document.getElementById('profit-result').innerText = "$" + Math.round(profit).toLocaleString();
-            document.getElementById('hours-needed').innerText = "Billable Hours Needed: " + Math.round(hours);
+            const costPct = parseFloat(document.getElementById('cost').value) / 100 || 0;
+            const util = parseFloat(document.getElementById('utilization').value) || 1;
+
+            const grossProfit = target * (1 - costPct);
+            const totalHoursNeeded = target / rate;
+            const staffNeeded = (totalHoursNeeded / util).toFixed(1);
+
+            // Formatter
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            });
+
+            // UI Updates
+            document.getElementById('profit-result').innerText = formatter.format(grossProfit);
+            document.getElementById('hours-needed').innerText = Math.round(totalHoursNeeded).toLocaleString();
+            document.getElementById('staff-needed').innerText = staffNeeded + " People";
+
+            // Logic Styling
+            const accent = document.getElementById('profit-accent');
+            const margin = (1 - costPct);
+            
+            if (margin < 0.3) {
+                accent.className = "bg-amber-500 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl relative overflow-hidden";
+            } else {
+                accent.className = "bg-blue-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl relative overflow-hidden";
+            }
         }
         window.onload = calculate;
     </script>
