@@ -4,74 +4,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit Economics & Contribution Margin Calculator | FounderCalculators</title>
-    <meta name="description" content="Calculate your unit economics and contribution margin. Ensure your startup is profitable on a per-customer or per-unit basis.">
+    <meta name="description" content="Calculate your unit economics, gross margin, and contribution margin. Model your break-even point and per-unit profitability for SaaS or E-commerce.">
     <link rel="canonical" href="https://foundercalculators.com/unit-economics.html">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        .input-card:focus-within { border-color: #10b981; box-shadow: 0 0 0 4px rgba(16,185,129,0.1); }
+        .progress-fill { transition: width 0.8s ease-out; }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#finance" class="standard-link">Finance</a>
+                <a href="index.html#growth" class="standard-link">Growth</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">Methodology</a>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Unit Economics Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Analyze your profit per unit after accounting for variable costs and COGS.</p>
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Unit Economics Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Analyze your profit per unit. Determine if your business model scales or if you're "losing money on every sale."</p>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Selling Price per Unit ($)</label>
-                        <input type="number" id="price" value="200" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+        <div class="bg-white border border-slate-200 rounded-3xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-5">
+                    <div class="input-card border rounded-2xl p-4 bg-slate-50/50">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Selling Price per Unit ($)</label>
+                        <input type="number" id="price" value="200" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-emerald-600">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Cost of Goods Sold (COGS) ($)</label>
-                        <input type="number" id="cogs" value="40" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    
+                    <div class="input-card border rounded-2xl p-4">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">COGS (Direct Material/Labor) ($)</label>
+                        <input type="number" id="cogs" value="40" oninput="calculate()" class="w-full bg-transparent font-bold outline-none">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Variable Marketing per Unit ($)</label>
-                        <input type="number" id="marketing" value="60" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+
+                    <div class="input-card border rounded-2xl p-4">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Variable Shipping/Marketing ($)</label>
+                        <input type="number" id="variable" value="60" oninput="calculate()" class="w-full bg-transparent font-bold outline-none">
+                    </div>
+
+                    <div class="pt-4 border-t">
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2 text-center">Optional: Monthly Fixed Costs ($)</label>
+                        <input type="number" id="fixed" value="5000" oninput="calculate()" class="w-full bg-slate-100 p-2 rounded-lg text-center font-medium outline-none focus:ring-1 focus:ring-slate-300">
                     </div>
                 </div>
 
-                <div class="bg-green-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-green-100">
-                    <span class="text-sm font-semibold text-green-600 uppercase tracking-wider mb-2">Contribution Margin</span>
-                    <div class="text-5xl font-black text-slate-900 mb-4" id="margin-result">$100</div>
-                    <p class="text-sm text-slate-500" id="margin-percent">50% Margin</p>
+                <div id="margin-box" class="rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-xl relative overflow-hidden bg-emerald-50 border border-emerald-100">
+                    <div class="relative z-10 w-full">
+                        <span class="text-xs font-bold text-emerald-700 uppercase tracking-widest mb-2 block" id="margin-label">Contribution Margin</span>
+                        <div class="text-6xl font-black mb-2 text-slate-900" id="margin-result">$100</div>
+                        <p class="text-emerald-600 font-bold mb-8" id="margin-percent">50% Margin</p>
+                        
+                        <div class="space-y-4 pt-6 border-t border-emerald-200/50">
+                            <div class="flex justify-between text-xs font-bold text-slate-500 uppercase">
+                                <span>Break-even Volume</span>
+                                <span id="breakeven-units" class="text-slate-900">50 Units</span>
+                            </div>
+                            <div class="w-full h-2 bg-emerald-200 rounded-full overflow-hidden">
+                                <div id="margin-bar" class="progress-fill h-full bg-emerald-500" style="width: 50%;"></div>
+                            </div>
+                            <p class="text-[10px] text-slate-400 italic" id="status-text">Healthy: Scalable unit economics.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg">Calculate Margins</button>
+            <button onclick="calculate()" class="w-full mt-10 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Validate Business Model</button>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">Why Unit Economics Matter</h2>
-            <p>Unit economics tell you if your business model is fundamentally sound. <strong>In 2026, venture investors look for SaaS gross margins of 70% to 85%</strong> to ensure the business can scale efficiently.</p>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Understanding Unit Economics</h2>
+            <p>
+                Unit economics are the direct revenues and costs associated with a particular business model, and expressed on a <strong>per-unit basis</strong>. A "unit" might be a single customer (in SaaS) or a physical item sold (in E-commerce).
+            </p>
 
-            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
-                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
-                <ul class="mb-0">
-                    <li><a href="breakeven-analysis.html" class="text-blue-600 hover:underline">Breakeven Analysis</a></li>
-                    <li><a href="cac-ltv-ratio.html" class="text-blue-600 hover:underline">CAC to LTV Ratio</a></li>
-                    <li><a href="saas-valuation.html" class="text-blue-600 hover:underline">SaaS Valuation</a></li>
-                </ul>
+            
+
+            <h3 class="text-2xl font-bold mt-8">Contribution Margin vs. Gross Margin</h3>
+            <p>
+                Founders often confuse these two, but in 2026, investors look closely at the distinction:
+            </p>
+            <ul>
+                <li><strong>Gross Margin:</strong> Revenue minus COGS (The cost of the product itself).</li>
+                <li><strong>Contribution Margin:</strong> Gross Margin minus <em>all other variable costs</em> (like shipping, credit card fees, and direct ad spend). This tells you how much money is actually left to pay for your rent, payroll, and fixed overhead.</li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mt-10">The Importance of "Breakeven Units"</h3>
+            <p>
+                Our calculator includes a <strong>Break-even Volume</strong> projection. This represents the number of units you must sell every month just to reach $0 in net profit. If your contribution margin is low, you need massive volume to survive.
+            </p>
+            
+            <div class="bg-amber-50 p-8 rounded-2xl border-l-4 border-amber-500 my-10">
+                <h4 class="text-amber-900 font-bold mt-0 italic">The SaaS Benchmarks</h4>
+                <p class="text-amber-800 mb-0 leading-relaxed">
+                    For high-valuation SaaS companies, the gold standard is a **70-80% Contribution Margin**. This allows for the high R&D and sales spending required to capture a market. If your margin is below 40%, you may be operating a "services" business disguised as software.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Finance & Efficiency Tools</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="breakeven-analysis.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    Full Breakeven Analysis →
+                </a>
+                <a href="saas-valuation.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    SaaS Valuation Tool →
+                </a>
             </div>
         </article>
     </main>
+
+    <footer class="bg-white border-t py-16 text-slate-500 text-center">
+        <p class="font-bold text-slate-900">FounderCalculators.com</p>
+        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    </footer>
 
     <script>
         function calculate() {
             const price = parseFloat(document.getElementById('price').value) || 0;
             const cogs = parseFloat(document.getElementById('cogs').value) || 0;
-            const mkt = parseFloat(document.getElementById('marketing').value) || 0;
-            const margin = price - cogs - mkt;
-            const percent = (price > 0) ? ((margin / price) * 100).toFixed(0) : 0;
-            document.getElementById('margin-result').innerText = "$" + margin.toLocaleString();
-            document.getElementById('margin-percent').innerText = percent + "% Margin";
+            const variable = parseFloat(document.getElementById('variable').value) || 0;
+            const fixed = parseFloat(document.getElementById('fixed').value) || 0;
+
+            const margin = price - cogs - variable;
+            const marginPercent = (price > 0) ? (margin / price) * 100 : 0;
+            const breakeven = (margin > 0) ? Math.ceil(fixed / margin) : "∞";
+
+            // UI Update Elements
+            const box = document.getElementById('margin-box');
+            const resultDisplay = document.getElementById('margin-result');
+            const percentDisplay = document.getElementById('margin-percent');
+            const breakevenDisplay = document.getElementById('breakeven-units');
+            const bar = document.getElementById('margin-bar');
+            const status = document.getElementById('status-text');
+
+            // Formatters
+            const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+            resultDisplay.innerText = formatter.format(margin);
+            percentDisplay.innerText = marginPercent.toFixed(0) + "% Margin";
+            breakevenDisplay.innerText = (margin > 0) ? (breakeven.toLocaleString() + " Units") : "Never";
+            bar.style.width = Math.max(0, Math.min(100, marginPercent)) + "%";
+
+            // Dynamic Styling Logic
+            if (marginPercent >= 60) {
+                box.className = "rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-xl relative overflow-hidden bg-emerald-50 border border-emerald-100 text-slate-900";
+                status.innerText = "Excellent: High efficiency unit economics.";
+            } else if (marginPercent >= 30) {
+                box.className = "rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-xl relative overflow-hidden bg-amber-50 border border-amber-100 text-slate-900";
+                status.innerText = "Moderate: Watch your fixed overhead costs.";
+            } else {
+                box.className = "rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-xl relative overflow-hidden bg-rose-50 border border-rose-100 text-slate-900";
+                status.innerText = "Warning: Margins are likely too thin to scale.";
+            }
         }
         window.onload = calculate;
     </script>
