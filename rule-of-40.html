@@ -3,72 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rule of 40 SaaS Calculator | FounderCalculators</title>
-    <meta name="description" content="Calculate your Rule of 40 score. Determine if your SaaS company is balancing growth and profitability effectively for investors.">
+    <title>Rule of 40 SaaS Calculator | Growth vs. Profitability Benchmarking</title>
+    <meta name="description" content="Calculate your SaaS Rule of 40 score. Analyze the trade-off between growth rate and EBITDA margin to determine your startup's efficiency and valuation premium.">
     <link rel="canonical" href="https://foundercalculators.com/rule-of-40.html">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+        #gauge-needle { transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: bottom center; }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#growth" class="standard-link">Growth</a>
+                <a href="index.html#finance" class="standard-link">Finance</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">About</a>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Rule of 40 Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">The gold standard for SaaS health: Growth Rate + Profit Margin should exceed 40%.</p>
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Rule of 40 SaaS Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">The ultimate SaaS health metric. Are you balancing aggressive growth with capital efficiency?</p>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Annual Revenue Growth (%)</label>
-                        <input type="number" id="growthRate" value="50" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <div class="input-card border rounded-xl p-4 bg-slate-50/50">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Annual Revenue Growth (%)</label>
+                        <input type="number" id="growthRate" value="50" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Profit Margin (EBITDA %) <span class="text-slate-400">(Negative if burning)</span></label>
-                        <input type="number" id="profitMargin" value="-15" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    
+                    <div class="input-card border rounded-xl p-4">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">EBITDA Margin (%)</label>
+                        <input type="number" id="profitMargin" value="-15" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-slate-900">
+                        <p class="text-[10px] text-slate-400 mt-1 italic">Use a negative number if you are currently burning cash.</p>
+                    </div>
+
+                    <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                        <div class="flex justify-between text-xs font-bold text-blue-800 mb-2 uppercase">
+                            <span>Valuation Impact</span>
+                            <span id="multiplier-label">Standard Multiple</span>
+                        </div>
+                        <p class="text-xs text-blue-600 leading-tight">Rule of 40 companies often trade at a <span class="font-bold">50-100% premium</span> compared to their peers.</p>
                     </div>
                 </div>
 
-                <div class="bg-green-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-green-100">
-                    <span class="text-sm font-semibold text-green-600 uppercase tracking-wider mb-2">Rule of 40 Score</span>
-                    <div class="text-5xl font-black text-slate-900 mb-4" id="score-result">35%</div>
-                    <p class="text-sm text-slate-500" id="score-status">Target: > 40%</p>
+                <div id="score-box" class="rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10 w-full">
+                        <span class="text-xs font-bold uppercase tracking-widest mb-2 block opacity-70" id="score-label">Combined Score</span>
+                        <div class="text-7xl font-black mb-4" id="score-result">35%</div>
+                        
+                        <div class="mt-4 px-6 py-2 rounded-full font-bold text-sm inline-block" id="status-badge">
+                            Neutral
+                        </div>
+                        
+                        <div class="mt-10 space-y-3 pt-6 border-t border-black/10">
+                            <div class="flex justify-between text-xs font-bold opacity-70">
+                                <span>Efficiency Quadrant</span>
+                                <span id="quadrant-result">Growth At All Costs</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg">Calculate Score</button>
+            <button onclick="calculate()" class="w-full mt-10 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Benchmarking Result</button>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">What is the Rule of 40?</h2>
-            <p>The Rule of 40 is a principle used to evaluate the trade-off between growth and profitability in SaaS. <strong>In 2026, venture investors prioritize Rule of 40 over "growth at all costs."</strong> A score of 40% or higher indicates a highly efficient, sustainable business.</p>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">What is the Rule of 40?</h2>
+            <p>
+                The Rule of 40 is a high-level metric used by venture capitalists and private equity firms to measure the performance of SaaS companies. It suggests that a company’s combined growth rate and profit margin should be <strong>40% or higher</strong>.
+            </p>
 
             
 
-            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
-                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
-                <ul class="mb-0">
-                    <li><a href="saas-valuation.html" class="text-blue-600 hover:underline">SaaS Valuation Calculator</a></li>
-                    <li><a href="unit-economics.html" class="text-blue-600 hover:underline">Unit Economics & Margin</a></li>
-                    <li><a href="churn-impact.html" class="text-blue-600 hover:underline">Churn Impact Tool</a></li>
-                </ul>
+            <h3 class="text-2xl font-bold mt-8">The Trade-off: Growth vs. Profit</h3>
+            <p>
+                As of 2026, the market has matured beyond the "growth at any cost" mindset. Investors look for balance:
+            </p>
+            <ul>
+                <li><strong>The Rocketship:</strong> 60% Growth + (-20% Margin) = 40% (Healthy)</li>
+                <li><strong>The Cash Cow:</strong> 10% Growth + 30% Margin = 40% (Healthy)</li>
+                <li><strong>The Danger Zone:</strong> 15% Growth + (-10% Margin) = 5% (Needs restructuring)</li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mt-10">How it Affects Valuation</h3>
+            <p>
+                Data shows a direct correlation between a company's Rule of 40 score and its <strong>Revenue Multiple</strong>. Companies consistently hitting >40% often see valuations of 10x–15x ARR, whereas those under 20% may struggle to achieve 4x–5x multiples.
+            </p>
+
+            <div class="bg-indigo-50 p-8 rounded-2xl border-l-4 border-indigo-500 my-10">
+                <h4 class="text-indigo-900 font-bold mt-0 italic">Expert Tip: When to measure?</h4>
+                <p class="text-indigo-800 mb-0">
+                    The Rule of 40 is generally applied to companies with at least <strong>$1M - $5M in ARR</strong>. Early-stage startups often have wildly fluctuating scores that don't yet represent the long-term unit economics of the business.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">SaaS Analysis Tools</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="mrr-projector.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    MRR Growth Projector →
+                </a>
+                <a href="churn-impact.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    Churn Impact Tool →
+                </a>
             </div>
         </article>
     </main>
 
+    <footer class="bg-white border-t py-16 text-slate-500 text-center">
+        <p class="font-bold text-slate-900">FounderCalculators.com</p>
+        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    </footer>
+
     <script>
         function calculate() {
-            const g = parseFloat(document.getElementById('growthRate').value) || 0;
-            const p = parseFloat(document.getElementById('profitMargin').value) || 0;
-            const score = g + p;
-            document.getElementById('score-result').innerText = score + "%";
-            document.getElementById('score-status').innerText = score >= 40 ? "Healthy (Above 40%)" : "Underperforming (Below 40%)";
+            const growth = parseFloat(document.getElementById('growthRate').value) || 0;
+            const profit = parseFloat(document.getElementById('profitMargin').value) || 0;
+            const score = growth + profit;
+
+            const scoreBox = document.getElementById('score-box');
+            const scoreResult = document.getElementById('score-result');
+            const badge = document.getElementById('status-badge');
+            const quadrant = document.getElementById('quadrant-result');
+            const multiplier = document.getElementById('multiplier-label');
+
+            scoreResult.innerText = score.toFixed(0) + "%";
+
+            // Logic for coloring and status
+            if (score >= 40) {
+                scoreBox.className = "bg-emerald-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl transition-all duration-500";
+                badge.className = "mt-4 px-6 py-2 rounded-full font-bold text-sm inline-block bg-emerald-400 text-emerald-900";
+                badge.innerText = "Top Tier Performance";
+                multiplier.innerText = "Premium Multiple (2x)";
+            } else if (score >= 20) {
+                scoreBox.className = "bg-blue-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl transition-all duration-500";
+                badge.className = "mt-4 px-6 py-2 rounded-full font-bold text-sm inline-block bg-blue-400 text-blue-900";
+                badge.innerText = "Sustainable";
+                multiplier.innerText = "Standard Multiple";
+            } else {
+                scoreBox.className = "bg-rose-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl transition-all duration-500";
+                badge.className = "mt-4 px-6 py-2 rounded-full font-bold text-sm inline-block bg-rose-400 text-rose-900";
+                badge.innerText = "Underperforming";
+                multiplier.innerText = "Discounted Multiple";
+            }
+
+            // Quadrant Logic
+            if (growth >= 40 && profit < 0) {
+                quadrant.innerText = "Hyper-Growth (Burning)";
+            } else if (growth < 20 && profit >= 20) {
+                quadrant.innerText = "Efficient Cash Cow";
+            } else if (growth >= 20 && profit >= 20) {
+                quadrant.innerText = "The Ideal Balance";
+            } else {
+                quadrant.innerText = "Restructuring Needed";
+            }
         }
+
         window.onload = calculate;
     </script>
 </body>
