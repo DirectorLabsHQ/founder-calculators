@@ -4,86 +4,209 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SaaS Valuation Calculator (2026 Benchmarks) | FounderCalculators</title>
-    <meta name="description" content="Estimate your SaaS company's valuation based on ARR, growth rate, and 2026 market multiples. Benchmarked for seed to Series B stages.">
+    <meta name="description" content="Estimate your SaaS company's valuation based on ARR, growth rate, and 2026 market multiples. Benchmarked for seed to Series B stages including retention impact.">
     <link rel="canonical" href="https://foundercalculators.com/saas-valuation.html">
-    <meta property="og:title" content="SaaS Valuation Calculator">
-    <meta property="og:description" content="Estimate your ARR valuation based on 2026 market multiples.">
-    <meta property="og:url" content="https://foundercalculators.com/saas-valuation.html">
-    <meta property="og:site_name" content="FounderCalculators">
-    <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+        #valuation-glimmer { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); background-size: 200% 100%; animation: glimmer 3s infinite; }
+        @keyframes glimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#finance" class="standard-link">Finance Tools</a>
+                <a href="index.html#growth" class="standard-link">Growth Tools</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">Market Data</a>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">SaaS Valuation Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Calculate your company worth using modern revenue multiples and growth adjustments.</p>
+            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">2026 Venture Benchmarks</span>
+            <h1 class="text-4xl font-extrabold mt-4 mb-4 tracking-tight">SaaS Valuation Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Determine your company's market value based on revenue quality, retention, and growth trajectory.</p>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white border border-slate-200 rounded-3xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Annual Recurring Revenue (ARR) ($)</label>
-                        <input type="number" id="arr" value="1000000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <div class="input-card border rounded-2xl p-4 bg-slate-50/50 transition">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Annual Recurring Revenue (ARR) ($)</label>
+                        <input type="number" id="arr" value="1000000" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Growth Rate (Year-over-Year %)</label>
-                        <input type="number" id="growth" value="100" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-card border rounded-2xl p-4">
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase">Growth (YoY %)</label>
+                            <input type="number" id="growth" value="100" oninput="calculate()" class="w-full bg-transparent font-bold outline-none">
+                        </div>
+                        <div class="input-card border rounded-2xl p-4">
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase">Net Retention (%)</label>
+                            <input type="number" id="nrr" value="110" oninput="calculate()" class="w-full bg-transparent font-bold outline-none">
+                        </div>
                     </div>
+                    <p class="text-[11px] text-slate-400 italic leading-tight">Net Retention (NRR) above 110% typically adds a 20% premium to the valuation multiple.</p>
                 </div>
 
-                <div class="bg-blue-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-blue-100">
-                    <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">Estimated Valuation</span>
-                    <div class="text-5xl font-black text-slate-900 mb-4" id="val-result">$10.0M</div>
-                    <p class="text-sm text-slate-500" id="multiple-label">Based on a 10.0x multiple</p>
+                <div id="val-box" class="rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-xl relative overflow-hidden bg-slate-900 text-white">
+                    <div id="valuation-glimmer" class="absolute inset-0 opacity-20"></div>
+                    <div class="relative z-10">
+                        <span class="text-xs font-bold uppercase tracking-widest mb-2 block opacity-70">Estimated Enterprise Value</span>
+                        <div class="text-6xl font-black mb-4 tracking-tighter" id="val-result">$10.0M</div>
+                        
+                        <div class="inline-block px-4 py-1 rounded-full bg-white/10 text-sm font-medium mb-6" id="multiple-label">
+                            10.0x Multiple
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 pt-6 border-t border-white/10">
+                            <div class="text-left">
+                                <span class="block text-[10px] uppercase text-slate-400 font-bold">Market Tier</span>
+                                <span id="tier-label" class="text-sm font-semibold text-blue-400">Top Tier</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="block text-[10px] uppercase text-slate-400 font-bold">Implied ARR</span>
+                                <span id="arr-display" class="text-sm font-semibold">$1.0M</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg hover:bg-blue-700 transition-all">Estimate Worth</button>
+            <button onclick="calculate()" class="w-full mt-10 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Generate Valuation Report</button>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">Understanding SaaS Valuation Multiples</h2>
-            <p>Valuing a SaaS business is primarily driven by its revenue quality and growth trajectory. <strong>In 2026, healthy early-stage SaaS startups typically command multiples between 6x and 12x ARR</strong>, though "outliers" with 100%+ growth can still see higher premiums.</p>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">How SaaS Companies are Valued in 2026</h2>
+            <p>
+                In 2026, the SaaS valuation landscape has shifted away from "growth at any cost." While revenue growth remains the primary lever, **capital efficiency** and **Net Revenue Retention (NRR)** have become equal partners in determining your multiple.
+            </p>
 
             
 
-            <h3>The Valuation Formula</h3>
-            <p>Our calculator applies a baseline multiple and adjusts it based on your growth rate:</p>
-            <ul>
-                <li><strong>Baseline:</strong> 5x ARR for stable growth (20-40%).</li>
-                <li><strong>Growth Bonus:</strong> Additional 1x-5x added for high-growth tiers (50% to 200%+).</li>
-            </ul>
+            <h3 class="text-2xl font-bold mt-8">The Three Pillars of Your Multiple</h3>
+            <ol>
+                <li><strong>Growth Rate:</strong> The "velocity" of your business. Triple-Triple-Double-Double-Double remains the gold standard for reaching unicorn status.</li>
+                <li><strong>Net Revenue Retention (NRR):</strong> Measures how much your existing customers grow. In 2026, an NRR of 120%+ is the single best way to secure a 15x+ multiple.</li>
+                <li><strong>Gross Margin:</strong> High-margin software (80%+) is valued significantly higher than tech-enabled services (30-50%) because it scales without proportional costs.</li>
+            </ol>
 
-            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
-                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
-                <ul class="mb-0">
-                    <li><a href="burn-rate-runway.html" class="text-blue-600 hover:underline">Burn Rate & Runway Calculator</a></li>
-                    <li><a href="equity-dilution.html" class="text-blue-600 hover:underline">Equity Dilution Calculator</a></li>
-                    <li><a href="mrr-projector.html" class="text-blue-600 hover:underline">MRR Growth Projector</a></li>
-                </ul>
+            <h3 class="text-2xl font-bold mt-10">Multiple Benchmarks by Stage</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm">
+                    <thead class="bg-slate-100">
+                        <tr>
+                            <th class="p-3 text-left">Growth Tier</th>
+                            <th class="p-3 text-left">YoY Growth</th>
+                            <th class="p-3 text-left">Typical Multiple</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-3 font-semibold">Legacy/Stable</td>
+                            <td class="p-3">0 - 20%</td>
+                            <td class="p-3">3x - 5x</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 font-semibold">Market Standard</td>
+                            <td class="p-3">20 - 50%</td>
+                            <td class="p-3">5x - 8x</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 font-semibold">High Growth</td>
+                            <td class="p-3">50 - 100%</td>
+                            <td class="p-3">8x - 12x</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 font-semibold">Hyper Growth</td>
+                            <td class="p-3">100%+</td>
+                            <td class="p-3">12x - 20x+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bg-blue-50 p-8 rounded-2xl border-l-4 border-blue-500 my-10">
+                <h4 class="text-blue-900 font-bold mt-0 italic">Did you know?</h4>
+                <p class="text-blue-800 mb-0">
+                    Your valuation is also impacted by your **Rule of 40** score. Companies that balance growth and profitability are currently seeing a 30% valuation premium over those that are burning cash excessively to buy growth.
+                </p>
+                <a href="rule-of-40.html" class="inline-block mt-4 text-blue-700 font-bold hover:underline underline-offset-4">Calculate your Rule of 40 score →</a>
+            </div>
+
+            <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Financial Planning Tools</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="burn-rate-runway.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    Burn Rate & Runway →
+                </a>
+                <a href="mrr-projector.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    MRR Growth Projector →
+                </a>
             </div>
         </article>
     </main>
+
+    <footer class="bg-white border-t py-16 text-slate-500 text-center">
+        <p class="font-bold text-slate-900">FounderCalculators.com</p>
+        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    </footer>
 
     <script>
         function calculate() {
             const arr = parseFloat(document.getElementById('arr').value) || 0;
             const growth = parseFloat(document.getElementById('growth').value) || 0;
-            let multiple = 5; 
+            const nrr = parseFloat(document.getElementById('nrr').value) || 100;
+
+            // Baseline Multiple based on Growth
+            let multiple = 4;
             if (growth >= 200) multiple = 15;
             else if (growth >= 100) multiple = 10;
             else if (growth >= 50) multiple = 7;
+            else if (growth >= 25) multiple = 5;
+
+            // NRR Premium Logic (Standard is 100%)
+            if (nrr > 110) {
+                multiple = multiple * 1.2; // 20% premium
+            } else if (nrr < 90) {
+                multiple = multiple * 0.8; // 20% penalty
+            }
+
             const val = arr * multiple;
-            document.getElementById('val-result').innerText = "$" + (val / 1000000).toFixed(1) + "M";
-            document.getElementById('multiple-label').innerText = "Based on a " + multiple.toFixed(1) + "x multiple";
+            
+            // UI Update
+            const valResult = document.getElementById('val-result');
+            const multipleLabel = document.getElementById('multiple-label');
+            const valBox = document.getElementById('val-box');
+            const tierLabel = document.getElementById('tier-label');
+            const arrDisplay = document.getElementById('arr-display');
+
+            valResult.innerText = "$" + (val / 1_000_000).toFixed(1) + "M";
+            multipleLabel.innerText = multiple.toFixed(1) + "x Multiple";
+            arrDisplay.innerText = "$" + (arr / 1_000_000).toFixed(1) + "M";
+
+            // Tier and Color Logic
+            if (multiple >= 12) {
+                valBox.className = "bg-emerald-900 rounded-3xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl transition-all duration-500";
+                tierLabel.innerText = "Unicorn Track";
+                tierLabel.className = "text-sm font-semibold text-emerald-400";
+            } else if (multiple >= 8) {
+                valBox.className = "bg-slate-900 rounded-3xl p-8 flex flex-col justify-center items-center text-center text-white shadow-xl transition-all duration-500";
+                tierLabel.innerText = "Top Tier";
+                tierLabel.className = "text-sm font-semibold text-blue-400";
+            } else {
+                valBox.className = "bg-slate-800 rounded-3xl p-8 flex flex-col justify-center items-center text-center text-white shadow-md transition-all duration-500";
+                tierLabel.innerText = "Market Average";
+                tierLabel.className = "text-sm font-semibold text-slate-400";
+            }
         }
         window.onload = calculate;
     </script>
