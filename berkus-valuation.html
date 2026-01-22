@@ -3,78 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkus Method Valuation Calculator | FounderCalculators</title>
+    <title>Berkus Method Valuation Calculator | Pre-Revenue Startup Tool</title>
     <meta name="description" content="Use the Berkus Method to value your pre-revenue startup. Score your team, product, and strategy for an instant seed-stage valuation.">
     <link rel="canonical" href="https://foundercalculators.com/berkus-valuation.html">
     <meta property="og:title" content="Berkus Method Valuation Calculator">
-    <meta property="og:description" content="Pre-revenue valuation for early-stage startups.">
+    <meta property="og:description" content="Calculate pre-revenue valuation for early-stage startups using the Berkus Method.">
     <meta property="og:url" content="https://foundercalculators.com/berkus-valuation.html">
     <meta property="og:site_name" content="FounderCalculators">
     <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#finance" class="standard-link">Finance</a>
+                <a href="index.html#growth" class="standard-link">Growth</a>
+                <a href="index.html#ops" class="standard-link">Operations</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">About</a>
+                <a href="contact.html" class="standard-link">Contact</a>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Berkus Method Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Value your pre-revenue startup by scoring five key success factors.</p>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Establish a baseline pre-revenue valuation by scoring five essential risk-reduction factors.</p>
+            
+            <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 text-sm text-slate-700 max-w-3xl mx-auto text-left leading-relaxed">
+                <strong>Important Notice:</strong> This <strong>Berkus Method valuation tool</strong> is designed for educational and modeling purposes only. It provides a mathematical framework for early-stage startup estimation and does not constitute professional investment, financial, or legal advice. Valuation is subjective; always consult with a certified advisor before making fundraising decisions.
+            </div>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-4">
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded">
-                        <label class="text-sm font-medium">Sound Idea (Scale 0-500k)</label>
-                        <input type="number" class="val-input w-24 p-1 border rounded" value="250000" step="50000">
+                    <div class="flex flex-col p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <label class="text-sm font-bold text-slate-700 mb-2">Sound Idea ($0 - $500k)</label>
+                        <input type="number" class="val-input w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" value="250000" step="50000" oninput="calculate()">
+                        <p class="text-xs text-slate-400 mt-1 italic">Baseline value for the core business concept.</p>
                     </div>
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded">
-                        <label class="text-sm font-medium">Prototype (Scale 0-500k)</label>
-                        <input type="number" class="val-input w-24 p-1 border rounded" value="250000" step="50000">
+                    <div class="flex flex-col p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <label class="text-sm font-bold text-slate-700 mb-2">Prototype ($0 - $500k)</label>
+                        <input type="number" class="val-input w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" value="250000" step="50000" oninput="calculate()">
+                        <p class="text-xs text-slate-400 mt-1 italic">Reduces technology and development risk.</p>
                     </div>
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded">
-                        <label class="text-sm font-medium">Quality Management (0-500k)</label>
-                        <input type="number" class="val-input w-24 p-1 border rounded" value="250000" step="50000">
+                    <div class="flex flex-col p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <label class="text-sm font-bold text-slate-700 mb-2">Quality Management ($0 - $500k)</label>
+                        <input type="number" class="val-input w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" value="250000" step="50000" oninput="calculate()">
+                        <p class="text-xs text-slate-400 mt-1 italic">Focuses on execution risk and founder experience.</p>
                     </div>
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded">
-                        <label class="text-sm font-medium">Strategic Relations (0-500k)</label>
-                        <input type="number" class="val-input w-24 p-1 border rounded" value="250000" step="50000">
+                    <div class="flex flex-col p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <label class="text-sm font-bold text-slate-700 mb-2">Strategic Relations ($0 - $500k)</label>
+                        <input type="number" class="val-input w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" value="250000" step="50000" oninput="calculate()">
+                        <p class="text-xs text-slate-400 mt-1 italic">Reduces market and competitive risk.</p>
                     </div>
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded">
-                        <label class="text-sm font-medium">Product Rollout (0-500k)</label>
-                        <input type="number" class="val-input w-24 p-1 border rounded" value="250000" step="50000">
+                    <div class="flex flex-col p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <label class="text-sm font-bold text-slate-700 mb-2">Product Rollout ($0 - $500k)</label>
+                        <input type="number" class="val-input w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" value="250000" step="50000" oninput="calculate()">
+                        <p class="text-xs text-slate-400 mt-1 italic">Reduces production and scalability risk.</p>
                     </div>
                 </div>
 
-                <div class="bg-blue-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-blue-100">
-                    <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">Pre-Revenue Valuation</span>
+                <div class="bg-blue-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-blue-100">
+                    <span class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">Pre-Revenue Valuation</span>
                     <div class="text-5xl font-black text-slate-900 mb-4" id="total-val">$1.25M</div>
-                    <p class="text-sm text-slate-500">Max suggested: $2.5M</p>
+                    <div class="text-sm font-medium text-slate-500 bg-white px-4 py-1 rounded-full border border-blue-100 shadow-sm mb-4">Industry Max: $2.5M</div>
+                    <p class="text-[10px] text-slate-400 leading-tight">Results are illustrative only and do not constitute financial advice.</p>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg">Calculate Valuation</button>
+            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-lg shadow-lg transition">Update Valuation Score</button>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">What is the Berkus Method?</h2>
-            <p>The Berkus Method is a popular technique for valuing startups that have not yet generated significant revenue. <strong>In 2026, the Berkus Method remains a standard "sanity check" for angel investors</strong> to ensure a pre-revenue valuation does not exceed $2.5 million.</p>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Understanding the Berkus Method</h2>
+            <p>
+                Created by venture capitalist Dave Berkus, the <strong>Berkus Method</strong> is a specialized framework designed to value "pre-revenue" startups. While traditional valuation methods rely on cash flow and multiples, this model focuses on <strong>risk reduction</strong>.
+            </p>
 
-            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
-                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
-                <ul class="mb-0">
-                    <li><a href="saas-valuation.html" class="text-blue-600 hover:underline">SaaS Valuation Multiple Calculator</a></li>
-                    <li><a href="equity-dilution.html" class="text-blue-600 hover:underline">Equity Dilution Tool</a></li>
-                    <li><a href="breakeven-analysis.html" class="text-blue-600 hover:underline">Breakeven Analysis</a></li>
+            
+
+            <h3 class="text-2xl font-bold mt-8">How to Score Your Startup</h3>
+            <p>
+                The model assumes a maximum valuation of $2.5 million for a pre-revenue company. Each of the five categories can add up to $500,000 to the pre-money valuation:
+            </p>
+            <ul class="space-y-4">
+                <li><strong>Sound Idea:</strong> Does the product solve a massive, high-value problem? A disruptive idea adds immediate baseline value.</li>
+                <li><strong>Prototype:</strong> Having a working MVP (Minimum Viable Product) reduces the risk that the product cannot be built.</li>
+                <li><strong>Quality Management:</strong> Investors bet on people. A team with prior successful exits or deep domain expertise reduces execution risk.</li>
+                <li><strong>Strategic Relations:</strong> Partnerships, a strong advisor board, or early LOIs (Letters of Intent) indicate market validation.</li>
+                <li><strong>Product Rollout:</strong> A clear plan for sales and distribution reduces the risk that the product won't reach customers.</li>
+            </ul>
+
+            <div class="my-10 p-8 bg-white border border-slate-200 rounded-2xl">
+                <h3 class="text-xl font-bold mb-4">Frequently Asked Questions</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-blue-600">When should I use the Berkus Method?</h4>
+                        <p class="text-slate-600 text-sm">It is best used for early-stage seed rounds before you have significant revenue. Once you have consistent MRR (Monthly Recurring Revenue), you should switch to our <a href="saas-valuation.html" class="text-blue-600 underline">SaaS Valuation Calculator</a>.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blue-600">Is $2.5M still the limit in 2026?</h4>
+                        <p class="text-slate-600 text-sm">While the original cap was $2.5M, some modern angel groups adjust this to $4M-$5M depending on the sector (like AI). However, $2.5M remains the conservative industry standard for early-stage software startups.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blue-600">How do investors verify these scores?</h4>
+                        <p class="text-slate-600 text-sm">During due diligence, investors will check your code (Prototype), call your references (Management), and review your GTM strategy (Rollout).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 p-6 bg-slate-900 text-white rounded-2xl">
+                <h3 class="text-lg font-bold mb-3 text-blue-400">Related Valuation Tools</h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
+                    <li><a href="saas-valuation.html" class="text-white hover:text-blue-400 transition">SaaS Valuation Multiple →</a></li>
+                    <li><a href="equity-dilution.html" class="text-white hover:text-blue-400 transition">Equity Dilution Tool →</a></li>
+                    <li><a href="breakeven-analysis.html" class="text-white hover:text-blue-400 transition">Breakeven Analysis →</a></li>
+                    <li><a href="unit-economics.html" class="text-white hover:text-blue-400 transition">Unit Economics Tool →</a></li>
                 </ul>
             </div>
         </article>
     </main>
+
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div>
+                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+                <p class="text-sm">Practical financial modeling for the modern startup operator.</p>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="about.html" class="standard-link">About Us</a></li>
+                    <li><a href="contact.html" class="standard-link">Contact Support</a></li>
+                    <li><a href="index.html#finance" class="standard-link">Financial Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
+                    <li><a href="disclaimer.html" class="standard-link">Earnings Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script>
         function calculate() {
