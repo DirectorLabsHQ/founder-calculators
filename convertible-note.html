@@ -16,215 +16,214 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#ops" class="standard-link">Operations</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-                <a href="contact.html" class="standard-link">Contact</a>
-            </div>
+<nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+        <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+            Founder<span class="text-blue-600">Calculators</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="index.html#finance" class="standard-link">Finance</a>
+            <a href="index.html#growth" class="standard-link">Growth</a>
+            <a href="index.html#ops" class="standard-link">Operations</a>
+            <div class="h-4 w-px bg-slate-200 mx-2"></div>
+            <a href="about.html" class="standard-link">About</a>
+            <a href="contact.html" class="standard-link">Contact</a>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <main class="max-w-4xl mx-auto px-6 py-12">
-        <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">SAFE / Convertible Note Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Model exactly how your early-stage notes will convert into equity during your next priced financing round.</p>
-            
-            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 text-sm text-indigo-700 max-w-2xl mx-auto text-left leading-relaxed">
-                <strong>Legal Notice:</strong> This tool provides an <em>estimated</em> ownership impact. Actual conversion depends on your specific "Pre-money" vs "Post-money" SAFE terms and the total number of shares outstanding.
-            </div>
+<main class="max-w-4xl mx-auto px-6 py-12">
+    <div class="mb-10 text-center">
+        <h1 class="text-4xl font-extrabold mb-4 tracking-tight">SAFE / Convertible Note Calculator</h1>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Model exactly how your early-stage notes will convert into equity during your next priced financing round.</p>
+        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 text-sm text-indigo-700 max-w-2xl mx-auto text-left leading-relaxed">
+            <strong>Legal Notice:</strong> This tool provides an <em>estimated</em> ownership impact. Actual conversion depends on your specific "Pre-money" vs "Post-money" SAFE terms and the total number of shares outstanding.
         </div>
+    </div>
 
-        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1">Note Principal ($)</label>
-                        <input type="number" id="principal" value="250000" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1">Valuation Cap ($)</label>
-                        <input type="number" id="cap" value="5000000" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1">Discount Rate (%)</label>
-                        <input type="number" id="discount" value="20" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all">
-                        <p class="text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-tight">Standard 2026 range: 15-25%</p>
-                    </div>
-                    <div class="pt-4 border-t">
-                        <label class="block text-sm font-bold text-indigo-600 mb-1">Next Round Valuation ($)</label>
-                        <input type="number" id="roundVal" value="8000000" oninput="calculate()" class="w-full p-3 border border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all bg-indigo-50/30">
-                    </div>
+    <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Note Principal ($)</label>
+                    <input type="number" id="principal" value="250000" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all">
                 </div>
-
-                <div id="conversion-card" class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white border border-slate-800 shadow-xl">
-                    <div id="badge-container" class="mb-4">
-                        <span id="trigger-badge" class="badge bg-indigo-500 text-white">Calculating...</span>
-                    </div>
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Estimated Ownership</span>
-                    <div class="text-6xl font-black mb-4" id="result-own" aria-label="Projected investor ownership percentage">0%</div>
-                    <p class="text-sm text-slate-400 mb-6 font-medium" id="eff-price-label">Effective Valuation: $0</p>
-                    
-                    <div class="w-full bg-slate-800 rounded-full h-1.5 mb-2 overflow-hidden">
-                        <div id="dilution-bar" class="bg-indigo-500 h-full transition-all duration-700" style="width: 0%;"></div>
-                    </div>
-                    <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Ownership Dilution Impact</span>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Valuation Cap ($)</label>
+                    <input type="number" id="cap" value="5000000" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Discount Rate (%)</label>
+                    <input type="number" id="discount" value="20" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all">
+                    <p class="text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-tight">Standard 2026 range: 15-25%</p>
+                </div>
+                <div class="pt-4 border-t">
+                    <label class="block text-sm font-bold text-indigo-600 mb-1">Next Round Valuation ($)</label>
+                    <input type="number" id="roundVal" value="8000000" oninput="calculate()" class="w-full p-3 border border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all bg-indigo-50/30">
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-lg shadow-lg transition-all">Update Conversion Model</button>
+
+            <div id="conversion-card" class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white border border-slate-800 shadow-xl">
+                <div id="badge-container" class="mb-4">
+                    <span id="trigger-badge" class="badge bg-indigo-500 text-white">Calculating...</span>
+                </div>
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Estimated Ownership</span>
+                <div class="text-6xl font-black mb-4" id="result-own" aria-label="Projected investor ownership percentage">0%</div>
+                <p class="text-sm text-slate-400 mb-6 font-medium" id="eff-price-label">Effective Valuation: $0</p>
+                
+                <div class="w-full bg-slate-800 rounded-full h-1.5 mb-2 overflow-hidden">
+                    <div id="dilution-bar" class="bg-indigo-500 h-full transition-all duration-700" style="width: 0%;"></div>
+                </div>
+                <span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Ownership Dilution Impact</span>
+            </div>
+        </div>
+        <button onclick="calculate()" class="w-full mt-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-lg shadow-lg transition-all">Update Conversion Model</button>
+    </div>
+
+    <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+        <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">How SAFE Notes Convert into Equity</h2>
+        <p>
+            Early-stage investment via <strong>SAFEs (Simple Agreement for Future Equity)</strong> or <strong>Convertible Notes</strong> is designed to defer the valuation conversation until a "Priced Round" (like a Series Seed or Series A). When that round happens, your investor's cash "converts" into preferred shares.
+        </p>
+
+        <h3 class="text-2xl font-bold mt-8 text-slate-900">The "Best Price" Rule</h3>
+        <p>
+            Almost all SAFEs and notes include a provision that allows the investor to convert at the <strong>more favorable price</strong> between the Valuation Cap and the Discount Rate:
+        </p>
+        <ul>
+            <li><strong>The Valuation Cap:</strong> A ceiling on the price. If the cap is $5M and you raise at $10M, the investor gets shares at the $5M price.</li>
+            <li><strong>The Discount Rate:</strong> A percentage off the new round's price. If the new round price is $1.00 per share and the investor has a 20% discount, they pay $0.80 per share.</li>
+        </ul>
+
+        <h3 class="text-2xl font-bold mt-10 text-slate-900">Pre-Money vs. Post-Money Distinction</h3>
+        <p>
+            In 2026, the <strong>Post-Money SAFE</strong> is the industry standard. It was introduced by Y Combinator to help founders understand exactly how much ownership they were giving away. In a Post-Money SAFE, the "Cap" refers to the valuation <em>after</em> all SAFEs have been added, making the dilution math much more transparent for the cap table.
+        </p>
+
+        <div class="bg-amber-50 p-6 rounded-xl border-l-4 border-amber-400 my-8">
+            <h4 class="text-amber-900 font-bold mt-0">Founder Insight: The "Note Stack"</h4>
+            <p class="text-amber-800 text-sm mb-0">
+                Be cautious of "stacking" SAFEs. If you raise $500k on a $5M cap and another $500k on a $7M cap, the cumulative dilution can often exceed 15-20% before you even reach your Series A. Use this calculator to model the combined impact of all outstanding notes.
+            </p>
         </div>
 
-        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">How SAFE Notes Convert into Equity</h2>
-            <p>
-                Early-stage investment via <strong>SAFEs (Simple Agreement for Future Equity)</strong> or <strong>Convertible Notes</strong> is designed to defer the valuation conversation until a "Priced Round" (like a Series Seed or Series A). When that round happens, your investor's cash "converts" into preferred shares.
-            </p>
+        <div class="my-10 p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
+            <h3 class="text-xl font-bold mb-6 text-slate-900 uppercase tracking-wide">Investment Conversion FAQ</h3>
+            <div class="space-y-6">
+                <div>
+                    <h4 class="font-bold text-indigo-600">What if my next round valuation is lower than the cap?</h4>
+                    <p class="text-slate-600 text-sm">If your next round valuation is below the cap, the cap is "out of the money." The investor will either use their <strong>Discount Rate</strong> or simply convert at the same price as the new investors, whichever is cheaper.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-indigo-600">Does interest accrue on SAFEs?</h4>
+                    <p class="text-slate-600 text-sm">No. SAFEs do not have an interest rate or a maturity date. Convertible Notes, however, are debt instruments that typically carry a 4-8% interest rate which converts into additional equity.</p>
+                </div>
+            </div>
+        </div>
 
-            
-
-            <h3 class="text-2xl font-bold mt-8 text-slate-900">The "Best Price" Rule</h3>
-            <p>
-                Almost all SAFEs and notes include a provision that allows the investor to convert at the <strong>more favorable price</strong> between the Valuation Cap and the Discount Rate:
-            </p>
-            <ul>
-                <li><strong>The Valuation Cap:</strong> A ceiling on the price. If the cap is $5M and you raise at $10M, the investor gets shares at the $5M price.</li>
-                <li><strong>The Discount Rate:</strong> A percentage off the new round's price. If the new round price is $1.00 per share and the investor has a 20% discount, they pay $0.80 per share.</li>
+        <div class="mt-12 p-6 bg-slate-900 text-white rounded-2xl">
+            <h3 class="text-lg font-bold mb-3 text-indigo-400">Essential Equity Tools</h3>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
+                <li><a href="equity-dilution.html" class="text-white hover:text-indigo-400 transition">Series A Dilution Tool →</a></li>
+                <li><a href="berkus-valuation.html" class="text-white hover:text-indigo-400 transition">Berkus Valuation Method →</a></li>
+                <li><a href="burn-rate-runway.html" class="text-white hover:text-indigo-400 transition">Burn Rate & Runway →</a></li>
+                <li><a href="saas-valuation.html" class="text-white hover:text-indigo-400 transition">SaaS Valuation Tool →</a></li>
             </ul>
-
-            <h3 class="text-2xl font-bold mt-10 text-slate-900">Pre-Money vs. Post-Money Distinction</h3>
-            <p>
-                In 2026, the <strong>Post-Money SAFE</strong> is the industry standard. It was introduced by Y Combinator to help founders understand exactly how much ownership they were giving away. In a Post-Money SAFE, the "Cap" refers to the valuation <em>after</em> all SAFEs have been added, making the dilution math much more transparent for the cap table.
-            </p>
-
-            <div class="bg-amber-50 p-6 rounded-xl border-l-4 border-amber-400 my-8">
-                <h4 class="text-amber-900 font-bold mt-0">Founder Insight: The "Note Stack"</h4>
-                <p class="text-amber-800 text-sm mb-0">
-                    Be cautious of "stacking" SAFEs. If you raise $500k on a $5M cap and another $500k on a $7M cap, the cumulative dilution can often exceed 15-20% before you even reach your Series A. Use this calculator to model the combined impact of all outstanding notes.
-                </p>
-            </div>
-
-            <div class="my-10 p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
-                <h3 class="text-xl font-bold mb-6 text-slate-900 uppercase tracking-wide">Investment Conversion FAQ</h3>
-                <div class="space-y-6">
-                    <div>
-                        <h4 class="font-bold text-indigo-600">What if my next round valuation is lower than the cap?</h4>
-                        <p class="text-slate-600 text-sm">If your next round valuation is below the cap, the cap is "out of the money." The investor will either use their <strong>Discount Rate</strong> or simply convert at the same price as the new investors, whichever is cheaper.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-indigo-600">Does interest accrue on SAFEs?</h4>
-                        <p class="text-slate-600 text-sm">No. SAFEs do not have an interest rate or a maturity date. Convertible Notes, however, are debt instruments that typically carry a 4-8% interest rate which converts into additional equity.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-12 p-6 bg-slate-900 text-white rounded-2xl">
-                <h3 class="text-lg font-bold mb-3 text-indigo-400">Essential Equity Tools</h3>
-                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
-                    <li><a href="equity-dilution.html" class="text-white hover:text-indigo-400 transition">Series A Dilution Tool →</a></li>
-                    <li><a href="berkus-valuation.html" class="text-white hover:text-indigo-400 transition">Berkus Valuation Method →</a></li>
-                    <li><a href="burn-rate-runway.html" class="text-white hover:text-indigo-400 transition">Burn Rate & Runway →</a></li>
-                    <li><a href="saas-valuation.html" class="text-white hover:text-indigo-400 transition">SaaS Valuation Tool →</a></li>
-                </ul>
-            </div>
-        </article>
-    </main>
-
-    <footer class="bg-white border-t py-16 text-slate-500">
-        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
-            <div>
-                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
-                <p class="text-sm">Helping founders navigate the complex math of venture capital and startup growth.</p>
-            </div>
-            <div>
-                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
-                <ul class="text-sm space-y-2">
-                    <li><a href="about.html" class="standard-link">About Us</a></li>
-                    <li><a href="contact.html" class="standard-link">Contact</a></li>
-                    <li><a href="index.html#finance" class="standard-link">Finance Tools</a></li>
-                </ul>
-            </div>
-            <div>
-                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
-                <ul class="text-sm space-y-2">
-                    <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
-                    <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
-                </ul>
-            </div>
         </div>
-        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
-            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+    </article>
+</main>
+
+<footer class="bg-white border-t py-16 text-slate-500">
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+        <div>
+            <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+            <p class="text-sm">Helping founders navigate the complex math of venture capital and startup growth.</p>
         </div>
-    </footer>
+        <div>
+            <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+            <ul class="text-sm space-y-2">
+                <li><a href="about.html" class="standard-link">About Us</a></li>
+                <li><a href="contact.html" class="standard-link">Contact</a></li>
+                <li><a href="index.html#finance" class="standard-link">Finance Tools</a></li>
+            </ul>
+        </div>
+        <div>
+            <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+            <ul class="text-sm space-y-2">
+                <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
+                <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+        <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+    </div>
+</footer>
 
-    <script>
-        function calculate() {
-            const principal = parseFloat(document.getElementById('principal').value) || 0;
-            const cap = parseFloat(document.getElementById('cap').value) || 0;
-            const discount = parseFloat(document.getElementById('discount').value) || 0;
-            const roundVal = parseFloat(document.getElementById('roundVal').value) || 0;
-            
-            // Safety check to prevent division by zero or negative results
-            if (roundVal <= 0 || (cap <= 0 && discount <= 0)) {
-                document.getElementById('result-own').innerText = "0%";
-                document.getElementById('eff-price-label').innerText = "Effective Valuation: N/A";
-                return;
-            }
+<script>
+function calculate() {
+    const principal = parseFloat(document.getElementById('principal').value) || 0;
+    const cap = parseFloat(document.getElementById('cap').value) || 0;
+    const discount = parseFloat(document.getElementById('discount').value) || 0;
+    const roundVal = parseFloat(document.getElementById('roundVal').value) || 0;
 
-            // Calculate valuation based on the discount
-            const discountedVal = roundVal * (1 - (discount / 100));
-            
-            // Note converts at the SHARPER price (Lower valuation)
-            let conversionVal;
-            let triggerText;
-            let badgeColor;
+    if (roundVal <= 0 || (cap <= 0 && discount <= 0)) {
+        document.getElementById('result-own').innerText = "0%";
+        document.getElementById('eff-price-label').innerText = "Effective Valuation: N/A";
+        return;
+    }
 
-            // Logic for "Best Price" conversion
-            if (cap > 0 && cap < discountedVal) {
-                conversionVal = cap;
-                triggerText = "Converting at Cap";
-                badgeColor = "#10b981"; // Green
-            } else if (discount > 0 && discountedVal < roundVal) {
-                conversionVal = discountedVal;
-                triggerText = "Converting at Discount";
-                badgeColor = "#f59e0b"; // Amber
-            } else {
-                conversionVal = roundVal;
-                triggerText = "Converting at Round Price";
-                badgeColor = "#6366f1"; // Indigo
-            }
+    const discountedVal = roundVal * (1 - (discount / 100));
 
-            // Simplified Ownership Calculation (Principal / (Conversion Valuation + Principal))
-            // We use (Val + Principal) as a proxy for the Post-Money of this specific conversion
-            const own = (principal / (conversionVal + principal)) * 100;
-            
-            // UI Updates
-            const resultOwn = document.getElementById('result-own');
-            const effPrice = document.getElementById('eff-price-label');
-            const bar = document.getElementById('dilution-bar');
-            const badge = document.getElementById('trigger-badge');
-            
-            resultOwn.innerText = own.toFixed(2) + "%";
-            badge.innerText = triggerText;
-            badge.style.backgroundColor = badgeColor;
-            
-            const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                maximumFractionDigits: 0
-            });
-            effPrice.innerText = "Effective Valuation: " + formatter.format(conversionVal);
+    let conversionVal, triggerText, badgeColor;
 
-            // Bar update (scaled for visibility)
-            bar.style.width = Math.min(own * 3, 100) + "%"; 
+    // Best Price Logic: choose lowest of cap or discounted
+    if (cap > 0 && discount > 0) {
+        if (cap < discountedVal) {
+            conversionVal = cap;
+            triggerText = "Converting at Cap";
+            badgeColor = "#10b981"; // Green
+        } else {
+            conversionVal = discountedVal;
+            triggerText = "Converting at Discount";
+            badgeColor = "#f59e0b"; // Amber
         }
-        window.onload = calculate;
-    </script>
+    } else if (cap > 0) {
+        conversionVal = cap;
+        triggerText = "Converting at Cap";
+        badgeColor = "#10b981";
+    } else if (discount > 0) {
+        conversionVal = discountedVal;
+        triggerText = "Converting at Discount";
+        badgeColor = "#f59e0b";
+    } else {
+        conversionVal = roundVal;
+        triggerText = "Converting at Round Price";
+        badgeColor = "#6366f1"; // Indigo
+    }
+
+    const own = (principal / (conversionVal + principal)) * 100;
+
+    const resultOwn = document.getElementById('result-own');
+    const effPrice = document.getElementById('eff-price-label');
+    const bar = document.getElementById('dilution-bar');
+    const badge = document.getElementById('trigger-badge');
+
+    resultOwn.innerText = own.toFixed(2) + "%";
+    badge.innerText = triggerText;
+    badge.style.backgroundColor = badgeColor;
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0
+    });
+    effPrice.innerText = "Effective Valuation: " + formatter.format(conversionVal);
+
+    bar.style.width = Math.min(own * 3, 100) + "%";
+}
+window.onload = calculate;
+</script>
+
 </body>
 </html>
