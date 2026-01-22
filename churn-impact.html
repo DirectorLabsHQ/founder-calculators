@@ -3,77 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SaaS Churn Impact Calculator | FounderCalculators</title>
-    <meta name="description" content="Calculate the long-term cost of customer churn on your SaaS revenue. Model lost ARR and cumulative revenue impact over 12 months.">
+    <title>SaaS Churn Impact Calculator | Revenue Loss Modeling (2026)</title>
+    <meta name="description" content="Calculate the compounding cost of customer churn on your SaaS revenue. Model lost ARR, ending MRR, and cumulative revenue impact over 12 months.">
     <link rel="canonical" href="https://foundercalculators.com/churn-impact.html">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        #churn-progress { transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease; }
+        .input-card { transition: border-color 0.2s; }
+        .input-card:focus-within { border-color: #3b82f6; }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#finance" class="standard-link">Finance</a>
+                <a href="index.html#growth" class="standard-link">Growth</a>
+                <a href="index.html#ops" class="standard-link">Operations</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">About</a>
+                <a href="contact.html" class="standard-link">Contact</a>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Churn Impact Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">See the compounding cost of losing subscribers over a 12-month period.</p>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Visualize the compounding decay of your revenue and the total cash lost over a 12-month window.</p>
+            
+            <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm text-slate-700 max-w-2xl mx-auto text-left leading-relaxed">
+                <strong>Disclaimer:</strong> This model calculates <strong>Gross Revenue Churn</strong>. It assumes no new customer acquisition or expansion revenue during the 12-month period to isolate the impact of loss.
+            </div>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Starting MRR ($)</label>
-                        <input type="number" id="mrr" value="50000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <div class="input-card p-1 border-b-2 border-transparent">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Starting MRR ($)</label>
+                        <input type="number" id="mrr" value="50000" oninput="calculate()" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition shadow-inner">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Monthly Churn Rate (%)</label>
-                        <input type="number" id="churn" value="5" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <div class="input-card p-1 border-b-2 border-transparent">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Monthly Churn Rate (%)</label>
+                        <input type="number" id="churn" value="5" oninput="calculate()" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition shadow-inner">
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            <strong>Tip:</strong> Reducing monthly churn by just 1% can increase your company's valuation by up to 20% over 3 years due to compounding.
+                        </p>
                     </div>
                 </div>
 
-                <div class="bg-red-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-red-100">
-                    <span class="text-sm font-semibold text-red-600 uppercase tracking-wider mb-2">12-Month Revenue Loss</span>
-                    <div class="text-5xl font-black text-slate-900 mb-4" id="churn-result">$13,000</div>
-                    <p class="text-sm text-slate-500" id="mrr-left">Ending MRR: $27,000</p>
+                <div class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white relative overflow-hidden shadow-2xl">
+                    <span class="text-xs font-bold text-red-400 uppercase tracking-widest mb-2 z-10">Total 12-Mo Revenue Loss</span>
+                    <div class="text-5xl font-black mb-2 z-10" id="churn-result" aria-label="12-month total revenue lost to churn">$0</div>
+                    <p class="text-lg font-medium text-slate-400 z-10" id="mrr-left">Ending MRR: $0</p>
+                    
+                    <div class="w-full mt-6 z-10">
+                        <div class="flex justify-between text-[10px] uppercase font-bold tracking-tighter mb-1 text-slate-500">
+                            <span>Revenue Retained</span>
+                            <span id="retention-percent">0%</span>
+                        </div>
+                        <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+                            <div id="churn-progress" class="h-full bg-red-500" style="width: 0%;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg">Model Churn Cost</button>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">The Leaky Bucket: Churn Benchmarks</h2>
-            <p>Churn is the silent killer of SaaS startups. <strong>In 2026, an acceptable monthly churn rate for B2B SaaS is 1% to 2%</strong>, while B2C apps often see churn as high as 5-10%.</p>
-            
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">The "Leaky Bucket" Phenomenon in SaaS</h2>
+            <p>
+                Churn is the percentage of your customers or revenue that leaves your service over a specific period. While acquisition often gets the spotlight, <strong>retention</strong> is the true engine of SaaS profitability. Even a "small" churn rate of 5% results in losing nearly half of your revenue by the end of the year.
+            </p>
+
             
 
-            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
-                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
-                <ul class="mb-0">
-                    <li><a href="rule-of-40.html" class="text-blue-600 hover:underline">Rule of 40 Efficiency</a></li>
-                    <li><a href="mrr-projector.html" class="text-blue-600 hover:underline">12-Mo MRR Projector</a></li>
-                    <li><a href="cac-ltv-ratio.html" class="text-blue-600 hover:underline">CAC to LTV Ratio</a></li>
+            <h3 class="text-2xl font-bold mt-8">Voluntary vs. Involuntary Churn</h3>
+            <p>
+                Not all churn is created equal. To fix your revenue decay, you must categorize your losses:
+            </p>
+            <ul>
+                <li><strong>Voluntary Churn:</strong> Customers actively canceling because of price, lack of features, or poor customer support.</li>
+                <li><strong>Involuntary Churn:</strong> Loss due to failed credit cards, expired billing info, or technical payment errors. This typically accounts for 20-40% of all churn.</li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mt-10">How to Reduce Your Churn Rate</h3>
+            <p>
+                If this calculator shows a "Danger Zone" result (Red), consider implementing these 2026 industry standards:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                <div class="p-6 border border-slate-200 rounded-xl bg-white shadow-sm">
+                    <h4 class="font-bold text-blue-600 mt-0">Dunning Management</h4>
+                    <p class="text-sm text-slate-600">Implement automated email sequences that trigger when a credit card fails. Offer a grace period before cutting off service to reduce involuntary loss.</p>
+                </div>
+                <div class="p-6 border border-slate-200 rounded-xl bg-white shadow-sm">
+                    <h4 class="font-bold text-blue-600 mt-0">Annual Plan Incentives</h4>
+                    <p class="text-sm text-slate-600">Move users from monthly to annual plans. Annual users typically have 50% lower churn because they have committed to the long-term value of the tool.</p>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-10">SaaS Churn Benchmarks</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-slate-200 rounded-lg text-sm">
+                    <thead>
+                        <tr class="bg-slate-50">
+                            <th class="px-4 py-3 border-b text-left">Target Audience</th>
+                            <th class="px-4 py-3 border-b text-left">Good Churn</th>
+                            <th class="px-4 py-3 border-b text-left">Bad Churn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="px-4 py-3 border-b font-medium">Enterprise (High ACV)</td>
+                            <td class="px-4 py-3 border-b text-green-600 font-bold">&lt; 1%</td>
+                            <td class="px-4 py-3 border-b text-red-600">&gt; 2%</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 border-b font-medium">Mid-Market / SMB</td>
+                            <td class="px-4 py-3 border-b text-green-600 font-bold">1.5% - 2%</td>
+                            <td class="px-4 py-3 border-b text-red-600">&gt; 5%</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 border-b font-medium">B2C / Prosumer</td>
+                            <td class="px-4 py-3 border-b text-green-600 font-bold">3% - 5%</td>
+                            <td class="px-4 py-3 border-b text-red-600">&gt; 10%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="my-10 p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                <h3 class="text-xl font-bold mb-6 text-slate-900 uppercase tracking-wide">Churn Analysis FAQ</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-blue-600">What is "Net Negative Churn"?</h4>
+                        <p class="text-slate-600 text-sm">This is the "Holy Grail" of SaaS. It happens when the expansion revenue from your existing customers (upsells, seat additions) is greater than the revenue lost from customers leaving.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blue-600">How does churn affect CAC?</h4>
+                        <p class="text-slate-600 text-sm">High churn forces you to spend more on Customer Acquisition Cost (CAC) just to stay flat. Low churn allows every new dollar of CAC to compound your total MRR.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 p-6 bg-slate-900 text-white rounded-2xl">
+                <h3 class="text-lg font-bold mb-3 text-blue-400">Related SaaS Calculators</h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
+                    <li><a href="cac-ltv-ratio.html" class="text-white hover:text-blue-400 transition">CAC to LTV Ratio Tool →</a></li>
+                    <li><a href="saas-valuation.html" class="text-white hover:text-blue-400 transition">SaaS Valuation Calculator →</a></li>
+                    <li><a href="burn-rate-runway.html" class="text-white hover:text-blue-400 transition">Burn Rate & Runway Tool →</a></li>
+                    <li><a href="unit-economics.html" class="text-white hover:text-blue-400 transition">Unit Economics Guide →</a></li>
                 </ul>
             </div>
         </article>
     </main>
 
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div>
+                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+                <p class="text-sm">Helping SaaS founders build sustainable, long-term wealth.</p>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="about.html" class="standard-link">About Us</a></li>
+                    <li><a href="contact.html" class="standard-link">Contact</a></li>
+                    <li><a href="index.html#growth" class="standard-link">Growth Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+        </div>
+    </footer>
+
     <script>
         function calculate() {
             const mrr = parseFloat(document.getElementById('mrr').value) || 0;
-            const churn = parseFloat(document.getElementById('churn').value) / 100 || 0;
+            const churnRate = (parseFloat(document.getElementById('churn').value) / 100) || 0;
+            
             let currentMrr = mrr;
-            let totalLost = 0;
-            for(let i=0; i<12; i++) {
-                let lost = currentMrr * churn;
-                totalLost += lost;
-                currentMrr -= lost;
+            let totalCashLost = 0;
+            
+            // Compounding calculation over 12 months
+            for(let i = 0; i < 12; i++) {
+                let lostThisMonth = currentMrr * churnRate;
+                totalCashLost += lostThisMonth;
+                currentMrr -= lostThisMonth;
             }
-            document.getElementById('churn-result').innerText = "$" + Math.round(totalLost).toLocaleString();
-            document.getElementById('mrr-left').innerText = "Ending MRR: $" + Math.round(currentMrr).toLocaleString();
+            
+            // Formatters
+            const currencyFormat = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            });
+
+            const resultEl = document.getElementById('churn-result');
+            const endingMrrEl = document.getElementById('mrr-left');
+            const progressEl = document.getElementById('churn-progress');
+            const percentEl = document.getElementById('retention-percent');
+            
+            resultEl.innerText = currencyFormat.format(totalCashLost);
+            endingMrrEl.innerText = "Ending MRR: " + currencyFormat.format(currentMrr);
+            
+            // Logic for visual progress bar (Revenue Retained)
+            let retentionPercentage = (currentMrr / mrr) * 100;
+            if (mrr === 0) retentionPercentage = 0;
+            
+            progressEl.style.width = Math.max(retentionPercentage, 0) + "%";
+            percentEl.innerText = Math.round(retentionPercentage) + "%";
+            
+            // Color Coding based on retention
+            if (retentionPercentage >= 80) {
+                progressEl.style.backgroundColor = "#10b981"; // Green (Healthy)
+            } else if (retentionPercentage >= 50) {
+                progressEl.style.backgroundColor = "#f59e0b"; // Amber (Caution)
+            } else {
+                progressEl.style.backgroundColor = "#ef4444"; // Red (Danger)
+            }
         }
         window.onload = calculate;
     </script>
