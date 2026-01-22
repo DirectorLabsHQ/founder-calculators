@@ -1,30 +1,235 @@
-Minor Suggestions
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulting & Freelance Rate Calculator | Professional Pricing Tool (2026)</title>
+    <meta name="description" content="Calculate your ideal hourly or project consulting rate. Factor in self-employment taxes, business overhead, and desired annual income.">
+    <link rel="canonical" href="https://foundercalculators.com/consulting-rate.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        #capacity-bar { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s; }
+        .input-group:focus-within label { color: #2563eb; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-Live Calculation
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#ops" class="standard-link">Operations</a>
+                <a href="index.html#finance" class="standard-link">Finance</a>
+                <a href="index.html#growth" class="standard-link">Growth</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">About</a>
+                <a href="contact.html" class="standard-link">Contact</a>
+            </div>
+        </div>
+    </nav>
 
-<input ... oninput="calculate()">
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Consulting Rate Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Determine the hourly rate required to sustain your lifestyle while covering business costs and taxes.</p>
+            
+            <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm text-slate-700 max-w-2xl mx-auto text-left leading-relaxed">
+                <strong>Strategic Note:</strong> Professional consulting requires "unbillable" time for lead generation and admin. Most high-earning consultants target 20-25 billable hours per week to avoid burnout.
+            </div>
+        </div>
 
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="input-group">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Target Annual Take-Home ($)</label>
+                        <input type="number" id="targetSalary" value="150000" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-tight">Your desired post-expense income</p>
+                    </div>
+                    <div class="input-group">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Target Billable Hours / Week</label>
+                        <input type="number" id="billableHours" value="25" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-tight" id="hours-warning">Healthy range: 20-30 hours</p>
+                    </div>
+                    <div class="input-group">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Business Overhead & Tax (%)</label>
+                        <input type="number" id="overhead" value="30" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-tight">Self-employment tax + software + health insurance</p>
+                    </div>
+                </div>
 
-Gives instant feedback when the user types, improving interactivity.
+                <div id="result-card" class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white relative overflow-hidden shadow-2xl transition-colors duration-500">
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2 z-10" id="result-label">Recommended Hourly Rate</span>
+                    <div class="text-6xl font-black mb-2 z-10" id="rate-result" aria-label="Ideal hourly consulting rate">$188</div>
+                    <p class="text-lg font-medium text-slate-400 z-10" id="weekly-rev">Weekly Target: $4,700</p>
+                    
+                    <div class="w-full mt-8 z-10">
+                        <div class="flex justify-between text-[10px] uppercase font-bold tracking-tighter mb-1 text-slate-500">
+                            <span id="capacity-label">Workload Intensity</span>
+                            <span id="capacity-percent">63%</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                            <div id="capacity-bar" class="h-full bg-blue-500" style="width: 63%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-lg shadow-lg transition">Update My Pricing Strategy</button>
+        </div>
 
-Edge Cases
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">The Burdened Rate: Why $50/hr is Not Enough</h2>
+            <p>
+                In 2026, the freelance and consulting market is more competitive than ever. Many new consultants make the mistake of setting an hourly rate based on their former corporate salary. If you earned $100k as an employee, you might think $50/hour is sufficient. <strong>It isn't.</strong>
+            </p>
 
-Billable hours = 0 could break the formula. You already have || 1, which is fine, but you could show a warning if hours are too low.
+            
 
-Visual Enhancements
+            <h3 class="text-2xl font-bold mt-8">Accounting for the "Consultant Tax"</h3>
+            <p>
+                As an independent professional, you have expenses that an employer used to cover. When calculating your rate, you must "burden" your hourly cost with:
+            </p>
+            <ul>
+                <li><strong>Self-Employment Tax:</strong> You now pay both the employee and employer portions of social security and medicare.</li>
+                <li><strong>Non-Billable Work:</strong> Every hour you spend on LinkedIn, writing proposals, or managing your books is an hour you aren't getting paid.</li>
+                <li><strong>Benefits:</strong> Health insurance, 401k matching, and paid time off (PTO) must now come out of your gross revenue.</li>
+            </ul>
 
-Consider a subtle progress bar showing percentage of salary covered by current rate, similar to your churn calculator’s retained revenue bar. Gives instant visual feedback.
+            <h3 class="text-2xl font-bold mt-10">Capacity Planning for Sustainability</h3>
+            <p>
+                A "full" work week in consulting is not 40 billable hours. If you bill 40 hours, you are likely working 55-60 total hours once admin and sales are included. 
+            </p>
+            <div class="bg-slate-100 p-6 rounded-xl border-l-4 border-blue-500 italic my-6">
+                "Sustainability is the key to longevity. A rate that requires 40 billable hours to meet your salary goals is a rate that will eventually lead to burnout."
+            </div>
 
-Professional Tone
+            <h3 class="text-2xl font-bold mt-10">Moving Toward Value-Based Pricing</h3>
+            <p>
+                Once you establish your baseline hourly rate using this calculator, consider moving toward <strong>Project-Based</strong> or <strong>Value-Based</strong> pricing. Instead of billing by the hour, charge based on the ROI you provide to the client. This decouples your income from your time and allows you to increase your "effective" hourly rate as you become more efficient.
+            </p>
 
-Could change “Set Your Rate” to “Calculate Your Ideal Rate” — slightly more formal for consulting professionals.
+            <div class="my-10 p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                <h3 class="text-xl font-bold mb-6 text-slate-900 uppercase tracking-wide">Consulting Rate FAQ</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-blue-600">Should I charge the same rate for every client?</h4>
+                        <p class="text-slate-600 text-sm">Not necessarily. You might charge a premium for "rush" work or complex enterprise projects, while offering a slight discount for long-term retainers that provide consistent revenue and lower sales effort.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blue-600">How do I explain my rate to a price-sensitive client?</h4>
+                        <p class="text-slate-600 text-sm">Focus on the outcome. Shift the conversation from "what I cost" to "what I produce." A professional rate reflects a professional level of service, reliability, and specialized expertise.</p>
+                    </div>
+                </div>
+            </div>
 
-Optional Advanced Feature
+            <div class="mt-12 p-6 bg-slate-900 text-white rounded-2xl">
+                <h3 class="text-lg font-bold mb-3 text-blue-400">Related Operations Tools</h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
+                    <li><a href="employee-cost.html" class="text-white hover:text-blue-400 transition">Fully Burdened Employee Cost →</a></li>
+                    <li><a href="unit-economics.html" class="text-white hover:text-blue-400 transition">Unit Economics Guide →</a></li>
+                    <li><a href="freelance-to-agency.html" class="text-white hover:text-blue-400 transition">Agency Scaler Tool →</a></li>
+                    <li><a href="burn-rate-runway.html" class="text-white hover:text-blue-400 transition">Business Runway Tool →</a></li>
+                </ul>
+            </div>
+        </article>
+    </main>
 
-Add toggle for project-based rates: Hourly vs Project calculator for consultants who bill per project.
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div>
+                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+                <p class="text-sm">Providing professional-grade financial modeling for modern founders and consultants.</p>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="about.html" class="standard-link">About Us</a></li>
+                    <li><a href="contact.html" class="standard-link">Contact</a></li>
+                    <li><a href="index.html#ops" class="standard-link">All Calculators</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+        </div>
+    </footer>
 
-✅ Example small improvement for live calculation
-<input type="number" id="targetSalary" value="150000" oninput="calculate()" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+    <script>
+        function calculate() {
+            const salary = parseFloat(document.getElementById('targetSalary').value) || 0;
+            const hoursPerWeek = parseFloat(document.getElementById('billableHours').value) || 1;
+            const overheadPercent = (parseFloat(document.getElementById('overhead').value) / 100) || 0;
+            
+            // Formula: (Target Salary * (1 + Overhead)) / (Weekly Hours * 52 weeks)
+            const totalRevenueNeeded = salary * (1 + overheadPercent);
+            const hourlyRate = totalRevenueNeeded / (hoursPerWeek * 52);
+            const weeklyTarget = hourlyRate * hoursPerWeek;
+            
+            // Formatters
+            const currencyFormat = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            });
 
+            const resultDisplay = document.getElementById('rate-result');
+            const weeklyDisplay = document.getElementById('weekly-rev');
+            const card = document.getElementById('result-card');
+            const label = document.getElementById('result-label');
+            const bar = document.getElementById('capacity-bar');
+            const percentLabel = document.getElementById('capacity-percent');
+            const hoursWarning = document.getElementById('hours-warning');
 
-Just add oninput="calculate()" to the other inputs as well.
+            resultDisplay.innerText = currencyFormat.format(hourlyRate);
+            weeklyDisplay.innerText = "Weekly Revenue Target: " + currencyFormat.format(weeklyTarget);
+            
+            // Capacity Logic (Based on 40hr week)
+            const capacity = (hoursPerWeek / 40) * 100;
+            bar.style.width = Math.min(capacity, 100) + "%";
+            percentLabel.innerText = Math.round(capacity) + "%";
+
+            // Visual Status and Alerts
+            if (hoursPerWeek > 35) {
+                // Burnout Zone
+                card.style.backgroundColor = "#450a0a"; // Very dark red
+                label.innerText = "Burnout Risk Alert";
+                label.style.color = "#f87171";
+                bar.style.backgroundColor = "#ef4444";
+                hoursWarning.innerText = "Warning: High burnout risk!";
+                hoursWarning.classList.add("text-red-500");
+                hoursWarning.classList.remove("text-slate-400");
+            } else if (hoursPerWeek < 15) {
+                // Under-utilized Zone
+                card.style.backgroundColor = "#0f172a"; // Default dark
+                label.innerText = "Under-Capacity Rate";
+                label.style.color = "#fbbf24";
+                bar.style.backgroundColor = "#f59e0b";
+                hoursWarning.innerText = "Note: Low billable utilization.";
+                hoursWarning.classList.add("text-amber-500");
+                hoursWarning.classList.remove("text-slate-400");
+            } else {
+                // Optimal Zone
+                card.style.backgroundColor = "#0f172a";
+                label.innerText = "Target Hourly Rate";
+                label.style.color = "#60a5fa";
+                bar.style.backgroundColor = "#3b82f6";
+                hoursWarning.innerText = "Optimal billable range.";
+                hoursWarning.classList.remove("text-red-500", "text-amber-500");
+                hoursWarning.classList.add("text-slate-400");
+            }
+        }
+        window.onload = calculate;
+    </script>
+</body>
+</html>
