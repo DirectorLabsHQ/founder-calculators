@@ -3,64 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Store Tax & Fee Calculator | FounderCalculators</title>
+    <title>App Store Tax & Fee Calculator | 2026 Payout Forecast</title>
     <meta name="description" content="Calculate your net revenue after Apple and Google Play store commissions. Model the 15% small business program vs the 30% standard tax.">
     <link rel="canonical" href="https://foundercalculators.com/app-store-tax.html">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#finance" class="standard-link">Finance</a>
+                <a href="index.html#growth" class="standard-link">Growth</a>
+                <a href="index.html#ops" class="standard-link">Operations</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">About</a>
+                <a href="contact.html" class="standard-link">Contact</a>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-4 tracking-tight">App Store Tax Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Forecast your real payout after mobile platform commissions and fees.</p>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Forecast your real payout after mobile platform commissions and fees for Apple and Google Play.</p>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-6">
                     <div>
-                        <label class="block text-sm font-medium mb-1">Gross App Revenue ($)</label>
-                        <input type="number" id="gross" value="10000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                        <label for="gross" class="block text-sm font-semibold text-slate-700 mb-1">Gross App Revenue ($)</label>
+                        <input type="number" id="gross" value="10000" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
+                        <p class="text-xs text-slate-400 mt-2 italic">Total digital sales before platform fees.</p>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1">Platform Fee (%)</label>
-                        <select id="fee" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                            <option value="15">Small Business (15%)</option>
-                            <option value="30">Standard (30%)</option>
+                        <label for="fee" class="block text-sm font-semibold text-slate-700 mb-1">Platform Fee (%)</label>
+                        <select id="fee" onchange="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
+                            <option value="15">Small Business Program (15%)</option>
+                            <option value="30">Standard Tier (30%)</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="bg-indigo-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-indigo-100">
-                    <span class="text-sm font-semibold text-indigo-600 uppercase tracking-wider mb-2">Net Payout</span>
+                <div class="bg-blue-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-blue-100">
+                    <span class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">Net Payout</span>
                     <div class="text-5xl font-black text-slate-900 mb-4" id="net-result">$8,500</div>
-                    <p class="text-sm text-slate-500" id="tax-paid">Store Tax: $1,500</p>
+                    <div class="text-sm font-medium text-slate-500 bg-white px-4 py-1 rounded-full border border-blue-100 shadow-sm" id="tax-paid">Store Tax: $1,500</div>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg">Calculate Net Revenue</button>
+            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-lg shadow-lg transition">Update Forecast</button>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">Navigating the App Store "Tax"</h2>
-            <p>Both Apple and Google take a cut of digital sales. <strong>In 2026, most startups qualify for the 15% rate</strong> through the Small Business Programs, but once revenue exceeds $1M, the rate jumps to 30%.</p>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6">Navigating App Store Fees in 2026</h2>
+            <p>
+                For most <strong>SaaS founders</strong> and mobile developers, the "App Store Tax" is the single largest line item in their unit economics. Both Apple and Google utilize a tiered commission structure designed to support early-stage startups while capturing higher margins from scaled enterprises.
+            </p>
 
-            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
-                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
-                <ul class="mb-0">
-                    <li><a href="unit-economics.html" class="text-blue-600 hover:underline">Unit Economics Tool</a></li>
-                    <li><a href="saas-valuation.html" class="text-blue-600 hover:underline">SaaS Valuation</a></li>
-                    <li><a href="churn-impact.html" class="text-blue-600 hover:underline">Churn Impact Calculator</a></li>
+            <h3 class="text-2xl font-bold mt-8">The Small Business Program (15%)</h3>
+            <p>
+                Launched to ease the burden on smaller developers, the 15% rate applies to companies earning less than $1 million USD in total proceeds during the prior calendar year. 
+            </p>
+            <ul class="space-y-2">
+                <li><strong>Apple:</strong> Enrollment is required. If you exceed $1M, the 30% rate applies to future earnings.</li>
+                <li><strong>Google Play:</strong> The 15% rate is automatically applied to the first $1M of revenue every year.</li>
+            </ul>
+
+            <div class="my-10 p-8 bg-white border border-slate-200 rounded-2xl">
+                <h3 class="text-xl font-bold mb-4">Frequently Asked Questions</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-blue-600">What counts as "Gross Revenue"?</h4>
+                        <p class="text-slate-600 text-sm">Gross revenue includes the total price paid by the user, including any applicable sales tax that the platform collects and remits on your behalf.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blue-600">Can I avoid the 30% fee?</h4>
+                        <p class="text-slate-600 text-sm">Most founders optimize their net revenue by utilizing "Multi-platform" strategies, encouraging users to subscribe via their website (Stripe) where fees are typically 3-5% vs the 15-30% on mobile.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blue-600">Are there hidden fees?</h4>
+                        <p class="text-slate-600 text-sm">Beyond the commission, remember to account for the $99/year Apple Developer fee and the one-time $25 Google Play registration fee.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold">Why Accurate Payout Forecasting Matters</h3>
+            <p>
+                Underestimating store fees can lead to a "growth trap" where your customer acquisition cost (CAC) exceeds your net LTV (Life Time Value). Use our <a href="unit-economics.html" class="text-blue-600 font-bold hover:underline">Unit Economics Tool</a> to see how these fees impact your overall profitability.
+            </p>
+
+            <div class="mt-12 p-6 bg-slate-900 text-white rounded-2xl">
+                <h3 class="text-lg font-bold mb-3 text-blue-400">Related Startup Calculators</h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
+                    <li><a href="unit-economics.html" class="text-white hover:text-blue-400 transition">Unit Economics Tool →</a></li>
+                    <li><a href="saas-valuation.html" class="text-white hover:text-blue-400 transition">SaaS Valuation →</a></li>
+                    <li><a href="burn-rate-runway.html" class="text-white hover:text-blue-400 transition">Burn Rate Calculator →</a></li>
+                    <li><a href="churn-impact.html" class="text-white hover:text-blue-400 transition">Churn Impact Calculator →</a></li>
                 </ul>
             </div>
         </article>
     </main>
+
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div>
+                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+                <p class="text-sm">Data-driven financial tools for modern SaaS founders and startup operators.</p>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="about.html" class="standard-link">About Us</a></li>
+                    <li><a href="contact.html" class="standard-link">Contact Support</a></li>
+                    <li><a href="index.html#finance" class="standard-link">Financial Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
+                    <li><a href="disclaimer.html" class="standard-link">Earnings Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script>
         function calculate() {
