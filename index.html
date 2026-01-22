@@ -4,23 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FounderCalculators – 20+ Free Startup & SaaS Business Calculators</title>
-    <meta name="description" content="The ultimate collection of free SaaS valuation, burn rate, equity dilution, and growth tools. Benchmarked for 2026 startup standards.">
+    <meta name="description" content="The ultimate collection of free SaaS valuation, burn rate, equity dilution, and growth tools. Benchmarked using modern startup finance best practices.">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .tool-card { transition: all 0.2s; border: 1px solid #e2e8f0; }
+        .tool-card { transition: all 0.2s; border: 1px solid #e2e8f0; height: 100%; }
         .tool-card:hover { transform: translateY(-3px); border-color: #2563eb; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .category-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+        html { scroll-behavior: smooth; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans">
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="#finance" class="hover:text-blue-600 transition">Finance</a>
+                <a href="#growth" class="hover:text-blue-600 transition">Growth</a>
+                <a href="#ops" class="hover:text-blue-600 transition">Operations</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="hover:text-blue-600 transition">About</a>
+                <a href="contact.html" class="hover:text-blue-600 transition">Contact</a>
+            </div>
+        </div>
+    </nav>
 
     <header class="bg-white border-b py-16 px-6">
         <div class="max-w-5xl mx-auto text-center">
-            <h1 class="text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">
-                Founder<span class="text-blue-600">Calculators</span><span class="text-slate-400">.com</span>
+            <h1 class="text-5xl font-extrabold text-slate-900 mb-4 tracking-tight leading-tight">
+                Startup Success is <span class="text-blue-600">Math</span>, Not Luck.
             </h1>
-            <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-8">
-                The essential toolkit for 2026 founders. Practical math to help you raise capital, manage cash, and scale growth.
+            <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+                The essential toolkit for founders and operators. Practical models to help you raise capital, manage cash, and scale growth.
             </p>
             
             <div class="max-w-md mx-auto relative">
@@ -29,15 +46,17 @@
                        onkeyup="searchTools()" 
                        aria-label="Search startup and SaaS calculators"
                        placeholder="Search 20+ business calculators..." 
-                       class="w-full p-4 pl-12 rounded-xl border border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                <svg class="w-6 h-6 absolute left-4 top-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                       class="w-full p-4 pl-12 rounded-xl border border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                <svg class="w-6 h-6 absolute left-4 top-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
             </div>
         </div>
     </header>
 
     <main class="max-w-6xl mx-auto px-6 py-12">
         
-        <section class="mb-16 category-section">
+        <section id="finance" class="mb-16 category-section">
             <h2 class="text-2xl font-bold mb-2 flex items-center">
                 <span class="bg-blue-600 w-2 h-8 rounded-full mr-3"></span>Finance & Funding
             </h2>
@@ -45,173 +64,208 @@
                 Financial modeling tools to help founders understand runway, startup valuation, dilution, and venture funding tradeoffs.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <a href="burn-rate-runway.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-red-500">Survival</span>
-                    <h3 class="font-bold text-lg mt-1">Burn & Runway</h3>
-                    <p class="text-sm text-slate-500 mt-2">See how many months of cash you have left.</p>
-                </a>
-                <a href="saas-valuation.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-blue-500">Valuation</span>
-                    <h3 class="font-bold text-lg mt-1">SaaS Valuation</h3>
-                    <p class="text-sm text-slate-500 mt-2">Estimate company worth via 2026 multiples.</p>
-                </a>
-                <a href="equity-dilution.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-purple-500">Equity</span>
-                    <h3 class="font-bold text-lg mt-1">Equity Dilution</h3>
-                    <p class="text-sm text-slate-500 mt-2">Model your ownership after a funding round.</p>
-                </a>
-                <a href="convertible-note.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-purple-500">Equity</span>
-                    <h3 class="font-bold text-lg mt-1">Convertible Note</h3>
-                    <p class="text-sm text-slate-500 mt-2">Calculate SAFE or Note conversions.</p>
-                </a>
-                <a href="berkus-valuation.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-blue-500">Valuation</span>
-                    <h3 class="font-bold text-lg mt-1">Berkus Method</h3>
-                    <p class="text-sm text-slate-500 mt-2">Pre-revenue valuation for early startups.</p>
-                </a>
-                <a href="debt-repayment.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-slate-500">Loans</span>
-                    <h3 class="font-bold text-lg mt-1">Loan Repayment</h3>
-                    <p class="text-sm text-slate-500 mt-2">Venture debt and monthly payment tool.</p>
-                </a>
-                <a href="rule-of-40.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-green-500">Efficiency</span>
-                    <h3 class="font-bold text-lg mt-1">Rule of 40</h3>
-                    <p class="text-sm text-slate-500 mt-2">Balance growth vs. profitability.</p>
-                </a>
-                <a href="breakeven-analysis.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-green-500">Efficiency</span>
-                    <h3 class="font-bold text-lg mt-1">Breakeven Point</h3>
-                    <p class="text-sm text-slate-500 mt-2">When will your startup turn a profit?</p>
-                </a>
+                <div class="tool-wrapper">
+                    <a href="burn-rate-runway.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-red-500">Survival</span>
+                        <h3 class="font-bold text-lg mt-1">Burn & Runway</h3>
+                        <p class="text-sm text-slate-500 mt-2">See how many months of cash you have left.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="saas-valuation.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-blue-500">Valuation</span>
+                        <h3 class="font-bold text-lg mt-1">SaaS Valuation</h3>
+                        <p class="text-sm text-slate-500 mt-2">Estimate company worth via modern multiples.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="equity-dilution.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-purple-500">Equity</span>
+                        <h3 class="font-bold text-lg mt-1">Equity Dilution</h3>
+                        <p class="text-sm text-slate-500 mt-2">Model ownership after a funding round.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="convertible-note.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-purple-500">Equity</span>
+                        <h3 class="font-bold text-lg mt-1">Convertible Note</h3>
+                        <p class="text-sm text-slate-500 mt-2">Calculate SAFE or Note conversions.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="berkus-valuation.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-blue-500">Valuation</span>
+                        <h3 class="font-bold text-lg mt-1">Berkus Method</h3>
+                        <p class="text-sm text-slate-500 mt-2">Pre-revenue valuation for early startups.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="debt-repayment.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-slate-500">Loans</span>
+                        <h3 class="font-bold text-lg mt-1">Loan Repayment</h3>
+                        <p class="text-sm text-slate-500 mt-2">Venture debt and monthly payment tool.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="rule-of-40.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-green-500">Efficiency</span>
+                        <h3 class="font-bold text-lg mt-1">Rule of 40</h3>
+                        <p class="text-sm text-slate-500 mt-2">Balance growth vs. profitability.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="breakeven-analysis.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-green-500">Efficiency</span>
+                        <h3 class="font-bold text-lg mt-1">Breakeven Point</h3>
+                        <p class="text-sm text-slate-500 mt-2">When will your startup turn a profit?</p>
+                    </a>
+                </div>
             </div>
         </section>
 
-        <section class="mb-16 category-section">
+        <section id="growth" class="mb-16 category-section">
             <h2 class="text-2xl font-bold mb-2 flex items-center">
                 <span class="bg-green-600 w-2 h-8 rounded-full mr-3"></span>Growth & Marketing
             </h2>
-            <p class="text-slate-500 mb-8 max-w-2xl">
-                Growth engineering tools to optimize customer acquisition costs, lifetime value, virality, and marketing spend efficiency.
-            </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <a href="cac-ltv-ratio.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-green-600">Unit Economics</span>
-                    <h3 class="font-bold text-lg mt-1">CAC to LTV</h3>
-                    <p class="text-sm text-slate-500 mt-2">The ultimate marketing health metric.</p>
-                </a>
-                <a href="viral-coefficient.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-pink-500">Loops</span>
-                    <h3 class="font-bold text-lg mt-1">Viral Coefficient</h3>
-                    <p class="text-sm text-slate-500 mt-2">Measure your K-Factor and virality.</p>
-                </a>
-                <a href="roas-calculator.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-orange-500">Ads</span>
-                    <h3 class="font-bold text-lg mt-1">ROAS Calculator</h3>
-                    <p class="text-sm text-slate-500 mt-2">Return on ad spend for paid channels.</p>
-                </a>
-                <a href="churn-impact.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-red-500">Retention</span>
-                    <h3 class="font-bold text-lg mt-1">Churn Impact</h3>
-                    <p class="text-sm text-slate-500 mt-2">The 12-month cost of losing users.</p>
-                </a>
-                <a href="referral-roi.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-pink-500">Loops</span>
-                    <h3 class="font-bold text-lg mt-1">Referral ROI</h3>
-                    <p class="text-sm text-slate-500 mt-2">Calculate savings vs. paid CAC.</p>
-                </a>
-                <a href="email-roi.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-orange-500">Campaigns</span>
-                    <h3 class="font-bold text-lg mt-1">Email Marketing ROI</h3>
-                    <p class="text-sm text-slate-500 mt-2">Predict revenue from your list.</p>
-                </a>
-                <a href="mrr-projector.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-blue-500">SaaS</span>
-                    <h3 class="font-bold text-lg mt-1">12-Mo MRR Projector</h3>
-                    <p class="text-sm text-slate-500 mt-2">Compounding growth revenue model.</p>
-                </a>
-                <a href="unit-economics.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-green-600">Unit Economics</span>
-                    <h3 class="font-bold text-lg mt-1">Unit Margins</h3>
-                    <p class="text-sm text-slate-500 mt-2">Profitability per item sold.</p>
-                </a>
+                <div class="tool-wrapper">
+                    <a href="cac-ltv-ratio.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-green-600">Unit Economics</span>
+                        <h3 class="font-bold text-lg mt-1">CAC to LTV</h3>
+                        <p class="text-sm text-slate-500 mt-2">The ultimate marketing health metric.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="viral-coefficient.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-pink-500">Loops</span>
+                        <h3 class="font-bold text-lg mt-1">Viral Coefficient</h3>
+                        <p class="text-sm text-slate-500 mt-2">Measure your K-Factor and virality.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="roas-calculator.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-orange-500">Ads</span>
+                        <h3 class="font-bold text-lg mt-1">ROAS Calculator</h3>
+                        <p class="text-sm text-slate-500 mt-2">Return on ad spend for paid channels.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="churn-impact.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-red-500">Retention</span>
+                        <h3 class="font-bold text-lg mt-1">Churn Impact</h3>
+                        <p class="text-sm text-slate-500 mt-2">The 12-month cost of losing users.</p>
+                    </a>
+                </div>
             </div>
         </section>
 
-        <section class="mb-16 category-section">
+        <section class="bg-slate-900 rounded-2xl p-8 md:p-12 text-center text-white mb-16 shadow-xl">
+            <h2 class="text-3xl font-bold mb-4">Build a better business every week.</h2>
+            <p class="text-slate-400 mb-8 max-w-xl mx-auto">Get one actionable growth experiment and a finance template delivered to your inbox every Sunday.</p>
+            <form class="max-w-md mx-auto flex flex-col md:flex-row gap-3">
+                <input type="email" placeholder="Enter your work email" class="flex-1 p-4 rounded-lg text-slate-900 focus:outline-none" required>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-lg font-bold transition">Join 5,000+ Founders</button>
+            </form>
+            <p class="mt-4 text-xs text-slate-500">
+                Your email is used only to send the newsletter. See our <a href="privacy.html" class="underline hover:text-blue-400">Privacy Policy</a> for details.
+            </p>
+        </section>
+
+        <section id="ops" class="mb-16 category-section">
             <h2 class="text-2xl font-bold mb-2 flex items-center">
                 <span class="bg-slate-800 w-2 h-8 rounded-full mr-3"></span>Operations & Scaling
             </h2>
-            <p class="text-slate-500 mb-8 max-w-2xl">
-                Operational calculators for hiring, team scaling, agency pricing, and platform-specific revenue modeling.
-            </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <a href="employee-cost.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-slate-600">Hiring</span>
-                    <h3 class="font-bold text-lg mt-1">Burdened Cost</h3>
-                    <p class="text-sm text-slate-500 mt-2">Real cost of an employee + benefits.</p>
-                </a>
-                <a href="app-store-tax.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-indigo-500">Platforms</span>
-                    <h3 class="font-bold text-lg mt-1">App Store Tax</h3>
-                    <p class="text-sm text-slate-500 mt-2">Net revenue after Apple/Google fees.</p>
-                </a>
-                <a href="freelance-to-agency.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-slate-600">Hiring</span>
-                    <h3 class="font-bold text-lg mt-1">Agency Scaler</h3>
-                    <p class="text-sm text-slate-500 mt-2">Contractors needed to hit profit targets.</p>
-                </a>
-                <a href="consulting-rate.html" class="tool-card bg-white p-6 rounded-xl block">
-                    <span class="category-tag text-slate-600">Solo</span>
-                    <h3 class="font-bold text-lg mt-1">Consulting Rate</h3>
-                    <p class="text-sm text-slate-500 mt-2">Price your time correctly.</p>
-                </a>
+                <div class="tool-wrapper">
+                    <a href="employee-cost.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-slate-600">Hiring</span>
+                        <h3 class="font-bold text-lg mt-1">Burdened Cost</h3>
+                        <p class="text-sm text-slate-500 mt-2">Real cost of an employee + benefits.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="app-store-tax.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-indigo-500">Platforms</span>
+                        <h3 class="font-bold text-lg mt-1">App Store Tax</h3>
+                        <p class="text-sm text-slate-500 mt-2">Net revenue after Apple/Google fees.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="freelance-to-agency.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-slate-600">Hiring</span>
+                        <h3 class="font-bold text-lg mt-1">Agency Scaler</h3>
+                        <p class="text-sm text-slate-500 mt-2">Contractors needed for profit targets.</p>
+                    </a>
+                </div>
+                <div class="tool-wrapper">
+                    <a href="consulting-rate.html" class="tool-card bg-white p-6 rounded-xl block">
+                        <span class="category-tag text-slate-600">Solo</span>
+                        <h3 class="font-bold text-lg mt-1">Consulting Rate</h3>
+                        <p class="text-sm text-slate-500 mt-2">Price your time correctly.</p>
+                    </a>
+                </div>
             </div>
         </section>
 
-        <section class="max-w-4xl mx-auto px-6 py-12 text-slate-700 border-t">
-          <h2 class="text-2xl font-bold mb-4">Startup Calculators for Founders</h2>
-          <p class="mb-4">
-            FounderCalculators.com is a free toolbox of practical business calculators designed
-            for startup founders, SaaS operators, and solo entrepreneurs. Each calculator focuses
-            on a single decision founders face when raising capital, managing cash flow, or
-            scaling growth.
-          </p>
-          <p class="mb-4">
-            Unlike generic finance tools, our calculators are benchmarked against modern
-            startup metrics including SaaS valuation multiples, CAC-to-LTV ratios, burn rate
-            runway standards, and unit economics used by investors in 2026.
-          </p>
-          <p>
-            Use these tools for pitch preparation, internal planning, or stress-testing
-            business assumptions before making high-stakes decisions.
-          </p>
-        </section>
+        <article class="max-w-4xl mx-auto px-6 py-12 text-slate-700 border-t prose prose-slate">
+            <h2 class="text-3xl font-bold mb-6 text-slate-900">Why We Built FounderCalculators</h2>
+            <p class="mb-4 leading-relaxed text-lg">
+                Most startup founders fail because they run out of cash or build something people don't want. In the current venture landscape, investors are looking for <strong>capital efficiency</strong>, strong <strong>unit economics</strong>, and a clear path to profitability.
+            </p>
+            <p class="mb-6 leading-relaxed italic text-slate-600 border-l-4 border-blue-600 pl-4">
+                FounderCalculators was created by founders and operators who have built and analyzed SaaS businesses across multiple stages, from bootstrapped startups to venture-backed companies.
+            </p>
+            <h3 class="text-xl font-bold mb-4 text-slate-900">How to use these tools:</h3>
+            <ul class="list-disc pl-6 space-y-3">
+                <li><strong>Fundraising:</strong> Use the <a href="equity-dilution.html" class="text-blue-600 hover:underline">Equity Dilution</a> and <a href="berkus-valuation.html" class="text-blue-600 hover:underline">Berkus Method</a> tools to prepare for seed or Series A rounds.</li>
+                <li><strong>Growth:</strong> Monitor your <a href="viral-coefficient.html" class="text-blue-600 hover:underline">Viral Coefficient</a> to see if your product-led growth is working.</li>
+                <li><strong>Operations:</strong> Calculate your <a href="employee-cost.html" class="text-blue-600 hover:underline">Burdened Employee Cost</a> before hiring your next team members.</li>
+            </ul>
+        </article>
 
     </main>
 
-    <footer class="bg-white border-t py-12 text-center text-slate-500">
-        <div class="max-w-5xl mx-auto px-6">
-            <p class="font-bold mb-2 text-slate-900">FounderCalculators.com</p>
-            <p class="text-sm">Helping founders build sustainable businesses through better math.</p>
-            <p class="text-xs mt-4 uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators</p>
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div>
+                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+                <p class="text-sm leading-relaxed">Helping founders build sustainable, profitable businesses through data-driven decisions and better financial literacy.</p>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="about.html" class="hover:text-blue-600 transition">About Us</a></li>
+                    <li><a href="contact.html" class="hover:text-blue-600 transition">Contact Support</a></li>
+                    <li><a href="#" class="hover:text-blue-600 transition">Startup Glossary</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="hover:text-blue-600 transition">Terms of Service</a></li>
+                    <li><a href="disclaimer.html" class="hover:text-blue-600 transition">Earnings Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script>
         function searchTools() {
             let input = document.getElementById('toolSearch').value.toLowerCase();
-            let cards = document.getElementsByClassName('tool-card');
+            let wrappers = document.getElementsByClassName('tool-wrapper');
             
-            for (let i = 0; i < cards.length; i++) {
-                let title = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
-                let desc = cards[i].getElementsByTagName('p')[0].innerText.toLowerCase();
+            for (let i = 0; i < wrappers.length; i++) {
+                let title = wrappers[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+                let desc = wrappers[i].getElementsByTagName('p')[0].innerText.toLowerCase();
                 
                 if (title.includes(input) || desc.includes(input)) {
-                    cards[i].style.display = "";
+                    wrappers[i].style.display = "block";
                 } else {
-                    cards[i].style.display = "none";
+                    wrappers[i].style.display = "none";
                 }
             }
         }
