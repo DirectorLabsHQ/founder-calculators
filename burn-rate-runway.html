@@ -15,85 +15,176 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .calc-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        .calc-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
         .btn-primary { background: #2563eb; color: white; transition: all 0.2s; cursor: pointer; }
         .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
+
+    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
+                Founder<span class="text-blue-600">Calculators</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="index.html#finance" class="standard-link">Finance</a>
+                <a href="index.html#growth" class="standard-link">Growth</a>
+                <a href="index.html#ops" class="standard-link">Operations</a>
+                <div class="h-4 w-px bg-slate-200 mx-2"></div>
+                <a href="about.html" class="standard-link">About</a>
+                <a href="contact.html" class="standard-link">Contact</a>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Burn Rate & Runway Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Determine exactly how much time your startup has to reach profitability or raise your next round.</p>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Determine exactly how much time your startup has to reach profitability or raise your next round.</p>
+            
+            <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm text-slate-700 max-w-2xl mx-auto text-left leading-relaxed">
+                <strong>Disclaimer:</strong> This <strong>burn rate calculator</strong> is for educational and modeling purposes only. It does not constitute financial or investment advice. Cash runway is a snapshot in time; real-world expenses and revenues often fluctuate.
+            </div>
         </div>
 
         <div class="calc-card p-8 mb-12">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-6">
                     <div>
-                        <label class="block text-sm font-medium mb-1">Current Cash Balance ($)</label>
-                        <input type="number" id="cash" value="500000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Current Cash Balance ($)</label>
+                        <input type="number" id="cash" value="500000" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1">Monthly Expenses ($)</label>
-                        <input type="number" id="expenses" value="50000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Monthly Expenses ($)</label>
+                        <input type="number" id="expenses" value="50000" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1">Monthly Revenue ($)</label>
-                        <input type="number" id="revenue" value="10000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Monthly Revenue ($)</label>
+                        <input type="number" id="revenue" value="10000" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
                 </div>
 
-                <div class="bg-blue-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-blue-100">
-                    <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-2">Estimated Runway</span>
-                    <div class="text-5xl font-black text-slate-900 mb-4" id="runway-result">12.5</div>
-                    <p class="text-lg font-medium text-slate-700">Months Remaining</p>
-                    <p class="text-sm text-slate-500 mt-2" id="burn-result">Net Burn: $40,000 / mo</p>
+                <div class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white relative overflow-hidden">
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2 z-10">Estimated Runway</span>
+                    <div class="text-6xl font-black mb-2 z-10" id="runway-result">12.5</div>
+                    <p class="text-lg font-medium text-slate-300 z-10">Months Remaining</p>
+                    <p class="text-sm text-slate-400 mt-4 z-10 font-mono" id="burn-result">Net Burn: $40,000 / mo</p>
+                    
+                    <div class="absolute bottom-0 left-0 w-full h-2 bg-slate-800">
+                        <div id="runway-progress" class="h-full bg-blue-500 transition-all duration-500" style="width: 50%;"></div>
+                    </div>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 btn-primary rounded-lg font-bold text-lg shadow-lg">Calculate Survival Timeline</button>
+            <button onclick="calculate()" class="w-full mt-8 py-4 btn-primary rounded-xl font-bold text-lg shadow-lg">Recalculate Survival Timeline</button>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">How to Calculate Startup Runway</h2>
-            <p>Startup runway is the number of months your business can survive before running out of cash. This calculation is vital for timing your next fundraise or pivot. <strong>Early-stage SaaS startups typically burn between $30,000 and $150,000 per month</strong> depending on headcount and growth stage.</p>
-            
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6">How to Manage Startup Runway in 2026</h2>
+            <p>
+                Startup runway is the number of months your business can survive before running out of cash. In the current economic climate, understanding your <strong>Net Burn Rate</strong> is vital for timing your next fundraise or strategic pivot.
+            </p>
+
             
 
-            <h3>The Startup Burn Rate Formula</h3>
-            <p>To calculate runway, you simply divide your total cash balance by your Net Monthly Burn Rate:</p>
-            <p class="bg-slate-100 p-4 rounded-lg font-mono text-center">Net Burn = Total Monthly Expenses - Total Monthly Revenue</p>
-            <p class="bg-slate-100 p-4 rounded-lg font-mono text-center">Runway = Total Cash / Net Burn</p>
-
-            <h3>What is a "Safe" Runway in 2026?</h3>
-            <p>In the current venture capital landscape, investors typically look for companies to have <strong>18 to 24 months</strong> of runway after a funding round. If your runway falls below 6 months, it is generally considered the "danger zone."</p>
-            
-            <ul>
-                <li><strong>Gross Burn:</strong> Total cash leaving your bank account each month.</li>
-                <li><strong>Net Burn:</strong> Your actual monthly loss (Expenses minus Revenue).</li>
-                <li><strong>Default Alive:</strong> You are "Default Alive" if you will reach profitability before running out of cash.</li>
+            <h3 class="text-2xl font-bold mt-8">The Calculation Example</h3>
+            <p>
+                To calculate runway, you divide your total cash balance by your Net Monthly Burn Rate. 
+                For example: If you have <strong>$500,000</strong> in the bank, monthly expenses of <strong>$50,000</strong>, and monthly revenue of <strong>$10,000</strong>:
+            </p>
+            <ul class="bg-slate-100 p-6 rounded-xl list-none">
+                <li><strong>Net Burn:</strong> $50,000 (Expenses) - $10,000 (Revenue) = <strong>$40,000</strong></li>
+                <li><strong>Runway:</strong> $500,000 / $40,000 = <strong>12.5 Months</strong></li>
             </ul>
 
-            <div class="mt-12 p-6 bg-slate-100 rounded-xl">
-                <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
-                <ul class="mb-0">
-                    <li><a href="saas-valuation.html" class="text-blue-600 hover:underline">SaaS Valuation Calculator</a></li>
-                    <li><a href="equity-dilution.html" class="text-blue-600 hover:underline">Equity Dilution Calculator</a></li>
-                    <li><a href="breakeven-analysis.html" class="text-blue-600 hover:underline">Breakeven Analysis Calculator</a></li>
+            <h3 class="text-2xl font-bold mt-10">Runway "Danger Zones" Benchmark</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-slate-200 rounded-lg text-sm">
+                    <thead>
+                        <tr class="bg-slate-50">
+                            <th class="px-4 py-3 border-b text-left">Runway Left</th>
+                            <th class="px-4 py-3 border-b text-left">Status</th>
+                            <th class="px-4 py-3 border-b text-left">Action Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="px-4 py-3 border-b font-bold text-red-600">0 - 6 Months</td>
+                            <td class="px-4 py-3 border-b italic text-red-500 font-bold">Danger Zone</td>
+                            <td class="px-4 py-3 border-b">Immediate aggressive cost-cutting or bridge funding.</td>
+                        </tr>
+                        <tr class="bg-amber-50">
+                            <td class="px-4 py-3 border-b font-bold text-amber-600">6 - 12 Months</td>
+                            <td class="px-4 py-3 border-b italic">Fundraising Zone</td>
+                            <td class="px-4 py-3 border-b">Start pitching investors now; cycles take 4-6 months.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 border-b font-bold text-green-600">18+ Months</td>
+                            <td class="px-4 py-3 border-b italic text-green-600 font-bold">Healthy</td>
+                            <td class="px-4 py-3 border-b">Focus on product-market fit and growth execution.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="my-10 p-8 bg-white border border-slate-200 rounded-2xl">
+                <h3 class="text-xl font-bold mb-6 text-slate-900 uppercase tracking-wide">Survival FAQs</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-blue-600">What is the difference between Gross Burn and Net Burn?</h4>
+                        <p class="text-slate-600 text-sm"><strong>Gross Burn</strong> is the total amount of cash leaving your bank account each month (Rent + Salaries + AWS). <strong>Net Burn</strong> is your actual loss (Gross Burn minus Revenue). Runway is always calculated using Net Burn.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blue-600">How can I extend my runway without raising money?</h4>
+                        <p class="text-slate-600 text-sm">The fastest ways to extend runway are reducing non-essential headcount, renegotiating software contracts, and focusing on high-margin customer segments to increase revenue immediately.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blue-600">What does "Default Alive" mean?</h4>
+                        <p class="text-slate-600 text-sm">Coined by Paul Graham, you are "Default Alive" if your current trajectory (growth and expenses) leads you to profitability before you run out of cash. Use our <a href="breakeven-analysis.html" class="text-blue-600 underline">Breakeven Tool</a> to verify this.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 p-6 bg-slate-900 text-white rounded-2xl">
+                <h3 class="text-lg font-bold mb-3 text-blue-400">Related Startup Resources</h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
+                    <li><a href="breakeven-analysis.html" class="text-white hover:text-blue-400 transition">Breakeven Analysis Tool →</a></li>
+                    <li><a href="saas-valuation.html" class="text-white hover:text-blue-400 transition">SaaS Valuation Calculator →</a></li>
+                    <li><a href="equity-dilution.html" class="text-white hover:text-blue-400 transition">Equity Dilution Tool →</a></li>
+                    <li><a href="unit-economics.html" class="text-white hover:text-blue-400 transition">Unit Economics & Margin →</a></li>
                 </ul>
             </div>
         </article>
     </main>
 
-    <footer class="bg-white border-t py-12 mt-12 text-center text-slate-400 text-sm">
-        <p>&copy; 2026 FounderCalculators.com | Practical Tools for Modern Founders</p>
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div>
+                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+                <p class="text-sm">Empowering founders through data-driven financial modeling.</p>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="about.html" class="standard-link">About Us</a></li>
+                    <li><a href="contact.html" class="standard-link">Contact Support</a></li>
+                    <li><a href="index.html#finance" class="standard-link">Financial Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
+                    <li><a href="disclaimer.html" class="standard-link">Earnings Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script>
@@ -101,16 +192,31 @@
             const cash = parseFloat(document.getElementById('cash').value) || 0;
             const exp = parseFloat(document.getElementById('expenses').value) || 0;
             const rev = parseFloat(document.getElementById('revenue').value) || 0;
-            
             const netBurn = exp - rev;
             
+            const resultEl = document.getElementById('runway-result');
+            const burnEl = document.getElementById('burn-result');
+            const progressEl = document.getElementById('runway-progress');
+
             if (netBurn <= 0) {
-                document.getElementById('runway-result').innerText = "∞";
-                document.getElementById('burn-result').innerText = "You are Profit-Positive";
+                resultEl.innerText = "∞";
+                burnEl.innerText = "You are Profit-Positive";
+                progressEl.style.width = "100%";
+                progressEl.style.backgroundColor = "#10b981"; // Green
             } else {
                 const runway = (cash / netBurn).toFixed(1);
-                document.getElementById('runway-result').innerText = runway;
-                document.getElementById('burn-result').innerText = "Net Burn: $" + netBurn.toLocaleString() + " / mo";
+                resultEl.innerText = runway;
+                burnEl.innerText = "Net Burn: $" + netBurn.toLocaleString() + " / mo";
+                
+                // Visual progress: 24 months is considered "100%" for indicator
+                let percentage = (parseFloat(runway) / 24) * 100;
+                percentage = Math.min(Math.max(percentage, 5), 100);
+                progressEl.style.width = percentage + "%";
+                
+                // Color coding indicator
+                if (runway < 6) progressEl.style.backgroundColor = "#ef4444"; // Red
+                else if (runway < 12) progressEl.style.backgroundColor = "#f59e0b"; // Amber
+                else progressEl.style.backgroundColor = "#3b82f6"; // Blue
             }
         }
         window.onload = calculate;
