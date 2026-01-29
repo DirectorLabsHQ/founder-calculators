@@ -92,10 +92,11 @@
                 </div>
             </div>
 
-            <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-                <button onclick="calculate()" class="w-full sm:w-auto px-10 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">
-                    Generate Valuation
-                </button>
+            <!-- Live update hint + share button -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <p class="text-sm text-slate-500 italic text-center">
+                    Updates instantly as you type
+                </p>
                 <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-2xl font-medium transition">
                     Share Result
                 </button>
@@ -105,7 +106,7 @@
                 <strong>Estimates are illustrative only.</strong> Actual valuations depend on market conditions, deal structure, investor demand, and many other factors.
             </div>
 
-            <p class="text-center text-sm text-slate-600 mt-4">
+            <p class="text-center text-sm text-slate-600 mt-6">
                 Want to see how growth + profitability balance? → <a href="rule-of-40.html" class="text-blue-600 hover:underline">Rule of 40 Calculator</a>
             </p>
         </div>
@@ -114,7 +115,7 @@
             Valuation copied! Paste into pitch deck, investor email, or Notion.
         </div>
 
-        <!-- Example box -->
+        <!-- Quick Example -->
         <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 md:p-8 mb-12">
             <h3 class="text-xl font-bold mb-4 text-slate-900">Quick Example</h3>
             <p class="text-slate-700">
@@ -222,7 +223,7 @@
             </div>
         </div>
         <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
-            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+            <p class="text-xs uppercase tracking-widest opacity-50">© 2026 FounderCalculators. All Rights Reserved.</p>
         </div>
     </footer>
 
