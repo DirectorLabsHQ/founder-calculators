@@ -1,16 +1,12 @@
-// nav.js (root level)
+// nav.js (root level) - text logo only
 document.addEventListener('DOMContentLoaded', function() {
   const navHTML = `
     <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
       <div class="max-w-6xl mx-auto flex justify-between items-center">
         
-        <!-- Logo on the left -->
-        <a href="/index.html" class="flex items-center flex-shrink-0">
-          <img 
-            src="/logo.png" 
-            alt="FounderCalculators Logo" 
-            class="h-10 sm:h-12 md:h-14 lg:h-16 w-auto transition-transform duration-200 hover:scale-105"
-          >
+        <!-- Text logo on the left -->
+        <a href="/index.html" class="font-bold text-2xl md:text-3xl tracking-tight text-slate-900 flex items-center">
+          Founder<span class="text-blue-600">Calculators</span>
         </a>
 
         <!-- Desktop menu with dropdown -->
@@ -65,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <a href="/contact.html" class="hover:text-blue-600 transition">Contact</a>
         </div>
 
-        <!-- Mobile menu button placeholder (you can add hamburger logic later) -->
+        <!-- Mobile menu button (placeholder for now) -->
         <button class="md:hidden text-slate-700 focus:outline-none">
           <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
