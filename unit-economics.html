@@ -6,6 +6,13 @@
     <title>Unit Economics & Contribution Margin Calculator | FounderCalculators</title>
     <meta name="description" content="Calculate your unit economics, gross margin, and contribution margin. Model your break-even point and per-unit profitability for SaaS or E-commerce.">
     <link rel="canonical" href="https://foundercalculators.com/unit-economics.html">
+    
+    <meta property="og:title" content="Unit Economics & Contribution Margin Calculator">
+    <meta property="og:description" content="See your profit per unit, contribution margin, and break-even volume.">
+    <meta property="og:url" content="https://foundercalculators.com/unit-economics.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .standard-link { transition: color 0.2s; }
@@ -16,24 +23,17 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">Methodology</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Unit Economics Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Analyze your profit per unit. Determine if your business model scales or if you're "losing money on every sale."</p>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-4">
+                Analyze your profit per unit. Determine if your business model scales or if you're "losing money on every sale."
+            </p>
+            <p class="text-base text-slate-700 max-w-2xl mx-auto mb-6 font-medium">
+                A “unit” can be one customer (SaaS) or one order/item (E-commerce).
+            </p>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-3xl p-8 mb-12 shadow-sm">
@@ -57,6 +57,9 @@
                     <div class="pt-4 border-t">
                         <label class="block text-xs font-bold text-slate-400 uppercase mb-2 text-center">Optional: Monthly Fixed Costs ($)</label>
                         <input type="number" id="fixed" value="5000" oninput="calculate()" class="w-full bg-slate-100 p-2 rounded-lg text-center font-medium outline-none focus:ring-1 focus:ring-slate-300">
+                        <p class="text-xs text-slate-500 mt-2 text-center italic">
+                            Fixed costs affect break-even volume, not contribution margin.
+                        </p>
                     </div>
                 </div>
 
@@ -77,46 +80,76 @@
                             <p class="text-[10px] text-slate-400 italic" id="status-text">Healthy: Scalable unit economics.</p>
                         </div>
                     </div>
+
+                    <p class="text-xs text-slate-600 mt-6 italic">
+                        Illustrative estimates only. Excludes taxes, financing costs, and non-operating expenses.
+                    </p>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-10 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Validate Business Model</button>
+
+            <!-- Live update hint + share button -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <p class="text-sm text-slate-500 italic text-center">
+                    Updates instantly as you type
+                </p>
+                <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
+                    Share Result
+                </button>
+            </div>
+
+            <p class="text-center text-sm text-slate-600 mt-6">
+                Want a full break-even timeline? → <a href="breakeven-analysis.html" class="text-emerald-600 hover:underline">Breakeven Analysis Tool</a>
+            </p>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Unit economics copied! Paste into pitch deck, investor update, or X thread.
+        </div>
+
+        <!-- Quick Example -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 md:p-8 mb-12">
+            <h3 class="text-xl font-bold mb-4 text-slate-900">Quick Example</h3>
+            <p class="text-slate-700">
+                Selling Price: $200<br>
+                COGS + Variable Costs: $100<br><br>
+                → $100 contribution margin (50%)<br>
+                → With $5,000 fixed costs = 50 units to break even
+            </p>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
             <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Understanding Unit Economics</h2>
             <p>
-                Unit economics are the direct revenues and costs associated with a particular business model, and expressed on a <strong>per-unit basis</strong>. A "unit" might be a single customer (in SaaS) or a physical item sold (in E-commerce).
+                Unit economics are the direct revenues and costs associated with a particular business model, expressed on a <strong>per-unit basis</strong>. A "unit" might be a single customer (in SaaS) or a physical item sold (in E-commerce).
             </p>
-
-            
 
             <h3 class="text-2xl font-bold mt-8">Contribution Margin vs. Gross Margin</h3>
             <p>
-                Founders often confuse these two, but in 2026, investors look closely at the distinction:
+                Founders often confuse these two, but in the current environment, investors look closely at the distinction:
             </p>
             <ul>
-                <li><strong>Gross Margin:</strong> Revenue minus COGS (The cost of the product itself).</li>
-                <li><strong>Contribution Margin:</strong> Gross Margin minus <em>all other variable costs</em> (like shipping, credit card fees, and direct ad spend). This tells you how much money is actually left to pay for your rent, payroll, and fixed overhead.</li>
+                <li><strong>Gross Margin:</strong> Revenue minus COGS (the cost of the product itself).</li>
+                <li><strong>Contribution Margin:</strong> Gross Margin minus <em>all other variable costs</em> (shipping, credit card fees, direct ad spend). This tells you how much money is left to cover fixed overhead like rent and payroll.</li>
             </ul>
 
             <h3 class="text-2xl font-bold mt-10">The Importance of "Breakeven Units"</h3>
             <p>
-                Our calculator includes a <strong>Break-even Volume</strong> projection. This represents the number of units you must sell every month just to reach $0 in net profit. If your contribution margin is low, you need massive volume to survive.
+                This calculator shows the number of units you must sell monthly just to reach $0 net profit. If your contribution margin is low, you need massive volume to survive — a red flag for scalability.
             </p>
             
             <div class="bg-amber-50 p-8 rounded-2xl border-l-4 border-amber-500 my-10">
-                <h4 class="text-amber-900 font-bold mt-0 italic">The SaaS Benchmarks</h4>
+                <h4 class="text-amber-900 font-bold mt-0 italic">SaaS Benchmarks</h4>
                 <p class="text-amber-800 mb-0 leading-relaxed">
-                    For high-valuation SaaS companies, the gold standard is a **70-80% Contribution Margin**. This allows for the high R&D and sales spending required to capture a market. If your margin is below 40%, you may be operating a "services" business disguised as software.
+                    Top-performing SaaS companies often operate with 70–80% contribution margins, depending on GTM model and scale. Below 40% often means you're running a "services" business disguised as software.
                 </p>
             </div>
 
             <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Finance & Efficiency Tools</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a href="breakeven-analysis.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                <a href="breakeven-analysis.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-emerald-600 font-semibold no-underline flex justify-between items-center">
                     Full Breakeven Analysis →
                 </a>
-                <a href="saas-valuation.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                <a href="saas-valuation.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-emerald-600 font-semibold no-underline flex justify-between items-center">
                     SaaS Valuation Tool →
                 </a>
             </div>
@@ -146,27 +179,58 @@
             const breakevenDisplay = document.getElementById('breakeven-units');
             const bar = document.getElementById('margin-bar');
             const status = document.getElementById('status-text');
+            const marginLabel = document.getElementById('margin-label');
+
+            // Reset dynamic classes
+            box.classList.remove('bg-emerald-50', 'border-emerald-100', 'bg-amber-50', 'border-amber-100', 'bg-rose-50', 'border-rose-100');
 
             // Formatters
             const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+            // Negative margin handling
+            if (margin < 0) {
+                marginLabel.innerText = "Negative Contribution Margin";
+                resultDisplay.innerText = formatter.format(margin);
+                percentDisplay.innerText = marginPercent.toFixed(0) + "% Margin";
+                breakevenDisplay.innerText = "Never";
+                bar.style.width = "0%";
+                status.innerText = "You lose money on every unit sold.";
+                box.classList.add('bg-rose-50', 'border-rose-100');
+                return;
+            }
 
             resultDisplay.innerText = formatter.format(margin);
             percentDisplay.innerText = marginPercent.toFixed(0) + "% Margin";
             breakevenDisplay.innerText = (margin > 0) ? (breakeven.toLocaleString() + " Units") : "Never";
             bar.style.width = Math.max(0, Math.min(100, marginPercent)) + "%";
 
-            // Dynamic Styling Logic
+            // Positive margin styling
             if (marginPercent >= 60) {
-                box.className = "rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-xl relative overflow-hidden bg-emerald-50 border border-emerald-100 text-slate-900";
+                box.classList.add('bg-emerald-50', 'border-emerald-100');
                 status.innerText = "Excellent: High efficiency unit economics.";
             } else if (marginPercent >= 30) {
-                box.className = "rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-xl relative overflow-hidden bg-amber-50 border border-amber-100 text-slate-900";
+                box.classList.add('bg-amber-50', 'border-amber-100');
                 status.innerText = "Moderate: Watch your fixed overhead costs.";
             } else {
-                box.className = "rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-xl relative overflow-hidden bg-rose-50 border border-rose-100 text-slate-900";
+                box.classList.add('bg-rose-50', 'border-rose-100');
                 status.innerText = "Warning: Margins are likely too thin to scale.";
             }
         }
+
+        function shareResult() {
+            const margin = document.getElementById('margin-result').innerText;
+            const percent = document.getElementById('margin-percent').innerText;
+            const breakeven = document.getElementById('breakeven-units').innerText;
+            const text = `My unit economics: ${margin} contribution margin (${percent}), break-even at ${breakeven}\nCalculated on FounderCalculators.com/unit-economics.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
         window.onload = calculate;
     </script>
 </body>
