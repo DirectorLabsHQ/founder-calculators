@@ -1,15 +1,15 @@
-// nav.js (place at repo root)
+// nav.js (updated with mobile hamburger menu)
 document.addEventListener('DOMContentLoaded', function() {
   const navHTML = `
     <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
       <div class="max-w-6xl mx-auto flex justify-between items-center">
         
-        <!-- Text brand on left -->
+        <!-- Brand -->
         <a href="/index.html" class="font-bold text-xl tracking-tight text-slate-900">
           Founder<span class="text-blue-600">Calculators</span>
         </a>
 
-        <!-- Desktop links + dropdown -->
+        <!-- Desktop links -->
         <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
           <div class="relative group">
             <button class="hover:text-blue-600 transition flex items-center focus:outline-none">
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <a href="/freelance-to-agency.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">Agency Scaler</a>
               <a href="/consulting-rate.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">Consulting Rate</a>
 
-              <!-- New Guides section -->
+              <!-- Guides section -->
               <div class="px-4 py-2 border-b border-slate-100 mt-2">
                 <p class="font-bold text-slate-900 uppercase text-xs tracking-wider">Guides & Benchmarks</p>
               </div>
@@ -69,9 +69,105 @@ document.addEventListener('DOMContentLoaded', function() {
           <a href="/contact.html" class="hover:text-blue-600 transition">Contact</a>
         </div>
 
+        <!-- Hamburger button (mobile only) -->
+        <button id="mobile-menu-btn" class="md:hidden text-slate-600 focus:outline-none">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
       </div>
     </nav>
+
+    <!-- Mobile menu overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden overflow-y-auto">
+      <div class="flex justify-between items-center p-6 border-b">
+        <a href="/index.html" class="font-bold text-xl text-slate-900">
+          Founder<span class="text-blue-600">Calculators</span>
+        </a>
+        <button id="close-menu" class="text-slate-600 focus:outline-none">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-8 text-lg font-medium text-slate-700">
+        <a href="/index.html" class="block hover:text-blue-600 transition">Home</a>
+
+        <!-- Mobile calculators (grouped, flat) -->
+        <div class="space-y-6">
+          <div class="font-bold uppercase text-xs text-slate-500">Finance & Funding</div>
+          <a href="/burn-rate-runway.html" class="block hover:text-blue-600 transition">Burn & Runway</a>
+          <a href="/saas-valuation.html" class="block hover:text-blue-600 transition">SaaS Valuation</a>
+          <a href="/unit-economics.html" class="block hover:text-blue-600 transition">Unit Economics</a>
+          <a href="/equity-dilution.html" class="block hover:text-blue-600 transition">Equity Dilution</a>
+          <a href="/convertible-note.html" class="block hover:text-blue-600 transition">Convertible Note / SAFE</a>
+          <a href="/berkus-valuation.html" class="block hover:text-blue-600 transition">Berkus Method</a>
+          <a href="/rule-of-40.html" class="block hover:text-blue-600 transition">Rule of 40</a>
+          <a href="/breakeven-analysis.html" class="block hover:text-blue-600 transition">Breakeven Point</a>
+          <a href="/debt-repayment.html" class="block hover:text-blue-600 transition">Debt Repayment</a>
+          <a href="/cac-payback.html" class="block hover:text-blue-600 transition">CAC Payback Period</a>
+          <a href="/co-founder-equity-split.html" class="block hover:text-blue-600 transition">Co-Founder Equity Split</a>
+        </div>
+
+        <div class="space-y-6">
+          <div class="font-bold uppercase text-xs text-slate-500">Growth & Marketing</div>
+          <a href="/mrr-projector.html" class="block hover:text-blue-600 transition">MRR Projector</a>
+          <a href="/mrr-expansion-churn.html" class="block hover:text-blue-600 transition">MRR Expansion + Churn</a>
+          <a href="/cac-ltv-ratio.html" class="block hover:text-blue-600 transition">CAC to LTV</a>
+          <a href="/viral-coefficient.html" class="block hover:text-blue-600 transition">Viral Coefficient</a>
+          <a href="/roas-calculator.html" class="block hover:text-blue-600 transition">ROAS Calculator</a>
+          <a href="/churn-impact.html" class="block hover:text-blue-600 transition">Churn Impact</a>
+          <a href="/referral-roi.html" class="block hover:text-blue-600 transition">Referral ROI</a>
+          <a href="/email-roi.html" class="block hover:text-blue-600 transition">Email Marketing ROI</a>
+        </div>
+
+        <div class="space-y-6">
+          <div class="font-bold uppercase text-xs text-slate-500">Operations & Scaling</div>
+          <a href="/employee-cost.html" class="block hover:text-blue-600 transition">Burdened Cost</a>
+          <a href="/app-store-tax.html" class="block hover:text-blue-600 transition">App Store Tax</a>
+          <a href="/freelance-to-agency.html" class="block hover:text-blue-600 transition">Agency Scaler</a>
+          <a href="/consulting-rate.html" class="block hover:text-blue-600 transition">Consulting Rate</a>
+        </div>
+
+        <div class="space-y-6">
+          <div class="font-bold uppercase text-xs text-slate-500">Guides & Benchmarks</div>
+          <a href="/guides/guides.html" class="block hover:text-blue-600 transition">All Guides</a>
+        </div>
+
+        <a href="/about.html" class="block hover:text-blue-600 transition">About</a>
+        <a href="/contact.html" class="block hover:text-blue-600 transition">Contact</a>
+      </div>
+    </div>
   `;
 
   document.body.insertAdjacentHTML('afterbegin', navHTML);
+
+  // Mobile menu toggle logic
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const closeBtn = document.getElementById('close-menu');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.remove('translate-x-full');
+      mobileMenu.classList.add('translate-x-0');
+      document.body.style.overflow = 'hidden'; // prevent scrolling behind menu
+    });
+
+    closeBtn.addEventListener('click', () => {
+      mobileMenu.classList.remove('translate-x-0');
+      mobileMenu.classList.add('translate-x-full');
+      document.body.style.overflow = '';
+    });
+
+    // Close on outside click
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        mobileMenu.classList.remove('translate-x-0');
+        mobileMenu.classList.add('translate-x-full');
+        document.body.style.overflow = '';
+      }
+    });
+  }
 });
