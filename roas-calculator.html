@@ -3,85 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROAS Calculator | Return on Ad Spend & Profitability Modeler (2026)</title>
+    <title>ROAS Calculator | Return on Ad Spend & Profitability Modeler</title>
     <meta name="description" content="Calculate your Return on Ad Spend (ROAS) and campaign profitability. Model breakeven ROAS based on your gross margins for Google, Meta, and LinkedIn ads.">
     <link rel="canonical" href="https://foundercalculators.com/roas-calculator.html">
+    
+    <meta property="og:title" content="ROAS Calculator">
+    <meta property="og:description" content="Model your real return on ad spend after margins and costs.">
+    <meta property="og:url" content="https://foundercalculators.com/roas-calculator.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .standard-link { transition: color 0.2s; }
         .standard-link:hover { color: #2563eb; text-decoration: underline; }
-        .input-card:focus-within { border-color: #f97316; box-shadow: 0 0 0 4px rgba(249,115,22,0.1); }
         #profit-bar { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .input-card:focus-within { border-color: #f97316; box-shadow: 0 0 0 4px rgba(249,115,22,0.1); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">ROAS & Profitability Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Don't just track revenue—track profit. Model your real return after ad spend and product margins.</p>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Don't just track revenue—track profit. Model your real return after ad spend and product margins.</p>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="space-y-5">
+                <div class="space-y-6">
                     <div class="input-card border rounded-xl p-4 bg-slate-50/50">
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Total Ad Spend ($)</label>
-                        <input type="number" id="adSpend" value="5000" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-orange-600">
+                        <input type="number" id="adSpend" value="5000" min="0" step="100" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-orange-600">
                     </div>
                     
                     <div class="input-card border rounded-xl p-4">
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Revenue from Ads ($)</label>
-                        <input type="number" id="adRev" value="20000" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-slate-900">
+                        <input type="number" id="adRev" value="20000" min="0" step="100" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-slate-900">
                     </div>
 
                     <div class="input-card border rounded-xl p-3">
                         <label class="block text-sm font-bold text-slate-700 mb-1">Product Gross Margin (%)</label>
-                        <input type="number" id="margin" value="70" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        <input type="number" id="margin" value="70" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
                         <p class="text-[10px] text-slate-400 mt-1">If it costs $30 to make a $100 product, your margin is 70%.</p>
                     </div>
+
+                    <p class="text-sm text-slate-500 italic mt-4 text-center">
+                        Updates instantly as you type
+                    </p>
                 </div>
 
                 <div class="bg-orange-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl relative overflow-hidden">
-                    <div class="relative z-10 w-full">
-                        <span class="text-xs font-bold text-orange-200 uppercase tracking-widest mb-2 block">Campaign ROAS</span>
-                        <div class="text-6xl font-black mb-2" id="roas-result">4.0x</div>
-                        <p class="text-orange-100 font-medium mb-6" id="roas-percent">400% Return</p>
-                        
-                        <div class="space-y-3 pt-6 border-t border-orange-500/50">
-                            <div class="flex justify-between text-xs font-bold">
-                                <span class="text-orange-200 uppercase">Net Contribution Profit</span>
-                                <span id="net-profit">$9,000</span>
-                            </div>
-                            <div class="w-full h-2 bg-orange-800 rounded-full overflow-hidden">
-                                <div id="profit-bar" class="h-full bg-white" style="width: 45%;"></div>
-                            </div>
-                            <p class="text-[10px] text-orange-200 italic" id="breakeven-label">Breakeven ROAS: 1.4x</p>
+                    <span class="text-sm font-bold text-orange-200 uppercase tracking-widest mb-2 z-10">Campaign ROAS</span>
+                    <div class="text-6xl font-black mb-2 z-10" id="roas-result">4.0x</div>
+                    <p class="text-orange-100 font-medium mb-6" id="roas-percent">400% Return</p>
+                    
+                    <div class="space-y-3 pt-6 border-t border-orange-500/50">
+                        <div class="flex justify-between text-xs font-bold">
+                            <span class="text-orange-200 uppercase">Net Contribution Profit</span>
+                            <span id="net-profit">$9,000</span>
                         </div>
+                        <div class="w-full h-2 bg-orange-800 rounded-full overflow-hidden">
+                            <div id="profit-bar" class="h-full bg-white" style="width: 45%;"></div>
+                        </div>
+                        <p class="text-[10px] text-orange-200 italic" id="breakeven-label">Breakeven ROAS: 1.4x</p>
+                        <p class="text-[10px] text-orange-300 mt-2 italic">(profit as % of revenue)</p>
                     </div>
+
+                    <p class="text-xs text-orange-200 mt-6">
+                        Illustrative only. Not financial advice.
+                    </p>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-10 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Analyze Ad Profitability</button>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            ROAS & profitability details copied! Paste into ad report or investor update.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Understanding ROAS in 2026</h2>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Understanding ROAS in the Current Market</h2>
             <p>
-                ROAS stands for <strong>Return on Ad Spend</strong>. It is a marketing metric that measures the amount of revenue your business earns for each dollar it spends on advertising. 
+                ROAS stands for <strong>Return on Ad Spend</strong>. It measures the amount of revenue your business earns for each dollar spent on advertising. It is a "top-of-funnel" health check.
             </p>
 
             <h3 class="text-2xl font-bold mt-8">ROAS vs. ROI: What's the Difference?</h3>
@@ -89,8 +94,8 @@
                 While they sound similar, they serve different purposes for a founder:
             </p>
             <ul>
-                <li><strong>ROAS:</strong> Only looks at revenue vs. ad spend. It’s a "top-of-funnel" health check.</li>
-                <li><strong>ROI (Return on Investment):</strong> Looks at the bottom-line profit after accounting for COGS, shipping, and agency fees.</li>
+                <li><strong>ROAS:</strong> Only looks at revenue vs. ad spend.</li>
+                <li><strong>ROI (Return on Investment):</strong> Looks at bottom-line profit after accounting for COGS, shipping, and agency fees.</li>
             </ul>
 
             <h3 class="text-2xl font-bold mt-10">The Breakeven ROAS Formula</h3>
@@ -98,16 +103,16 @@
                 Knowing your breakeven ROAS is the most important part of scaling ads. If your ROAS drops below this number, you are losing money on every sale.
             </p>
             <div class="bg-slate-100 p-6 rounded-xl font-mono text-sm border-l-4 border-orange-500">
-                Breakeven ROAS = 1 / Gross Margin %
+                Breakeven ROAS = 1 / Gross Margin (as decimal)
             </div>
             <p class="mt-4">
-                Example: If your margins are 50%, your breakeven ROAS is 2.0x. If your margins are 80% (common in SaaS), your breakeven is 1.25x.
+                Example: If your margins are 50% (0.50 decimal), your breakeven ROAS is 2.0x. If your margins are 80% (0.80 decimal), your breakeven is 1.25x.
             </p>
 
             <div class="bg-blue-50 p-8 rounded-2xl border-l-4 border-blue-500 my-10">
-                <h4 class="text-blue-900 font-bold mt-0 italic text-lg">"High ROAS can hide a dying business."</h4>
+                <h4 class="text-blue-900 font-bold mt-0 italic">Strategic Insight</h4>
                 <p class="text-blue-800 mb-0">
-                    In 2026, with privacy-first tracking (iOS 17+ and beyond), reported ROAS in ad managers like Meta or Google is often an estimate. Always cross-reference your <strong>MER (Marketing Efficiency Ratio)</strong>: Total Revenue / Total Marketing Spend.
+                    In the current privacy-first tracking environment (iOS 17+ and beyond), reported ROAS in ad managers like Meta or Google is often an estimate. Always cross-reference your <strong>MER (Marketing Efficiency Ratio)</strong>: Total Revenue / Total Marketing Spend.
                 </p>
             </div>
 
@@ -123,9 +128,11 @@
         </article>
     </main>
 
-    <footer class="bg-white border-t py-16 text-slate-500 text-center">
-        <p class="font-bold text-slate-900">FounderCalculators.com</p>
-        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p class="font-bold text-slate-900">FounderCalculators.com</p>
+            <p class="text-xs uppercase tracking-widest opacity-50 mt-4">&copy; 2026 All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script>
@@ -147,15 +154,32 @@
             document.getElementById('breakeven-label').innerText = "Breakeven ROAS: " + breakevenRoas.toFixed(1) + "x";
             
             // Color Logic & Bar
+            const profitEl = document.getElementById('net-profit');
+            profitEl.classList.remove('text-orange-200');
+            
             const profitBar = document.getElementById('profit-bar');
-            if (netProfit < 0) {
-                profitBar.style.width = "0%";
-                document.getElementById('net-profit').classList.add('text-orange-200');
-            } else {
-                // Visualize profit as a % of revenue
-                const profitWidth = (netProfit / rev) * 100;
-                profitBar.style.width = Math.min(100, profitWidth) + "%";
+            let profitWidth = 0;
+            if (rev > 0 && netProfit > 0) {
+                profitWidth = (netProfit / rev) * 100;
             }
+            profitBar.style.width = Math.min(100, profitWidth) + "%";
+
+            if (netProfit < 0) {
+                profitEl.classList.add('text-orange-200');
+            }
+        }
+
+        function shareResult() {
+            const roas = document.getElementById('roas-result').innerText;
+            const netProfit = document.getElementById('net-profit').innerText;
+            const text = `My campaign ROAS: ${roas} (Net Profit: ${netProfit})\nCalculated on FounderCalculators.com/roas-calculator.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
         }
 
         window.onload = calculate;
