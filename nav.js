@@ -30,11 +30,14 @@ document.addEventListener('DOMContentLoaded', function() {
               <a href="/rule-of-40.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">Rule of 40</a>
               <a href="/breakeven-analysis.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">Breakeven Point</a>
               <a href="/debt-repayment.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">Debt Repayment</a>
+              <a href="/cac-payback.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">CAC Payback Period</a>
+              <a href="/co-founder-equity-split.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">Co-Founder Equity Split</a>
 
               <div class="px-4 py-2 border-b border-slate-100 mt-2">
                 <p class="font-bold text-slate-900 uppercase text-xs tracking-wider">Growth & Marketing</p>
               </div>
               <a href="/mrr-projector.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">MRR Projector</a>
+              <a href="/mrr-expansion-churn.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">MRR Expansion + Churn</a>
               <a href="/cac-ltv-ratio.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">CAC to LTV</a>
               <a href="/viral-coefficient.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">Viral Coefficient</a>
               <a href="/roas-calculator.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">ROAS Calculator</a>
