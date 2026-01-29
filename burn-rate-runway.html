@@ -70,14 +70,23 @@
                 </div>
             </div>
 
-            <!-- Removed redundant button; added live-update hint -->
-            <p class="text-center text-sm text-slate-500 mt-6 italic">
-                Updates instantly as you type
-            </p>
+            <!-- Live update hint + share button -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <p class="text-sm text-slate-500 italic text-center">
+                    Updates instantly as you type
+                </p>
+                <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
+                    Share Result
+                </button>
+            </div>
 
-            <p class="text-center text-sm text-slate-600 mt-4">
+            <p class="text-center text-sm text-slate-600 mt-6">
                 Want to know if you're Default Alive? → <a href="breakeven-analysis.html" class="text-blue-600 hover:underline">Breakeven Calculator</a>
             </p>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Runway copied! Paste into email, Notion, investor update, or X post.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
@@ -185,7 +194,7 @@
             </div>
         </div>
         <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
-            <p class="text-xs uppercase tracking-widest opacity-50">© 2026 FounderCalculators. All Rights Reserved.</p>
+            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -222,6 +231,20 @@
                 else progressEl.style.backgroundColor = "#3b82f6"; // Blue
             }
         }
+
+        function shareResult() {
+            const runway = document.getElementById('runway-result').innerText;
+            const burn = document.getElementById('burn-result').innerText;
+            const text = `My startup runway: ${runway} months (${burn})\nCalculated on FounderCalculators.com/burn-rate-runway.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
         window.onload = calculate;
     </script>
 </body>
