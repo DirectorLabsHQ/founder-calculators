@@ -20,11 +20,8 @@
         #profit-bar { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .input-card:focus-within { border-color: #f97316; box-shadow: 0 0 0 4px rgba(249,115,22,0.1); }
     </style>
-<!-- Load AdSense from shared file -->
-<script>
-  fetch('/head-ads.html')
-    .then(r => r.text())
-    .then(html => document.head.innerHTML += html);
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3979959488510560"
+     crossorigin="anonymous">
 </script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
@@ -192,4 +189,5 @@
     </script>
 </body>
 </html>
+
 
