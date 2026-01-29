@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Breakeven Analysis Calculator | Startup Profitability Tool</title>
+    <title>Breakeven Analysis Calculator | Startup & SaaS Profitability Tool</title>
     <meta name="description" content="Calculate your startup's breakeven point. Find out exactly how many units or customers you need to cover your fixed costs and become default alive.">
     <link rel="canonical" href="https://foundercalculators.com/breakeven-analysis.html">
+    
+    <meta property="og:title" content="Breakeven Analysis Calculator">
+    <meta property="og:description" content="Find the exact number of customers or units needed to reach profitability.">
+    <meta property="og:url" content="https://foundercalculators.com/breakeven-analysis.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .standard-link { transition: color 0.2s; }
@@ -15,21 +22,7 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#ops" class="standard-link">Operations</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-                <a href="contact.html" class="standard-link">Contact</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
@@ -46,22 +39,26 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-1">Fixed Monthly Costs ($)</label>
-                        <input type="number" id="fixedCosts" value="10000" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
+                        <input type="number" id="fixedCosts" value="10000" min="0" step="100" oninput="calculate()" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                         <p class="text-xs text-slate-400 mt-1">Rent, salaries, software subscriptions.</p>
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-1">Price per Unit / Subscription ($)</label>
-                        <input type="number" id="unitPrice" value="100" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
+                        <input type="number" id="unitPrice" value="100" min="0" step="1" oninput="calculate()" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-1">Variable Cost per Unit ($)</label>
-                        <input type="number" id="variableCost" value="20" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
+                        <input type="number" id="variableCost" value="20" min="0" step="1" oninput="calculate()" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                         <p class="text-xs text-slate-400 mt-1">Cloud costs, payment fees, support.</p>
                     </div>
+
+                    <p class="text-sm text-slate-500 italic mt-4 text-center">
+                        All inputs should use the same time period (e.g., monthly). Updates instantly as you type.
+                    </p>
                 </div>
 
                 <div class="bg-indigo-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-indigo-100">
-                    <span class="text-sm font-bold text-indigo-600 uppercase tracking-widest mb-2">Customers Needed</span>
+                    <span class="text-sm font-bold text-indigo-600 uppercase tracking-widest mb-2">Customers / Units Needed</span>
                     <div class="text-6xl font-black text-slate-900 mb-4" id="breakeven-result">125</div>
                     <p class="text-sm text-slate-500 font-medium bg-white px-4 py-1 rounded-full border border-indigo-100 shadow-sm">To reach 0% net burn</p>
                     
@@ -69,23 +66,41 @@
                         <div id="cost-bar" class="bg-red-400 w-12 rounded-t" style="height: 80%;"></div>
                         <div id="rev-bar" class="bg-green-500 w-12 rounded-t" style="height: 80%;"></div>
                     </div>
-                    <p class="text-[10px] text-slate-400 mt-2 uppercase font-bold tracking-tighter">Costs vs Revenue at Breakeven</p>
+                    <p class="text-[10px] text-slate-400 mt-2 uppercase font-bold tracking-tighter">
+                        Costs vs Revenue at Breakeven (relative illustration only)
+                    </p>
+
+                    <p class="text-xs text-slate-600 mt-6">
+                        Illustrative only. Not financial advice.
+                    </p>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-lg shadow-lg transition">Recalculate Profitability</button>
+
+            <!-- Share button -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
+                    Share Result
+                </button>
+            </div>
+
+            <p class="text-center text-sm text-slate-600 mt-6">
+                Want to model full runway? → <a href="burn-rate-runway.html" class="text-indigo-600 hover:underline">Burn Rate & Runway Calculator</a>
+            </p>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Estimated breakeven point copied! Paste into investor update, board deck, or X post.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
             <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Understanding the Path to "Default Alive"</h2>
             <p>
-                Reaching the breakeven point is a landmark achievement for any founder. In the 2026 startup ecosystem, being "Default Alive"—meaning you can reach profitability before running out of cash—is the ultimate form of leverage during fundraising negotiations.
+                Reaching the breakeven point is a landmark achievement for any founder. In the current startup ecosystem, being "Default Alive"—meaning you can reach profitability before running out of cash—is a powerful form of leverage during fundraising negotiations.
             </p>
-
-            
 
             <h3 class="text-2xl font-bold mt-8 text-slate-900">A Practical Example</h3>
             <p>
-                To understand the math, consider a SaaS company with <strong>$10,000 in monthly fixed costs</strong> (office, engineering salaries, and marketing baseline). They sell a subscription for <strong>$100/month</strong>. Every new customer costs an additional <strong>$20/month</strong> in server hosting and customer support (variable costs).
+                Consider a SaaS company with <strong>$10,000 in monthly fixed costs</strong> (office, engineering salaries, marketing baseline). They sell a subscription for <strong>$100/month</strong>. Every new customer costs an additional <strong>$20/month</strong> in server hosting and customer support (variable costs).
             </p>
             <p class="bg-slate-100 p-6 rounded-xl border-l-4 border-blue-500 italic">
                 Contribution Margin = $100 - $20 = $80 per customer.<br>
@@ -97,9 +112,9 @@
                 Understanding your breakeven point isn't just about survival; it's about strategy. It informs three major pillars of your business:
             </p>
             <ul>
-                <li><strong>Pricing Strategy:</strong> If your breakeven unit count is too high, you may need to increase prices or lower your variable costs.</li>
-                <li><strong>Fundraising Leverage:</strong> Investors are more likely to offer favorable terms to companies that don't *need* the money to survive.</li>
-                <li><strong>Risk Mitigation:</strong> Knowing your "floor" helps you decide when it is safe to hire more employees or scale marketing spend.</li>
+                <li><strong>Pricing Strategy:</strong> If your breakeven unit count is too high, consider increasing prices or lowering variable costs.</li>
+                <li><strong>Fundraising Leverage:</strong> Investors are often more favorable toward companies that don't *need* the money to survive.</li>
+                <li><strong>Risk Mitigation:</strong> Knowing your "floor" helps decide when it's safe to hire or scale marketing spend.</li>
             </ul>
 
             <div class="my-10 p-8 bg-white border border-slate-200 rounded-2xl">
@@ -107,11 +122,11 @@
                 <div class="space-y-6">
                     <div>
                         <h4 class="font-bold text-blue-600">What if my margin is negative?</h4>
-                        <p class="text-slate-600 text-sm">If your variable costs exceed your price, you have a negative contribution margin. This means every new customer actually loses you money. In this scenario, you cannot "grow" your way out of the problem; you must fix your pricing or unit costs first.</p>
+                        <p class="text-slate-600 text-sm">If your variable costs exceed your price, you have a negative contribution margin. This means every new customer actually loses you money. In this scenario, you cannot "grow" your way out of the problem; you must fix pricing or unit costs first.</p>
                     </div>
                     <div>
                         <h4 class="font-bold text-blue-600">How do I reduce my breakeven point?</h4>
-                        <p class="text-slate-600 text-sm">There are two levers: reduce fixed costs (lower rent, leaner team) or increase the contribution margin (raise prices, optimize server efficiency).</p>
+                        <p class="text-slate-600 text-sm">Two main levers: reduce fixed costs (lower rent, leaner team) or increase contribution margin (raise prices, optimize variable costs).</p>
                     </div>
                 </div>
             </div>
@@ -174,6 +189,19 @@
                 resultDisplay.classList.remove('text-red-500');
             }
         }
+
+        function shareResult() {
+            const breakeven = document.getElementById('breakeven-result').innerText;
+            const text = `Estimated breakeven point: ${breakeven} customers/units needed\nCalculated on FounderCalculators.com/breakeven-analysis.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
         window.onload = calculate;
     </script>
 </body>
