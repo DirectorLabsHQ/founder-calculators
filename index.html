@@ -11,31 +11,18 @@
         .tool-card:hover { transform: translateY(-3px); border-color: #2563eb; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .category-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
         html { scroll-behavior: smooth; }
-        .logo-img { max-height: 40px; width: auto; transition: transform 0.2s ease; }
-        .logo-img:hover { transform: scale(1.05); }
-        @media (max-width: 768px) {
-            .logo-img { max-height: 32px; }
-        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
     <script src="/nav.js"></script>
 
-    <header class="bg-white border-b py-16 px-6">
+    <header class="bg-white border-b py-20 md:py-24 px-6">
         <div class="max-w-5xl mx-auto text-center">
-            <a href="/index.html" class="inline-block mb-6">
-                <img 
-                    src="/logo.png" 
-                    alt="FounderCalculators Logo" 
-                    class="logo-img mx-auto"
-                >
-                <span class="sr-only">FounderCalculators</span> <!-- Screen reader fallback -->
-            </a>
-            <h1 class="text-5xl font-extrabold text-slate-900 mb-4 tracking-tight leading-tight">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">
                 Startup Success is <span class="text-blue-600">Math</span>, Not Luck.
             </h1>
-            <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+            <p class="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed">
                 The essential toolkit for founders and operators. Practical models to help you raise capital, manage cash, and scale growth.
             </p>
             
