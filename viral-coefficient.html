@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viral Coefficient (K-Factor) Calculator | Growth Loop Modeler</title>
-    <meta name="description" content="Calculate your product's viral coefficient (K-Factor). Model exponential growth, viral cycle time, and project your organic user acquisition.">
+    <meta name="description" content="Estimate viral growth potential and compounding behavior. Calculate your product's viral coefficient (K-Factor) and project organic user acquisition.">
     <link rel="canonical" href="https://foundercalculators.com/viral-coefficient.html">
+    
+    <meta property="og:title" content="Viral Coefficient (K-Factor) Calculator">
+    <meta property="og:description" content="Measure your product's viral loop and project exponential user growth.">
+    <meta property="og:url" content="https://foundercalculators.com/viral-coefficient.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .standard-link { transition: color 0.2s; }
@@ -16,24 +23,12 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">Insights</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Viral Coefficient Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Measure the "K-Factor" of your product. If every user brings at least one more, you have achieved true virality.</p>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Measure the "K-Factor" of your product. If every user brings at least one more, you have achieved true virality.</p>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-3xl p-8 mb-12 shadow-sm">
@@ -41,18 +36,18 @@
                 <div class="space-y-5">
                     <div class="input-card border rounded-2xl p-4 bg-slate-50/50">
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Invites Sent per Active User</label>
-                        <input type="number" id="invites" value="5" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-pink-600">
+                        <input type="number" id="invites" value="5" min="0" step="1" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-pink-600">
                     </div>
                     
                     <div class="input-card border rounded-2xl p-4">
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Invite Conversion Rate (%)</label>
-                        <input type="number" id="conversion" value="25" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-slate-900">
+                        <input type="number" id="conversion" value="25" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-slate-900">
                     </div>
 
                     <div class="p-4 bg-slate-100 rounded-2xl border border-slate-200">
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Viral Cycle Time (Days)</label>
-                        <input type="number" id="cycle" value="7" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
-                        <p class="text-[10px] text-slate-400 mt-2 italic text-center">How long it takes for a user to invite others.</p>
+                        <input type="number" id="cycle" value="7" min="1" max="90" step="0.1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        <p class="text-[10px] text-slate-400 mt-2 italic text-center">How long it takes for a user to invite others. Updates instantly as you type.</p>
                     </div>
                 </div>
 
@@ -64,18 +59,38 @@
                         
                         <div class="space-y-4 pt-6 border-t border-pink-200/50">
                             <div class="flex justify-between text-xs font-bold text-slate-500 uppercase">
-                                <span>Users after 10 Cycles</span>
+                                <span>Users after ~90 Days (from 100)</span>
                                 <span id="projection-result" class="text-slate-900">1,000+</span>
                             </div>
                             <div class="w-full h-2 bg-pink-200 rounded-full overflow-hidden">
                                 <div id="k-bar" class="growth-animate h-full bg-pink-500" style="width: 100%;"></div>
                             </div>
-                            <p class="text-[10px] text-slate-400 leading-tight">Cycle time: Faster cycles = Faster compounding.</p>
+                            <p class="text-[10px] text-slate-400 leading-tight">
+                                Projection assumes 100 starting users for comparison. Faster cycles = faster compounding.
+                            </p>
                         </div>
                     </div>
+
+                    <p class="text-xs text-slate-600 mt-6">
+                        Illustrative projection only. Not financial advice.
+                    </p>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-10 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Project Viral Growth</button>
+
+            <!-- Share button -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
+                    Share Result
+                </button>
+            </div>
+
+            <p class="text-center text-sm text-slate-600 mt-6">
+                Want to model referral ROI? → <a href="referral-roi.html" class="text-pink-600 hover:underline">Referral Program ROI Tool</a>
+            </p>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Viral coefficient copied! Paste into growth deck or investor update.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
@@ -84,16 +99,14 @@
                 The Viral Coefficient, often called <strong>K-Factor</strong>, is a metric that describes the number of new users generated by an existing user. It is the core engine behind the most successful consumer apps of the last decade.
             </p>
 
-            
-
             <h3 class="text-2xl font-bold mt-8">The Virality Threshold (K=1)</h3>
             <p>
                 The magic number for any growth marketer is <strong>1.0</strong>.
             </p>
             <ul>
                 <li><strong>K &lt; 1:</strong> Your product is not viral. While users are inviting others, your user base will eventually stop growing unless you keep spending on ads.</li>
-                <li><strong>K = 1:</strong> You have achieved a stable growth loop. Each user replaces themselves.</li>
-                <li><strong>K &gt; 1:</strong> You have reached <strong>Exponential Virality</strong>. This is where "magic" happens and user acquisition costs effectively drop to zero.</li>
+                <li><strong>K ≈ 1:</strong> You have achieved a stable growth loop. Each user replaces themselves.</li>
+                <li><strong>K &gt; 1:</strong> You have reached <strong>exponential virality</strong>. This is where "magic" happens and user acquisition costs effectively drop to zero over time.</li>
             </ul>
 
             <h3 class="text-2xl font-bold mt-10">Viral Cycle Time: The Hidden Variable</h3>
@@ -102,19 +115,19 @@
             </p>
             
             <div class="bg-blue-50 p-8 rounded-2xl border-l-4 border-blue-500 my-10">
-                <h4 class="text-blue-900 font-bold mt-0 italic">Growth Formula (2026)</h4>
+                <h4 class="text-blue-900 font-bold mt-0">Growth Formula</h4>
                 <p class="text-blue-800 mb-0 leading-relaxed text-sm font-mono">
-                    Total Users = Initial Users * (K^Cycles)
+                    Users after N cycles ≈ Initial Users × K^N
                 </p>
                 <p class="text-blue-600 text-xs mt-2 uppercase font-bold tracking-widest">Compounding is the 8th wonder of the startup world.</p>
             </div>
 
             <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Optimization Tools</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a href="referral-roi.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                <a href="referral-roi.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-pink-600 font-semibold no-underline flex justify-between items-center">
                     Referral Program ROI →
                 </a>
-                <a href="mrr-projector.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                <a href="mrr-projector.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-pink-600 font-semibold no-underline flex justify-between items-center">
                     MRR Growth Projector →
                 </a>
             </div>
@@ -123,18 +136,26 @@
 
     <footer class="bg-white border-t py-16 text-slate-500 text-center">
         <p class="font-bold text-slate-900">FounderCalculators.com</p>
-        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">© 2026 All Rights Reserved.</p>
     </footer>
 
     <script>
         function calculate() {
-            const invites = parseFloat(document.getElementById('invites').value) || 0;
-            const conversion = parseFloat(document.getElementById('conversion').value) / 100 || 0;
-            const k = (invites * conversion);
-            
-            // Projection Logic (Starting with 100 users)
+            let invites = parseFloat(document.getElementById('invites').value) || 0;
+            let conversion = parseFloat(document.getElementById('conversion').value) / 100 || 0;
+            let cycle = parseFloat(document.getElementById('cycle').value) || 1;
+
+            // Guardrails
+            invites = Math.max(0, invites);
+            conversion = Math.min(1, Math.max(0, conversion));
+            cycle = Math.max(1, cycle);
+
+            const k = invites * conversion;
+
+            // Realistic projection: users after ~90 days
             const initialUsers = 100;
-            const projection = Math.floor(initialUsers * Math.pow(k, 10));
+            const cycles = Math.floor(90 / cycle);
+            const projection = Math.floor(initialUsers * Math.pow(k, cycles));
 
             // UI Elements
             const box = document.getElementById('k-box');
@@ -145,29 +166,55 @@
 
             result.innerText = k.toFixed(2);
             
+            // Classification with tolerance for K ≈ 1
             if (k > 1) {
                 box.className = "rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl relative overflow-hidden bg-emerald-50 border border-emerald-100 text-slate-900";
                 status.innerText = "Exponential Growth";
                 status.className = "text-emerald-600 font-bold mb-8 uppercase tracking-tighter";
                 bar.className = "growth-animate h-full bg-emerald-500";
-                bar.style.width = "100%";
-                projectionDisplay.innerText = projection.toLocaleString();
+            } else if (Math.abs(k - 1) < 0.01) {
+                box.className = "rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-xl relative overflow-hidden bg-blue-50 border border-blue-100 text-slate-900";
+                status.innerText = "Stable Viral Loop";
+                status.className = "text-blue-600 font-bold mb-8 uppercase tracking-tighter";
+                bar.className = "growth-animate h-full bg-blue-500";
             } else if (k >= 0.7) {
                 box.className = "rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-xl relative overflow-hidden bg-blue-50 border border-blue-100 text-slate-900";
                 status.innerText = "Strong Linear Growth";
                 status.className = "text-blue-600 font-bold mb-8 uppercase tracking-tighter";
                 bar.className = "growth-animate h-full bg-blue-500";
-                bar.style.width = (k * 100) + "%";
-                projectionDisplay.innerText = projection.toLocaleString();
             } else {
                 box.className = "rounded-3xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-lg relative overflow-hidden bg-slate-100 border border-slate-200 text-slate-900";
-                status.innerText = "Failing Loop";
+                status.innerText = "Sub-Critical Loop";
                 status.className = "text-slate-500 font-bold mb-8 uppercase tracking-tighter";
                 bar.className = "growth-animate h-full bg-slate-400";
-                bar.style.width = (k * 100) + "%";
-                projectionDisplay.innerText = projection < 1 ? "0" : projection.toLocaleString();
+            }
+
+            // Bar: simple k-based scale (capped at 100%)
+            bar.style.width = Math.min(k * 100, 100) + "%";
+
+            // Projection display with explosion cap
+            if (projection > 10000000) {
+                projectionDisplay.innerText = "Explosive (theoretical)";
+            } else if (projection > 1000000) {
+                projectionDisplay.innerText = "1M+";
+            } else {
+                projectionDisplay.innerText = projection.toLocaleString();
             }
         }
+
+        function shareResult() {
+            const k = document.getElementById('k-result').innerText;
+            const status = document.getElementById('k-status').innerText;
+            const text = `My viral coefficient (K-Factor): ${k} (${status})\nCalculated on FounderCalculators.com/viral-coefficient.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
         window.onload = calculate;
     </script>
 </body>
