@@ -22,6 +22,12 @@
         #growth-trend-bar { transition: width 0.8s ease-in-out; }
         .negative-growth { color: #ef4444 !important; }
     </style>
+<!-- Load AdSense from shared file -->
+<script>
+  fetch('/head-ads.html')
+    .then(r => r.text())
+    .then(html => document.head.innerHTML += html);
+</script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
@@ -241,3 +247,4 @@
     </script>
 </body>
 </html>
+
