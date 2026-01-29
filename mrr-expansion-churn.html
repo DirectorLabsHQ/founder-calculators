@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRR Expansion + Churn Calculator | Net Revenue Retention Model</title>
+    <meta name="description" content="Model your SaaS MRR over 12 months with expansion (upsells) and churn. See net revenue retention, ending MRR, and cumulative impact.">
+    <link rel="canonical" href="https://foundercalculators.com/mrr-expansion-churn.html">
+    
+    <meta property="og:title" content="MRR Expansion + Churn Calculator">
+    <meta property="og:description" content="Forecast net MRR growth with expansion and churn effects.">
+    <meta property="og:url" content="https://foundercalculators.com/mrr-expansion-churn.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+        #retention-bar { transition: width 0.8s ease-out; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+
+    <script src="/nav.js"></script>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">MRR Expansion + Churn Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Model how expansion (upsells/seats) and churn affect your SaaS MRR over 12 months. See net retention and revenue impact.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-6">
+                    <div class="input-card border rounded-xl p-4 bg-slate-50/50">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Starting MRR ($)</label>
+                        <input type="number" id="startMrr" value="50000" min="0" step="100" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-card border rounded-xl p-3">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Monthly Expansion Rate (%)</label>
+                            <input type="number" id="expansionRate" value="5" min="0" max="50" step="0.1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                            <p class="text-xs text-slate-400 mt-1">Upsells, seat adds, price increases.</p>
+                        </div>
+                        <div class="input-card border rounded-xl p-3">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Monthly Churn Rate (%)</label>
+                            <input type="number" id="churnRate" value="4" min="0" max="50" step="0.1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                            <p class="text-xs text-slate-400 mt-1">Downgrades + cancellations.</p>
+                        </div>
+                    </div>
+
+                    <div class="input-card border rounded-xl p-4 bg-slate-50/50">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Forecast Months</label>
+                        <input type="number" id="months" value="12" min="1" max="36" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+
+                    <p class="text-sm text-slate-500 italic mt-4 text-center">
+                        Updates instantly as you type
+                    </p>
+                </div>
+
+                <div id="mrr-card" class="rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl relative overflow-hidden bg-white border border-slate-200">
+                    <span class="text-xs font-bold uppercase tracking-widest mb-2 block" id="status-label">Ending MRR</span>
+                    <div class="text-7xl font-black mb-4 text-slate-900" id="ending-mrr">$0</div>
+                    <p class="text-sm font-medium mb-6" id="net-retention">Net Retention: 101%</p>
+                    
+                    <div class="w-full mt-4">
+                        <div class="flex justify-between text-xs font-bold text-slate-500 uppercase mb-1">
+                            <span>Revenue Retained</span>
+                            <span id="retention-percent">100%</span>
+                        </div>
+                        <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
+                            <div id="retention-bar" class="h-full bg-blue-500 transition-all duration-500" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-600 mt-6" id="zero-warning" style="display:none;">
+                        No growth or loss possible (starting MRR = 0)
+                    </p>
+
+                    <p class="text-xs text-slate-600 mt-6">
+                        Illustrative only. Not financial advice.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center mb-12">
+            <button onclick="shareResult()" class="px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
+                Share MRR Model
+            </button>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            MRR expansion + churn model copied! Paste into investor deck or financial model.
+        </div>
+
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Understanding MRR with Expansion + Churn</h2>
+            <p>
+                Net Revenue Retention (NRR) is one of the most powerful SaaS metrics. It shows how much revenue you keep (and grow) from existing customers after accounting for churn and expansion (upsells, seat adds, price increases).
+            </p>
+
+            <h3 class="text-2xl font-bold mt-8">Key Concepts</h3>
+            <ul>
+                <li><strong>Gross Churn:</strong> Revenue lost from downgrades + cancellations</li>
+                <li><strong>Expansion:</strong> Revenue gained from existing customers (upsells, add-ons)</li>
+                <li><strong>Net Retention Rate:</strong> (Ending MRR from existing customers) / Starting MRR</li>
+                <li><strong>NRR > 100%:</strong> Expansion > Churn → "Net Negative Churn" (holy grail)</li>
+                <li><strong>NRR < 100%:</strong> Churn > Expansion → revenue decay</li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mt-10">Benchmarks (2026)</h3>
+            <ul>
+                <li><strong>Top-tier SaaS:</strong> NRR 110–130%+</li>
+                <li><strong>Healthy growth-stage:</strong> NRR 100–110%</li>
+                <li><strong>Warning zone:</strong> NRR 90–100%</li>
+                <li><strong>Danger zone:</strong> NRR < 90%</li>
+            </ul>
+
+            <div class="bg-indigo-50 p-8 rounded-2xl border-l-4 border-indigo-500 my-10">
+                <h4 class="text-indigo-900 font-bold mt-0">Strategic Insight</h4>
+                <p class="text-indigo-800 mb-0">
+                    If your NRR is >110%, you can often afford higher CAC and still grow profitably. If NRR <100%, focus on retention and expansion before scaling acquisition spend.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Related SaaS Tools</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="mrr-projector.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    MRR Growth Projector →
+                </a>
+                <a href="churn-impact.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    Churn Impact Calculator →
+                </a>
+                <a href="cac-ltv-ratio.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    CAC to LTV Ratio →
+                </a>
+                <a href="saas-valuation.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    SaaS Valuation Calculator →
+                </a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="bg-white border-t py-16 text-slate-500 text-center">
+        <p class="font-bold text-slate-900">FounderCalculators.com</p>
+        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function calculate() {
+            const startMrr = parseFloat(document.getElementById('startMrr').value) || 0;
+            const expansionRate = parseFloat(document.getElementById('expansionRate').value) / 100 || 0;
+            const churnRate = parseFloat(document.getElementById('churnRate').value) / 100 || 0;
+            const months = parseFloat(document.getElementById('months').value) || 12;
+
+            let currentMrr = startMrr;
+            let cumulativeGain = 0;
+            let cumulativeLoss = 0;
+
+            for (let i = 0; i < months; i++) {
+                const expansionThisMonth = currentMrr * expansionRate;
+                const churnThisMonth = currentMrr * churnRate;
+                currentMrr += expansionThisMonth - churnThisMonth;
+                cumulativeGain += expansionThisMonth;
+                cumulativeLoss += churnThisMonth;
+            }
+
+            const netRetention = startMrr > 0 ? (currentMrr / startMrr) * 100 : 0;
+            const statusText = netRetention > 110 ? "Excellent (Net Negative Churn)" :
+                              netRetention >= 100 ? "Healthy (Expansion > Churn)" :
+                              netRetention >= 90 ? "Caution (Churn is winning)" :
+                              "Danger (Revenue Decay)";
+
+            // UI Updates
+            const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+            
+            document.getElementById('ending-mrr').innerText = formatter.format(currentMrr);
+            document.getElementById('net-retention').innerText = "Net Retention: " + netRetention.toFixed(0) + "%";
+            document.getElementById('status-text').innerText = statusText;
+
+            const bar = document.getElementById('retention-bar');
+            const progressPercent = Math.min(100, netRetention);
+            bar.style.width = progressPercent + "%";
+
+            const card = document.getElementById('mrr-card');
+            if (netRetention > 110) {
+                card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-emerald-50 border border-emerald-100";
+                bar.className = "h-full bg-emerald-500 transition-all duration-500";
+            } else if (netRetention >= 100) {
+                card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-blue-50 border border-blue-100";
+                bar.className = "h-full bg-blue-500 transition-all duration-500";
+            } else if (netRetention >= 90) {
+                card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-amber-50 border border-amber-100";
+                bar.className = "h-full bg-amber-500 transition-all duration-500";
+            } else {
+                card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-rose-50 border border-rose-100";
+                bar.className = "h-full bg-rose-500 transition-all duration-500";
+            }
+
+            const zeroWarning = document.getElementById('zero-warning');
+            zeroWarning.style.display = (startMrr === 0) ? "block" : "none";
+        }
+
+        function shareResult() {
+            const ending = document.getElementById('ending-mrr').innerText;
+            const retention = document.getElementById('net-retention').innerText;
+            const status = document.getElementById('status-text').innerText;
+            const text = `My MRR forecast: Ending ${ending} (${retention}, ${status})\nCalculated on FounderCalculators.com/mrr-expansion-churn.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
+        window.onload = calculate;
+    </script>
+</body>
+</html>
