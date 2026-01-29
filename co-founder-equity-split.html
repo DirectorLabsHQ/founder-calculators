@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-Founder Equity Split Calculator | Fair Ownership Modeler</title>
+    <meta name="description" content="Calculate a fair equity split for co-founders. Weight idea, time, cash, technical, and business contributions. Includes vesting preview.">
+    <link rel="canonical" href="https://foundercalculators.com/co-founder-equity-split.html">
+    
+    <meta property="og:title" content="Co-Founder Equity Split Calculator">
+    <meta property="og:description" content="Model fair ownership percentages for your startup team.">
+    <meta property="og:url" content="https://foundercalculators.com/co-founder-equity-split.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+        #equity-bar { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+
+    <script src="/nav.js"></script>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Co-Founder Equity Split Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Model a fair ownership split based on contributions. Includes vesting preview and fairness check.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Founder 1 -->
+                <div class="space-y-6">
+                    <h3 class="text-lg font-bold text-slate-800 text-center">Founder 1</h3>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Name (optional)</label>
+                        <input type="text" id="f1Name" value="Founder 1" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Idea / Vision (%)</label>
+                        <input type="number" id="f1Idea" value="33" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        <p class="text-xs text-slate-400 mt-1">Percentages are relative weights — they do not need to total 100.</p>
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Time / Sweat (%)</label>
+                        <input type="number" id="f1Time" value="33" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cash Invested ($)</label>
+                        <input type="number" id="f1Cash" value="0" min="0" step="1000" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Technical Expertise (%)</label>
+                        <input type="number" id="f1Tech" value="33" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Business / Ops Expertise (%)</label>
+                        <input type="number" id="f1Biz" value="33" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <p id="f1Vesting" class="text-xs text-slate-500 mt-2">After 1-year cliff: 0.0%</p>
+                </div>
+
+                <!-- Founder 2 -->
+                <div class="space-y-6">
+                    <h3 class="text-lg font-bold text-slate-800 text-center">Founder 2</h3>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Name (optional)</label>
+                        <input type="text" id="f2Name" value="Founder 2" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Idea / Vision (%)</label>
+                        <input type="number" id="f2Idea" value="33" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Time / Sweat (%)</label>
+                        <input type="number" id="f2Time" value="33" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cash Invested ($)</label>
+                        <input type="number" id="f2Cash" value="0" min="0" step="1000" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Technical Expertise (%)</label>
+                        <input type="number" id="f2Tech" value="33" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Business / Ops Expertise (%)</label>
+                        <input type="number" id="f2Biz" value="33" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <p id="f2Vesting" class="text-xs text-slate-500 mt-2">After 1-year cliff: 0.0%</p>
+                </div>
+
+                <!-- Founder 3 (optional) -->
+                <div class="space-y-6">
+                    <h3 class="text-lg font-bold text-slate-800 text-center">Founder 3 (optional)</h3>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Name (optional)</label>
+                        <input type="text" id="f3Name" value="" placeholder="Leave blank if 2 founders" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Idea / Vision (%)</label>
+                        <input type="number" id="f3Idea" value="0" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Time / Sweat (%)</label>
+                        <input type="number" id="f3Time" value="0" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cash Invested ($)</label>
+                        <input type="number" id="f3Cash" value="0" min="0" step="1000" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Technical Expertise (%)</label>
+                        <input type="number" id="f3Tech" value="0" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <div class="input-card border rounded-xl p-3">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Business / Ops Expertise (%)</label>
+                        <input type="number" id="f3Biz" value="0" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                    </div>
+                    <p id="f3Vesting" class="text-xs text-slate-500 mt-2">After 1-year cliff: 0.0%</p>
+                </div>
+            </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <p class="text-sm text-slate-500 italic text-center">
+                    Updates instantly as you type
+                </p>
+                <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
+                    Share Equity Split
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-50 rounded-xl p-6 text-center">
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Founder 1</h3>
+                    <div class="text-4xl font-black text-blue-600" id="f1Equity">33.0%</div>
+                    <p class="text-sm text-slate-600 mt-2" id="f1NameDisplay">Founder 1</p>
+                    <p id="f1Vesting" class="text-xs text-slate-500 mt-2">After 1-year cliff: 0.0%</p>
+                </div>
+                <div class="bg-slate-50 rounded-xl p-6 text-center">
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Founder 2</h3>
+                    <div class="text-4xl font-black text-indigo-600" id="f2Equity">33.0%</div>
+                    <p class="text-sm text-slate-600 mt-2" id="f2NameDisplay">Founder 2</p>
+                    <p id="f2Vesting" class="text-xs text-slate-500 mt-2">After 1-year cliff: 0.0%</p>
+                </div>
+                <div class="bg-slate-50 rounded-xl p-6 text-center">
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Founder 3</h3>
+                    <div class="text-4xl font-black text-purple-600" id="f3Equity">0.0%</div>
+                    <p class="text-sm text-slate-600 mt-2" id="f3NameDisplay">(optional)</p>
+                    <p id="f3Vesting" class="text-xs text-slate-500 mt-2">After 1-year cliff: 0.0%</p>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <div class="flex justify-between text-xs font-bold text-slate-500 uppercase mb-1">
+                    <span>Equity Distribution</span>
+                    <span id="totalEquity">100%</span>
+                </div>
+                <div class="w-full h-4 bg-slate-200 rounded-full overflow-hidden flex">
+                    <div id="f1Bar" class="h-full bg-blue-500" style="width: 33%;"></div>
+                    <div id="f2Bar" class="h-full bg-indigo-500" style="width: 33%;"></div>
+                    <div id="f3Bar" class="h-full bg-purple-500" style="width: 0%;"></div>
+                </div>
+                <p class="text-xs text-slate-500 italic mt-2 text-center">
+                    Blue: Founder 1 · Indigo: Founder 2 · Purple: Founder 3
+                </p>
+            </div>
+
+            <p class="text-xs text-slate-500 italic mt-4 text-center">
+                Illustrative only. Equity splits are always subjective and should be discussed with co-founders and legal counsel.
+            </p>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Equity split model copied! Paste into co-founder discussion or investor deck.
+        </div>
+
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">How to Split Equity Fairly</h2>
+            <p>
+                Equity splits are one of the most emotional and important early decisions in a startup. There is no perfect formula, but a weighted contribution model can help start the conversation objectively.
+            </p>
+
+            <h3 class="text-2xl font-bold mt-8">Common Weighting Factors</h3>
+            <ul>
+                <li><strong>Idea / Vision:</strong> Who came up with the core concept and direction?</li>
+                <li><strong>Time / Sweat Equity:</strong> Who is committing full-time vs part-time?</li>
+                <li><strong>Cash Invested:</strong> Who put in personal money at risk?</li>
+                <li><strong>Technical Expertise:</strong> Who is building the product or has deep domain knowledge?</li>
+                <li><strong>Business / Ops Expertise:</strong> Who is driving sales, operations, fundraising?</li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mt-10">Vesting Basics</h3>
+            <p>
+                Standard founder vesting is 4 years with a 1-year cliff. This protects everyone if someone leaves early. Use the vesting preview to see how ownership evolves over time.
+            </p>
+
+            <div class="bg-indigo-50 p-8 rounded-2xl border-l-4 border-indigo-500 my-10">
+                <h4 class="text-indigo-900 font-bold mt-0">Important Reminder</h4>
+                <p class="text-indigo-800 mb-0">
+                    This calculator is a starting point for discussion, not legal advice. Equity splits should always be formalized with a co-founder agreement and vesting schedule reviewed by a startup attorney.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Related Founder Tools</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="employee-cost.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    Employee Cost (Full Burden) →
+                </a>
+                <a href="equity-dilution.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    Equity Dilution Model →
+                </a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div>
+                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+                <p class="text-sm">Empowering founders through data-driven financial modeling.</p>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="about.html" class="standard-link">About Us</a></li>
+                    <li><a href="contact.html" class="standard-link">Contact Support</a></li>
+                    <li><a href="index.html#ops" class="standard-link">Operations Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
+                    <li><a href="disclaimer.html" class="standard-link">Earnings Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calculate() {
+            // Get inputs
+            const f1Idea = parseFloat(document.getElementById('f1Idea').value) || 0;
+            const f1Time = parseFloat(document.getElementById('f1Time').value) || 0;
+            const f1Cash = parseFloat(document.getElementById('f1Cash').value) || 0;
+            const f1Tech = parseFloat(document.getElementById('f1Tech').value) || 0;
+            const f1Biz = parseFloat(document.getElementById('f1Biz').value) || 0;
+
+            const f2Idea = parseFloat(document.getElementById('f2Idea').value) || 0;
+            const f2Time = parseFloat(document.getElementById('f2Time').value) || 0;
+            const f2Cash = parseFloat(document.getElementById('f2Cash').value) || 0;
+            const f2Tech = parseFloat(document.getElementById('f2Tech').value) || 0;
+            const f2Biz = parseFloat(document.getElementById('f2Biz').value) || 0;
+
+            const f3Idea = parseFloat(document.getElementById('f3Idea').value) || 0;
+            const f3Time = parseFloat(document.getElementById('f3Time').value) || 0;
+            const f3Cash = parseFloat(document.getElementById('f3Cash').value) || 0;
+            const f3Tech = parseFloat(document.getElementById('f3Tech').value) || 0;
+            const f3Biz = parseFloat(document.getElementById('f3Biz').value) || 0;
+
+            // Normalize cash
+            const maxCash = Math.max(f1Cash, f2Cash, f3Cash, 1);
+            const f1CashScore = (f1Cash / maxCash) * 100;
+            const f2CashScore = (f2Cash / maxCash) * 100;
+            const f3CashScore = (f3Cash / maxCash) * 100;
+
+            // Total weights
+            const totalWeight = 
+                (f1Idea + f1Time + f1CashScore + f1Tech + f1Biz) +
+                (f2Idea + f2Time + f2CashScore + f2Tech + f2Biz) +
+                (f3Idea + f3Time + f3CashScore + f3Tech + f3Biz);
+
+            let f1Equity = 0, f2Equity = 0, f3Equity = 0;
+            if (totalWeight > 0) {
+                f1Equity = ((f1Idea + f1Time + f1CashScore + f1Tech + f1Biz) / totalWeight) * 100;
+                f2Equity = ((f2Idea + f2Time + f2CashScore + f2Tech + f2Biz) / totalWeight) * 100;
+                f3Equity = ((f3Idea + f3Time + f3CashScore + f3Tech + f3Biz) / totalWeight) * 100;
+            }
+
+            // Clamp to prevent rounding overflow
+            f1Equity = Math.min(100, f1Equity);
+            f2Equity = Math.min(100, f2Equity);
+            f3Equity = Math.min(100, f3Equity);
+
+            // UI Updates
+            document.getElementById('f1Equity').innerText = f1Equity.toFixed(1) + "%";
+            document.getElementById('f2Equity').innerText = f2Equity.toFixed(1) + "%";
+            document.getElementById('f3Equity').innerText = f3Equity.toFixed(1) + "%";
+
+            document.getElementById('f1NameDisplay').innerText = document.getElementById('f1Name').value || "Founder 1";
+            document.getElementById('f2NameDisplay').innerText = document.getElementById('f2Name').value || "Founder 2";
+            document.getElementById('f3NameDisplay').innerText = document.getElementById('f3Name').value || "(optional)";
+
+            document.getElementById('f1Bar').style.width = f1Equity + "%";
+            document.getElementById('f2Bar').style.width = f2Equity + "%";
+            document.getElementById('f3Bar').style.width = f3Equity + "%";
+
+            document.getElementById('totalEquity').innerText = "100%";
+
+            // Simple vesting preview (4 years, 1-year cliff) — 0% until cliff passes
+            const cliffEquity = 0;
+            document.getElementById('f1Vesting').innerText = `After 1-year cliff: ${cliffEquity.toFixed(1)}%`;
+            document.getElementById('f2Vesting').innerText = `After 1-year cliff: ${cliffEquity.toFixed(1)}%`;
+            document.getElementById('f3Vesting').innerText = `After 1-year cliff: ${cliffEquity.toFixed(1)}%`;
+        }
+
+        function shareResult() {
+            const f1 = document.getElementById('f1Equity').innerText;
+            const f2 = document.getElementById('f2Equity').innerText;
+            const f3 = document.getElementById('f3Equity').innerText;
+            const text = `My co-founder equity split: Founder 1 ${f1}, Founder 2 ${f2}, Founder 3 ${f3}\nCalculated on FounderCalculators.com/co-founder-equity-split.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
+        window.onload = calculate;
+    </script>
+</body>
+</html>
