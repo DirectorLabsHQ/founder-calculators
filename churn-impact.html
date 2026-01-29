@@ -21,6 +21,12 @@
         .input-card { transition: border-color 0.2s; }
         .input-card:focus-within { border-color: #3b82f6; }
     </style>
+<!-- Load AdSense from shared file -->
+<script>
+  fetch('/head-ads.html')
+    .then(r => r.text())
+    .then(html => document.head.innerHTML += html);
+</script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
@@ -258,3 +264,4 @@
     </script>
 </body>
 </html>
+
