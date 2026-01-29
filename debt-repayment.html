@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Startup Loan Repayment Calculator | Amortization Schedule (2026)</title>
+    <title>Startup Loan Repayment Calculator | Venture Debt Amortization</title>
     <meta name="description" content="Calculate monthly startup loan payments and total interest. Includes a full month-by-month amortization schedule and venture debt modeling for founders.">
     <link rel="canonical" href="https://foundercalculators.com/debt-repayment.html">
+    
+    <meta property="og:title" content="Startup Loan Repayment Calculator">
+    <meta property="og:description" content="Model monthly payments, total interest, and amortization for venture debt or startup loans.">
+    <meta property="og:url" content="https://foundercalculators.com/debt-repayment.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .standard-link { transition: color 0.2s; }
@@ -17,21 +24,7 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#ops" class="standard-link">Operations</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-                <a href="contact.html" class="standard-link">Contact</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
@@ -43,26 +36,30 @@
             </div>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-8 shadow-sm">
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-6">
-                    <div class="input-card border rounded-lg p-1">
+                    <div class="input-card border rounded-lg p-3 bg-slate-50/50">
                         <label class="block text-sm font-bold text-slate-700 mb-1 px-2 pt-1">Loan Principal ($)</label>
-                        <input type="number" id="amount" value="100000" oninput="calculate()" class="w-full p-2 bg-transparent outline-none transition">
+                        <input type="number" id="amount" value="100000" min="0" step="1000" oninput="calculate()" class="w-full bg-transparent outline-none transition p-3 text-lg">
                     </div>
-                    <div class="input-card border rounded-lg p-1">
-                        <label class="block text-sm font-bold text-slate-700 mb-1 px-2 pt-1">Annual Interest Rate (%)</label>
-                        <input type="number" id="rate" value="9" oninput="calculate()" class="w-full p-2 bg-transparent outline-none transition">
+                    <div class="input-card border rounded-lg p-3">
+                        <label class="block text-sm font-bold text-slate-700 mb-1 px-2 pt-1">Annual Interest Rate (APR %)</label>
+                        <input type="number" id="rate" value="9" min="0" max="30" step="0.1" oninput="calculate()" class="w-full bg-transparent outline-none transition p-3 text-lg">
                     </div>
-                    <div class="input-card border rounded-lg p-1">
+                    <div class="input-card border rounded-lg p-3">
                         <label class="block text-sm font-bold text-slate-700 mb-1 px-2 pt-1">Loan Term (Months)</label>
-                        <input type="number" id="term" value="24" oninput="calculate()" class="w-full p-2 bg-transparent outline-none transition">
+                        <input type="number" id="term" value="24" min="1" max="120" step="1" oninput="calculate()" class="w-full bg-transparent outline-none transition p-3 text-lg">
                     </div>
+
+                    <p class="text-sm text-slate-500 italic mt-4 text-center">
+                        All values assume monthly repayment. Updates instantly as you type.
+                    </p>
                 </div>
 
                 <div class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white relative overflow-hidden shadow-2xl">
-                    <span class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2 z-10">Monthly Repayment</span>
-                    <div class="text-5xl font-black mb-2 z-10" id="main-result" aria-label="Calculated monthly payment">$0</div>
+                    <span class="text-sm font-bold text-blue-400 uppercase tracking-widest mb-2 z-10">Monthly Repayment</span>
+                    <div class="text-5xl font-black mb-2 z-10" id="main-result">$0</div>
                     <p class="text-lg font-medium text-slate-400 z-10" id="result-description">Total Interest: $0</p>
                     
                     <div class="w-full mt-6 z-10">
@@ -74,6 +71,10 @@
                             <div id="interest-bar" class="h-full bg-blue-500" style="width: 0%;"></div>
                         </div>
                     </div>
+
+                    <p class="text-xs text-slate-400 mt-6">
+                        Illustrative only. Not financial advice.
+                    </p>
                 </div>
             </div>
         </div>
@@ -95,18 +96,28 @@
                         </tr>
                     </thead>
                     <tbody id="amortization-body" class="text-sm">
-                        </tbody>
+                        <!-- Dynamically populated -->
+                    </tbody>
                 </table>
             </div>
+        </div>
+
+        <!-- Share button -->
+        <div class="flex justify-center mb-12">
+            <button onclick="shareResult()" class="px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
+                Share Result
+            </button>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Loan repayment details copied! Paste into financial model or investor discussion.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
             <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Venture Debt vs. Equity Dilution</h2>
             <p>
-                For founders in 2026, debt is a strategic alternative to mid-stage equity rounds. By taking a loan instead of selling another 5% of the company, you preserve upside for yourself and your team. However, the <strong>Cost of Capital</strong> is more than just the interest rate.
+                For founders today, debt is a strategic alternative to mid-stage equity rounds. By taking a loan instead of selling another 5% of the company, you preserve upside for yourself and your team. However, the <strong>cost of capital</strong> is more than just the interest rate.
             </p>
-
-            
 
             <h3 class="text-2xl font-bold mt-8">The "DSCR" Factor: Can You Afford It?</h3>
             <p>
@@ -117,7 +128,7 @@
                 <li><strong>Danger Zone (DSCR < 1.1):</strong> A single bad month or high churn spike could prevent repayment, potentially triggering default.</li>
             </ul>
 
-            <h3 class="text-2xl font-bold mt-10 text-slate-900 uppercase tracking-tight text-sm">Related Finance Tools</h3>
+            <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Related Finance Tools</h3>
             <div class="mt-4 p-6 bg-slate-900 text-white rounded-2xl">
                 <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0 m-0">
                     <li><a href="burn-rate-runway.html" class="text-white hover:text-blue-400 transition no-underline">Burn Rate & Runway Tool →</a></li>
@@ -169,7 +180,11 @@
 
             // UI Updates
             document.getElementById('main-result').innerText = formatter.format(monthlyPayment);
-            document.getElementById('result-description').innerText = "Total Interest: " + formatter.format(totalInterest);
+            if (annualRate === 0) {
+                document.getElementById('result-description').innerText = "0% Interest Loan";
+            } else {
+                document.getElementById('result-description').innerText = "Total Interest: " + formatter.format(totalInterest);
+            }
 
             const bar = document.getElementById('interest-bar');
             const ratioLabel = document.getElementById('interest-ratio');
@@ -209,6 +224,19 @@
                 `;
                 tbody.appendChild(row);
             }
+        }
+
+        function shareResult() {
+            const monthly = document.getElementById('main-result').innerText;
+            const interest = document.getElementById('result-description').innerText;
+            const text = `My startup loan repayment: ${monthly} monthly (${interest})\nCalculated on FounderCalculators.com/debt-repayment.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
         }
 
         window.onload = calculate;
