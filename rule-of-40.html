@@ -6,6 +6,13 @@
     <title>Rule of 40 SaaS Calculator | Growth vs. Profitability Benchmarking</title>
     <meta name="description" content="Calculate your SaaS Rule of 40 score. Analyze the trade-off between growth rate and EBITDA margin to determine your startup's efficiency and valuation premium.">
     <link rel="canonical" href="https://foundercalculators.com/rule-of-40.html">
+    
+    <meta property="og:title" content="Rule of 40 SaaS Calculator">
+    <meta property="og:description" content="Benchmark your SaaS growth vs. profitability with the Rule of 40.">
+    <meta property="og:url" content="https://foundercalculators.com/rule-of-40.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .standard-link { transition: color 0.2s; }
@@ -16,24 +23,12 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Rule of 40 SaaS Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">The ultimate SaaS health metric. Are you balancing aggressive growth with capital efficiency?</p>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">The ultimate SaaS health metric. Are you balancing aggressive growth with capital efficiency?</p>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
@@ -41,13 +36,13 @@
                 <div class="space-y-6">
                     <div class="input-card border rounded-xl p-4 bg-slate-50/50">
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Annual Revenue Growth (%)</label>
-                        <input type="number" id="growthRate" value="50" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
+                        <input type="number" id="growthRate" value="50" min="-100" max="300" step="1" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
                     </div>
                     
                     <div class="input-card border rounded-xl p-4">
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">EBITDA Margin (%)</label>
-                        <input type="number" id="profitMargin" value="-15" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-slate-900">
-                        <p class="text-[10px] text-slate-400 mt-1 italic">Use a negative number if you are currently burning cash.</p>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">EBITDA / Operating Margin (%)</label>
+                        <input type="number" id="profitMargin" value="-15" min="-100" max="100" step="1" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-slate-900">
+                        <p class="text-[10px] text-slate-400 mt-1 italic">Use a negative number if you are currently burning cash. Use annualized figures for best accuracy.</p>
                     </div>
 
                     <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">
@@ -55,7 +50,9 @@
                             <span>Valuation Impact</span>
                             <span id="multiplier-label">Standard Multiple</span>
                         </div>
-                        <p class="text-xs text-blue-600 leading-tight">Rule of 40 companies often trade at a <span class="font-bold">50-100% premium</span> compared to their peers.</p>
+                        <p class="text-xs text-blue-600 leading-tight">
+                            Historically, companies consistently above 40% have correlated with higher revenue multiples, all else equal.
+                        </p>
                     </div>
                 </div>
 
@@ -75,38 +72,57 @@
                             </div>
                         </div>
                     </div>
+
+                    <p class="text-xs text-slate-600 mt-6">
+                        Illustrative benchmark only. Not financial advice.
+                    </p>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-10 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Benchmarking Result</button>
+
+            <!-- Live update hint + share button -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <p class="text-sm text-slate-500 italic text-center">
+                    Updates instantly as you type
+                </p>
+                <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
+                    Share Result
+                </button>
+            </div>
+
+            <p class="text-center text-sm text-slate-600 mt-6">
+                Want to project future MRR? → <a href="mrr-projector.html" class="text-blue-600 hover:underline">MRR Growth Projector</a>
+            </p>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Rule of 40 score copied! Paste into investor update or board deck.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
             <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">What is the Rule of 40?</h2>
             <p>
-                The Rule of 40 is a high-level metric used by venture capitalists and private equity firms to measure the performance of SaaS companies. It suggests that a company’s combined growth rate and profit margin should be <strong>40% or higher</strong>.
+                The Rule of 40 is a widely used high-level metric in SaaS to measure the balance between growth and profitability. It suggests that a company’s combined revenue growth rate and profit margin should ideally be **40% or higher**.
             </p>
-
-            
 
             <h3 class="text-2xl font-bold mt-8">The Trade-off: Growth vs. Profit</h3>
             <p>
-                As of 2026, the market has matured beyond the "growth at any cost" mindset. Investors look for balance:
+                As of the current market, investors increasingly favor balance over pure growth-at-all-costs:
             </p>
             <ul>
-                <li><strong>The Rocketship:</strong> 60% Growth + (-20% Margin) = 40% (Healthy)</li>
-                <li><strong>The Cash Cow:</strong> 10% Growth + 30% Margin = 40% (Healthy)</li>
-                <li><strong>The Danger Zone:</strong> 15% Growth + (-10% Margin) = 5% (Needs restructuring)</li>
+                <li><strong>The Rocketship:</strong> 60% Growth + (-20% Margin) = 40% (often still healthy if unit economics are strong)</li>
+                <li><strong>The Cash Cow:</strong> 10% Growth + 30% Margin = 40% (very attractive for efficiency-focused investors)</li>
+                <li><strong>The Danger Zone:</strong> 15% Growth + (-10% Margin) = 5% (signals need for restructuring)</li>
             </ul>
 
             <h3 class="text-2xl font-bold mt-10">How it Affects Valuation</h3>
             <p>
-                Data shows a direct correlation between a company's Rule of 40 score and its <strong>Revenue Multiple</strong>. Companies consistently hitting >40% often see valuations of 10x–15x ARR, whereas those under 20% may struggle to achieve 4x–5x multiples.
+                Data shows a correlation between a company's Rule of 40 score and its revenue multiple. Companies consistently hitting >40% often command higher multiples than peers with lower scores — though many other factors (market, retention, etc.) also play a role.
             </p>
 
             <div class="bg-indigo-50 p-8 rounded-2xl border-l-4 border-indigo-500 my-10">
                 <h4 class="text-indigo-900 font-bold mt-0 italic">Expert Tip: When to measure?</h4>
                 <p class="text-indigo-800 mb-0">
-                    The Rule of 40 is generally applied to companies with at least <strong>$1M - $5M in ARR</strong>. Early-stage startups often have wildly fluctuating scores that don't yet represent the long-term unit economics of the business.
+                    The Rule of 40 is generally applied to companies with at least <strong>$1M - $5M in ARR</strong>. Early-stage startups often have wildly fluctuating scores that don't yet represent long-term unit economics.
                 </p>
             </div>
 
@@ -146,7 +162,7 @@
                 scoreBox.className = "bg-emerald-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl transition-all duration-500";
                 badge.className = "mt-4 px-6 py-2 rounded-full font-bold text-sm inline-block bg-emerald-400 text-emerald-900";
                 badge.innerText = "Top Tier Performance";
-                multiplier.innerText = "Premium Multiple (2x)";
+                multiplier.innerText = "Premium Multiple Potential";
             } else if (score >= 20) {
                 scoreBox.className = "bg-blue-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl transition-all duration-500";
                 badge.className = "mt-4 px-6 py-2 rounded-full font-bold text-sm inline-block bg-blue-400 text-blue-900";
@@ -156,7 +172,7 @@
                 scoreBox.className = "bg-rose-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl transition-all duration-500";
                 badge.className = "mt-4 px-6 py-2 rounded-full font-bold text-sm inline-block bg-rose-400 text-rose-900";
                 badge.innerText = "Underperforming";
-                multiplier.innerText = "Discounted Multiple";
+                multiplier.innerText = "Discounted Multiple Risk";
             }
 
             // Quadrant Logic
@@ -169,6 +185,19 @@
             } else {
                 quadrant.innerText = "Restructuring Needed";
             }
+        }
+
+        function shareResult() {
+            const score = document.getElementById('score-result').innerText;
+            const status = document.getElementById('status-badge').innerText;
+            const text = `My SaaS Rule of 40 score: ${score} (${status})\nCalculated on FounderCalculators.com/rule-of-40.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
         }
 
         window.onload = calculate;
