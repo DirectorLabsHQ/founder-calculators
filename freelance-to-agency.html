@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agency Scaling & Contractor ROI Calculator | Freelance Growth Model</title>
-    <meta name="description" content="Calculate the number of hires needed to hit agency revenue goals. Model profit margins, billable hour capacity, and contractor costs for scaling 2026 boutique agencies.">
+    <meta name="description" content="Calculate the number of hires needed to hit agency revenue goals. Model profit margins, billable hour capacity, and contractor costs for scaling boutique agencies.">
     <link rel="canonical" href="https://foundercalculators.com/freelance-to-agency.html">
+    
+    <meta property="og:title" content="Agency Scaling & Contractor ROI Calculator">
+    <meta property="og:description" content="Model hires, margins, and capacity to scale from freelancer to boutique agency.">
+    <meta property="og:url" content="https://foundercalculators.com/freelance-to-agency.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .standard-link { transition: color 0.2s; }
@@ -16,26 +23,12 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#ops" class="standard-link">Operations</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-                <a href="contact.html" class="standard-link">Contact</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Agency Scaler & ROI Tool</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Model your transition from solo freelancer to boutique agency. Map out your hires, margins, and capacity.</p>
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Agency Scaler & ROI Tool</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Model your transition from solo freelancer to boutique agency. Map out your hires, margins, and capacity.</p>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
@@ -43,30 +36,31 @@
                 <div class="space-y-5">
                     <div class="input-card border rounded-xl p-4 bg-slate-50/50">
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Target Monthly Revenue ($)</label>
-                        <input type="number" id="target" value="50000" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
+                        <input type="number" id="target" value="50000" min="0" step="1000" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4">
                         <div class="input-card border rounded-xl p-3">
-                            <label class="block text-[10px] font-bold text-slate-500 uppercase">Avg Billable Rate ($)</label>
-                            <input type="number" id="rate" value="150" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Avg Billable Rate ($)</label>
+                            <input type="number" id="rate" value="150" min="0" step="10" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
                         </div>
                         <div class="input-card border rounded-xl p-3">
-                            <label class="block text-[10px] font-bold text-slate-500 uppercase">Contractor Cost (%)</label>
-                            <input type="number" id="cost" value="50" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Contractor Cost (% of revenue)</label>
+                            <input type="number" id="cost" value="50" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                            <p class="text-xs text-slate-400 mt-1">Includes contractors, freelancers, and delivery staff only.</p>
                         </div>
                     </div>
 
                     <div class="input-card border rounded-xl p-3">
-                        <label class="block text-sm font-bold text-slate-700 mb-1">Target Billable Hours per Staff <span class="text-slate-400 font-normal">(Monthly)</span></label>
-                        <input type="number" id="utilization" value="120" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
-                        <p class="text-[10px] text-slate-400 mt-1">120 hrs/mo allows for 25% non-billable time (admin/learning).</p>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Target Billable Hours per Staff (Monthly)</label>
+                        <input type="number" id="utilization" value="120" min="40" max="200" step="10" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        <p class="text-xs text-slate-400 mt-1">120 hrs/mo allows for 25% non-billable time (admin/learning). Updates instantly as you type.</p>
                     </div>
                 </div>
 
                 <div id="profit-accent" class="bg-blue-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl relative overflow-hidden">
                     <div class="relative z-10">
-                        <span class="text-xs font-bold text-blue-100 uppercase tracking-widest mb-2 block">Monthly Gross Profit</span>
+                        <span class="text-xs font-bold text-blue-100 uppercase tracking-widest mb-2 block">Monthly Gross Profit (Before Overhead)</span>
                         <div class="text-6xl font-black mb-2" id="profit-result">$25,000</div>
                         
                         <div class="mt-6 pt-6 border-t border-blue-500/50 space-y-3">
@@ -80,9 +74,16 @@
                             </div>
                         </div>
                     </div>
+
+                    <p class="text-xs text-blue-100 mt-6">
+                        Illustrative only. Not financial advice.
+                    </p>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-10 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Project Agency Capacity</button>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Agency scaling model copied! Paste into hiring plan or investor deck.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
@@ -91,10 +92,8 @@
                 Scaling an agency is essentially a game of **capacity management**. As a freelancer, you sell your own time. As an agency owner, you sell the time of others and keep the spread (margin) between what you charge the client and what you pay the talent.
             </p>
 
-            
-
             <h3 class="text-2xl font-bold mt-8">The 50/25/25 Rule for Agencies</h3>
-            <p>Sustainable boutique agencies in 2026 often follow this financial blueprint:</p>
+            <p>Sustainable boutique agencies often follow this financial blueprint:</p>
             <ul>
                 <li><strong>50% Cost of Goods Sold (COGS):</strong> Half of your revenue should go directly to the people doing the work.</li>
                 <li><strong>25% Operating Expenses:</strong> Sales, marketing, software, and your own base salary.</li>
@@ -128,9 +127,32 @@
         </article>
     </main>
 
-    <footer class="bg-white border-t py-16 text-slate-500 text-center">
-        <p class="font-bold text-slate-900">FounderCalculators.com</p>
-        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div>
+                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+                <p class="text-sm">Empowering founders through data-driven financial modeling.</p>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="about.html" class="standard-link">About Us</a></li>
+                    <li><a href="contact.html" class="standard-link">Contact Support</a></li>
+                    <li><a href="index.html#finance" class="standard-link">Financial Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
+                    <li><a href="disclaimer.html" class="standard-link">Earnings Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script>
@@ -138,7 +160,10 @@
             const target = parseFloat(document.getElementById('target').value) || 0;
             const rate = parseFloat(document.getElementById('rate').value) || 1;
             const costPct = parseFloat(document.getElementById('cost').value) / 100 || 0;
-            const util = parseFloat(document.getElementById('utilization').value) || 1;
+            let util = parseFloat(document.getElementById('utilization').value) || 1;
+
+            // Guardrail: min utilization to avoid division by zero or absurdity
+            util = Math.max(40, util);
 
             const grossProfit = target * (1 - costPct);
             const totalHoursNeeded = target / rate;
@@ -166,6 +191,20 @@
                 accent.className = "bg-blue-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl relative overflow-hidden";
             }
         }
+
+        function shareResult() {
+            const profit = document.getElementById('profit-result').innerText;
+            const staff = document.getElementById('staff-needed').innerText;
+            const text = `My agency scaling model: ${profit} monthly gross profit (before overhead) (${staff} delivery staff needed)\nCalculated on FounderCalculators.com/freelance-to-agency.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
         window.onload = calculate;
     </script>
 </body>
