@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAC Payback Period Calculator | SaaS Efficiency Tool</title>
+    <meta name="description" content="Calculate how many months it takes to recover your customer acquisition cost (CAC). Model payback period based on monthly gross profit per customer.">
+    <link rel="canonical" href="https://foundercalculators.com/cac-payback.html">
+    
+    <meta property="og:title" content="CAC Payback Period Calculator">
+    <meta property="og:description" content="See how long it takes to break even on customer acquisition spend.">
+    <meta property="og:url" content="https://foundercalculators.com/cac-payback.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+        #payback-bar { transition: width 0.8s ease-out; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+
+    <script src="/nav.js"></script>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">CAC Payback Period Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">How many months does it take to recover your customer acquisition cost? Benchmark against SaaS standards.</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-6">
+                    <div class="input-card border rounded-xl p-4 bg-slate-50/50">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Customer Acquisition Cost (CAC) ($)</label>
+                        <input type="number" id="cac" value="1200" min="0" step="50" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
+                    </div>
+                    
+                    <div class="input-card border rounded-xl p-4">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Monthly Gross Profit per Customer ($)</label>
+                        <input type="number" id="monthlyProfit" value="100" min="0" step="10" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-slate-900">
+                        <p class="text-xs text-slate-400 mt-1">ARPU × Gross Margin (e.g., $150 ARPU × 67% margin = $100).</p>
+                    </div>
+
+                    <div class="input-card border rounded-xl p-4 bg-slate-50/50">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Target Payback Period (Months)</label>
+                        <input type="number" id="targetMonths" value="12" min="1" max="36" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        <p class="text-xs text-slate-400 mt-1">Common benchmarks: <12 months = healthy, >18 months = risky.</p>
+                    </div>
+
+                    <p class="text-sm text-slate-500 italic mt-4 text-center">
+                        Updates instantly as you type
+                    </p>
+                </div>
+
+                <div id="payback-card" class="rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl relative overflow-hidden bg-white border border-slate-200">
+                    <span class="text-xs font-bold uppercase tracking-widest mb-2 block" id="status-label">Payback Period</span>
+                    <div class="text-7xl font-black mb-4 text-slate-900" id="months-result">12 mo</div>
+                    <p class="text-sm font-medium mb-6" id="status-text">Healthy</p>
+                    
+                    <div class="w-full mt-4">
+                        <div class="flex justify-between text-xs font-bold text-slate-500 uppercase mb-1">
+                            <span>Progress Toward Target</span>
+                            <span id="progress-percent">100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                            <div id="payback-bar" class="h-full bg-blue-500 transition-all duration-500" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-600 mt-6" id="zero-warning" style="display:none;">
+                        No payback possible (monthly profit = 0)
+                    </p>
+
+                    <p class="text-xs text-slate-600 mt-6">
+                        Illustrative only. Not financial advice.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Share button -->
+            <div class="mt-8 flex justify-center">
+                <button onclick="shareResult()" class="px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
+                    Share Payback Model
+                </button>
+            </div>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            CAC payback model copied! Paste into investor deck or financial model.
+        </div>
+
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">What is CAC Payback Period?</h2>
+            <p>
+                CAC Payback Period measures how many months it takes for a customer to generate enough gross profit to recover the cost of acquiring them. It’s one of the most watched SaaS efficiency metrics by investors.
+            </p>
+
+            <h3 class="text-2xl font-bold mt-8">Why It Matters</h3>
+            <p>
+                A short payback period means your business can reinvest cash quickly and grow faster with less external capital. A long payback period signals higher risk — especially if burn is high.
+            </p>
+            <ul>
+                <li><strong>&lt; 12 months:</strong> Healthy / attractive to investors</li>
+                <li><strong>12–18 months:</strong> Acceptable for many growth-stage SaaS</li>
+                <li><strong>&gt; 18 months:</strong> Risky — often requires pricing, margin, or CAC optimization</li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mt-10">Quick Formula</h3>
+            <div class="bg-slate-100 p-6 rounded-xl font-mono text-sm border-l-4 border-blue-500">
+                Payback Period (months) = CAC / Monthly Gross Profit per Customer
+            </div>
+
+            <div class="bg-indigo-50 p-8 rounded-2xl border-l-4 border-indigo-500 my-10">
+                <h4 class="text-indigo-900 font-bold mt-0">Rule of Thumb (2026)</h4>
+                <p class="text-indigo-800 mb-0">
+                    Most top-tier SaaS companies target <strong>&lt;12 months</strong> payback. If you're >18 months, focus on increasing ARPU, improving gross margins, or lowering CAC before aggressive scaling.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Related SaaS Tools</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="cac-ltv-ratio.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    CAC to LTV Ratio →
+                </a>
+                <a href="unit-economics.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                    Unit Economics Guide →
+                </a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="bg-white border-t py-16 text-slate-500 text-center">
+        <p class="font-bold text-slate-900">FounderCalculators.com</p>
+        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function calculate() {
+            const cac = parseFloat(document.getElementById('cac').value) || 0;
+            const monthlyProfit = parseFloat(document.getElementById('monthlyProfit').value) || 0;
+            const targetMonths = parseFloat(document.getElementById('targetMonths').value) || 12;
+
+            let paybackMonths = 0;
+            let statusText = "Healthy";
+            let statusLabel = "Payback Period";
+            let progressPercent = 0;
+
+            if (monthlyProfit > 0) {
+                paybackMonths = cac / monthlyProfit;
+                progressPercent = Math.min(100, (targetMonths / paybackMonths) * 100);
+            } else if (monthlyProfit === 0) {
+                paybackMonths = "—";
+                statusText = "No payback possible (monthly profit = 0)";
+                progressPercent = 0;
+            }
+
+            // UI Updates
+            document.getElementById('months-result').innerText = typeof paybackMonths === 'number' ? paybackMonths.toFixed(1) + " mo" : paybackMonths;
+            document.getElementById('progress-percent').innerText = Math.round(progressPercent) + "% of target";
+
+            const bar = document.getElementById('payback-bar');
+            bar.style.width = progressPercent + "%";
+
+            const card = document.getElementById('payback-card');
+            const statusLbl = document.getElementById('status-label');
+            const statusTxt = document.getElementById('status-text');
+            const zeroWarning = document.getElementById('zero-warning');
+
+            zeroWarning.style.display = (monthlyProfit === 0) ? "block" : "none";
+
+            if (monthlyProfit > 0) {
+                if (paybackMonths <= 12) {
+                    card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-emerald-50 border border-emerald-100";
+                    statusLbl.innerText = "Healthy Payback";
+                    statusTxt.innerText = "Strong efficiency";
+                    bar.className = "h-full bg-emerald-500 transition-all duration-500";
+                } else if (paybackMonths <= 18) {
+                    card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-amber-50 border border-amber-100";
+                    statusLbl.innerText = "Caution Zone";
+                    statusTxt.innerText = "Acceptable but optimize";
+                    bar.className = "h-full bg-amber-500 transition-all duration-500";
+                } else {
+                    card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-rose-50 border border-rose-100";
+                    statusLbl.innerText = "Risky Payback";
+                    statusTxt.innerText = "Needs attention";
+                    bar.className = "h-full bg-rose-500 transition-all duration-500";
+                }
+            } else {
+                card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-gray-50 border border-gray-200";
+                statusLbl.innerText = "No Payback";
+                statusTxt.innerText = "Monthly profit = 0";
+                bar.className = "h-full bg-gray-400 transition-all duration-500";
+            }
+        }
+
+        function shareResult() {
+            const months = document.getElementById('months-result').innerText;
+            const status = document.getElementById('status-text').innerText;
+            const text = `My CAC payback period: ${months} (${status})\nCalculated on FounderCalculators.com/cac-payback.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
+        window.onload = calculate;
+    </script>
+</body>
+</html>
