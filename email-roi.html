@@ -3,54 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Marketing ROI Calculator | FounderCalculators</title>
+    <title>Email Marketing ROI Calculator | List Revenue Modeler</title>
     <meta name="description" content="Calculate the return on your email marketing efforts. Estimate revenue based on list size, open rates, and conversion metrics.">
     <link rel="canonical" href="https://foundercalculators.com/email-roi.html">
+    
+    <meta property="og:title" content="Email Marketing ROI Calculator">
+    <meta property="og:description" content="Estimate revenue from your email list based on size, click rate, and conversions.">
+    <meta property="og:url" content="https://foundercalculators.com/email-roi.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .standard-link { transition: color 0.2s; }
+        .standard-link:hover { color: #2563eb; text-decoration: underline; }
+        .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-    <nav class="border-b bg-white py-4">
-        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl text-blue-600">FounderCalculators<span class="text-slate-400">.com</span></a>
-            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600">← Back to Toolbox</a>
-        </div>
-    </nav>
+
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Email Marketing ROI Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Predict how much revenue your email list should be generating based on list health.</p>
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Email Marketing ROI Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Predict how much revenue your email list should be generating based on list health.</p>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-8 mb-12 shadow-sm">
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">List Size</label>
-                        <input type="number" id="listSize" value="10000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <div class="input-card border rounded-xl p-4 bg-slate-50/50">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">List Size</label>
+                        <input type="number" id="listSize" value="10000" min="0" step="100" oninput="calculate()" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Avg Click Rate (%)</label>
-                        <input type="number" id="clickRate" value="3" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <div class="input-card border rounded-xl p-4">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Avg Click-Through Rate (% of list)</label>
+                        <input type="number" id="clickRate" value="3" min="0" max="100" step="0.1" oninput="calculate()" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Avg Sale Value ($)</label>
-                        <input type="number" id="saleValue" value="50" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <div class="input-card border rounded-xl p-4">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Click-to-Sale Conversion (%)</label>
+                        <input type="number" id="conversionRate" value="10" min="0" max="100" step="0.1" oninput="calculate()" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
+                    <div class="input-card border rounded-xl p-4">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Avg Sale Value ($)</label>
+                        <input type="number" id="saleValue" value="50" min="0" step="1" oninput="calculate()" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
+                    </div>
+
+                    <p class="text-sm text-slate-500 italic mt-4 text-center">
+                        Updates instantly as you type
+                    </p>
                 </div>
 
-                <div class="bg-orange-50 rounded-xl p-8 flex flex-col justify-center items-center text-center border border-orange-100">
-                    <span class="text-sm font-semibold text-orange-600 uppercase tracking-wider mb-2">Estimated Revenue</span>
-                    <div class="text-5xl font-black text-slate-900 mb-4" id="email-result">$1,500</div>
-                    <p class="text-sm text-slate-500">Per Campaign Sent</p>
+                <div class="bg-orange-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-orange-100">
+                    <span class="text-sm font-bold text-orange-600 uppercase tracking-wider mb-2">Projected Gross Revenue</span>
+                    <div class="text-5xl md:text-6xl font-black mb-4 text-slate-900" id="email-result">$1,500</div>
+                    <p class="text-sm text-slate-500">Per Campaign Sent (top-line estimate)</p>
+
+                    <p class="text-xs text-slate-600 mt-6">
+                        Illustrative only. Not financial advice.
+                    </p>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 text-white rounded-lg font-bold text-lg shadow-lg">Project Email ROI</button>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Email ROI estimate copied! Paste into marketing plan or investor update.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-2xl font-bold mb-4">Email ROI Benchmarks</h2>
-            <p>Email remains one of the highest ROI channels for founders. <strong>In 2026, every $1 spent on email marketing typically returns $36-$40 in revenue</strong> for established lists.</p>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Email ROI Benchmarks</h2>
+            <p>
+                Email remains one of the highest ROI channels for founders. In the current environment, every $1 spent on email marketing is often cited as returning $36–$42 in revenue for established lists.
+            </p>
 
             <div class="mt-12 p-6 bg-slate-100 rounded-xl">
                 <h3 class="text-lg font-bold mb-3 mt-0">Related Founder Calculators</h3>
@@ -63,14 +88,35 @@
         </article>
     </main>
 
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p class="font-bold text-slate-900">FounderCalculators.com</p>
+            <p class="text-xs uppercase tracking-widest opacity-50 mt-4">&copy; 2026 All Rights Reserved.</p>
+        </div>
+    </footer>
+
     <script>
         function calculate() {
             const list = parseFloat(document.getElementById('listSize').value) || 0;
             const click = parseFloat(document.getElementById('clickRate').value) / 100 || 0;
+            const conversion = parseFloat(document.getElementById('conversionRate').value) / 100 || 0;
             const sale = parseFloat(document.getElementById('saleValue').value) || 0;
-            const total = list * click * 0.1 * sale; // Assume 10% of clicks convert to sales
+            const total = list * click * conversion * sale;
             document.getElementById('email-result').innerText = "$" + Math.round(total).toLocaleString();
         }
+
+        function shareResult() {
+            const revenue = document.getElementById('email-result').innerText;
+            const text = `My email marketing ROI estimate: ${revenue} per campaign\nCalculated on FounderCalculators.com/email-roi.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
         window.onload = calculate;
     </script>
 </body>
