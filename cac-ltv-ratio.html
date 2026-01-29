@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAC to LTV Ratio Calculator | Unit Economics Guide (2026)</title>
+    <title>LTV:CAC Ratio Calculator (Startup Unit Economics Tool)</title>
     <meta name="description" content="Calculate your LTV:CAC ratio instantly. Learn if your startup is spending too much on acquisition and discover benchmarks for healthy unit economics.">
     <link rel="canonical" href="https://foundercalculators.com/cac-ltv-ratio.html">
+    
+    <meta property="og:title" content="LTV:CAC Ratio Calculator">
+    <meta property="og:description" content="Benchmark your customer acquisition cost vs lifetime value for scalable growth.">
+    <meta property="og:url" content="https://foundercalculators.com/cac-ltv-ratio.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .standard-link { transition: color 0.2s; }
@@ -17,29 +24,15 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <a href="index.html#ops" class="standard-link">Operations</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-                <a href="contact.html" class="standard-link">Contact</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">CAC to LTV Ratio Calculator</h1>
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">LTV:CAC Ratio Calculator</h1>
             <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Are you spending too much to acquire a customer? Analyze your unit economics efficiency in real-time.</p>
             
             <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm text-slate-700 max-w-2xl mx-auto text-left leading-relaxed">
-                <strong>Educational Notice:</strong> This calculator is for illustrative purposes only and does not constitute financial or investment advice. Unit economics can vary wildly by industry, geography, and business model.
+                <strong>Educational Notice:</strong> This calculator is for illustrative purposes only and does not constitute financial or investment advice. Unit economics can vary widely by industry, geography, and business model.
             </div>
         </div>
 
@@ -48,25 +41,37 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-1">Lifetime Value (LTV) ($)</label>
-                        <input type="number" id="ltv" value="3000" oninput="calculate()" class="input-focus w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none shadow-sm">
-                        <p class="text-xs text-slate-400 mt-2 italic">Total revenue expected from one customer over their lifetime. Example: $3,000.</p>
+                        <input type="number" id="ltv" value="3000" min="0" step="100" oninput="calculate()" class="input-focus w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none shadow-sm">
+                        <p class="text-xs text-slate-400 mt-2 italic">Total gross-margin-adjusted revenue expected from one customer over their lifetime. Example: $3,000.</p>
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-1">Acquisition Cost (CAC) ($)</label>
-                        <input type="number" id="cac" value="1000" oninput="calculate()" class="input-focus w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none shadow-sm">
+                        <input type="number" id="cac" value="1000" min="0" step="10" oninput="calculate()" class="input-focus w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none shadow-sm">
                         <p class="text-xs text-slate-400 mt-2 italic">Total Sales & Marketing spend divided by new customers. Example: $1,000.</p>
                     </div>
+
+                    <p class="text-sm text-slate-500 italic mt-4 text-center">
+                        Updates instantly as you type
+                    </p>
                 </div>
 
                 <div id="ratio-card" class="bg-green-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-green-100">
                     <span class="text-sm font-bold text-green-600 uppercase tracking-widest mb-2" id="status-label">Healthy Ratio</span>
-                    <div class="text-6xl font-black text-slate-900 mb-4" id="ratio-result" aria-label="Customer Acquisition Cost to Lifetime Value ratio">3.0x</div>
+                    <div class="text-6xl font-black text-slate-900 mb-4" id="ratio-result">3.0x</div>
                     <div class="w-full bg-white/50 rounded-full h-2 mb-4 overflow-hidden">
                         <div id="health-bar" class="bg-green-500 h-full transition-all duration-500" style="width: 60%;"></div>
                     </div>
                     <p class="text-sm font-bold text-slate-700" id="ratio-status">Target: 3:1 or better</p>
+
+                    <p class="text-xs text-slate-600 mt-6">
+                        Illustrative only. Not financial advice.
+                    </p>
                 </div>
             </div>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            LTV:CAC ratio copied! Paste into investor deck or financial model.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
@@ -75,11 +80,9 @@
                 The <strong>LTV to CAC ratio</strong> measures the relationship between the lifetime value of a customer and the cost of acquiring that customer. It is the primary signal used by venture capitalists to determine if a business has a scalable "money machine."
             </p>
 
-            
-
             <h3 class="text-2xl font-bold mt-8">What Happens if Your CAC Exceeds LTV?</h3>
             <p>
-                If your ratio falls below 1:1, you are in the <strong>"Value Destruction"</strong> zone. This means every customer you acquire actually makes your business poorer. In 2026, growth at the expense of unit economics is no longer a viable strategy for fundraising. You must either increase your prices, improve retention to boost LTV, or optimize your marketing channels to lower CAC.
+                If your ratio falls below 1:1, you are in the <strong>"Value Destruction"</strong> zone. This means every customer you acquire actually makes your business poorer. In the current environment, growth at the expense of unit economics is no longer a viable strategy for fundraising. You must either increase prices, improve retention to boost LTV, or optimize marketing channels to lower CAC.
             </p>
 
             <h3 class="text-2xl font-bold mt-8">Benchmark Table: Interpretation of Results</h3>
@@ -95,17 +98,17 @@
                     <tbody>
                         <tr>
                             <td class="px-4 py-3 border-b font-bold text-red-600">&lt; 2.0x</td>
-                            <td class="px-4 py-3 border-b font-bold">Warning</td>
+                            <td class="px-4 py-3 border-b font-bold">Value Destruction</td>
                             <td class="px-4 py-3 border-b">Inefficient. Focus on product-market fit and reducing sales cycle length.</td>
                         </tr>
                         <tr>
                             <td class="px-4 py-3 border-b font-bold text-amber-600">2.0x - 3.0x</td>
-                            <td class="px-4 py-3 border-b font-bold">Caution</td>
+                            <td class="px-4 py-3 border-b font-bold">Fragile</td>
                             <td class="px-4 py-3 border-b">Average. Look for "leaky buckets" in your churn rate to increase LTV.</td>
                         </tr>
                         <tr class="bg-green-50">
                             <td class="px-4 py-3 border-b font-bold text-green-700">3.0x - 5.0x</td>
-                            <td class="px-4 py-3 border-b font-bold">Healthy</td>
+                            <td class="px-4 py-3 border-b font-bold">Scalable</td>
                             <td class="px-4 py-3 border-b">The Gold Standard. You are ready to scale marketing spend aggressively.</td>
                         </tr>
                         <tr>
@@ -138,6 +141,10 @@
                         <h4 class="font-bold text-blue-600">How often should I calculate this?</h4>
                         <p class="text-slate-600 text-sm">Monthly. Because ad platforms and seasonal churn fluctuate, your LTV:CAC is a living metric. We recommend using automated expense tracking to keep these numbers fresh.</p>
                     </div>
+                    <div>
+                        <h4 class="font-bold text-blue-600">Monthly vs Blended CAC — what's the difference?</h4>
+                        <p class="text-slate-600 text-sm">Monthly CAC is your current spend divided by new customers in that month. Blended CAC includes organic and paid channels over time. Use monthly for tactical decisions, blended for long-term planning.</p>
+                    </div>
                 </div>
             </div>
 
@@ -163,7 +170,7 @@
                 <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
                 <ul class="text-sm space-y-2">
                     <li><a href="about.html" class="standard-link">About Us</a></li>
-                    <li><a href="contact.html" class="standard-link">Contact Support</a></li>
+                    <li><a href="contact.html" class="standard-link">Contact</a></li>
                     <li><a href="index.html#growth" class="standard-link">Growth Tools</a></li>
                 </ul>
             </div>
@@ -184,42 +191,66 @@
     <script>
         function calculate() {
             const ltv = parseFloat(document.getElementById('ltv').value) || 0;
-            const cac = parseFloat(document.getElementById('cac').value) || 1;
-            const ratio = (ltv / cac).toFixed(1);
+            const cac = parseFloat(document.getElementById('cac').value) || 0;
             
+            const ratioCard = document.getElementById('ratio-card');
             const resultDisplay = document.getElementById('ratio-result');
             const statusDisplay = document.getElementById('ratio-status');
             const statusLabel = document.getElementById('status-label');
-            const card = document.getElementById('ratio-card');
             const bar = document.getElementById('health-bar');
-            
+
+            if (cac <= 0) {
+                resultDisplay.innerText = "N/A";
+                statusDisplay.innerText = "Invalid input (CAC must be > 0)";
+                statusLabel.innerText = "Error";
+                bar.style.width = "0%";
+                ratioCard.className = "bg-gray-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-gray-200";
+                statusLabel.className = "text-sm font-bold text-gray-600 uppercase tracking-widest mb-2";
+                bar.className = "bg-gray-400 h-full transition-all duration-500";
+                return;
+            }
+
+            const ratio = (ltv / cac).toFixed(1);
             resultDisplay.innerText = ratio + "x";
-            
+
             // Logic for visual feedback
-            let colorClass = "";
-            let barWidth = Math.min((ratio / 5) * 100, 100);
+            let barWidth = Math.min((ratio / 4) * 100, 100); // Cap visual at 4x (reinforces 3:1 target)
             bar.style.width = barWidth + "%";
 
             if (ratio < 2) {
-                statusLabel.innerText = "Warning Ratio";
+                statusLabel.innerText = "Value Destruction";
                 statusDisplay.innerText = "Critical Efficiency Level";
-                card.className = "bg-red-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-red-100";
+                ratioCard.className = "bg-red-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-red-100";
                 statusLabel.className = "text-sm font-bold text-red-600 uppercase tracking-widest mb-2";
                 bar.className = "bg-red-500 h-full transition-all duration-500";
             } else if (ratio < 3) {
-                statusLabel.innerText = "Caution Ratio";
+                statusLabel.innerText = "Fragile";
                 statusDisplay.innerText = "Room for Improvement";
-                card.className = "bg-amber-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-amber-100";
+                ratioCard.className = "bg-amber-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-amber-100";
                 statusLabel.className = "text-sm font-bold text-amber-600 uppercase tracking-widest mb-2";
                 bar.className = "bg-amber-500 h-full transition-all duration-500";
             } else {
-                statusLabel.innerText = "Healthy Ratio";
-                statusDisplay.innerText = "3:1 or Better (Scalable)";
-                card.className = "bg-green-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-green-100";
+                statusLabel.innerText = "Scalable";
+                statusDisplay.innerText = "3:1 or Better (Healthy)";
+                ratioCard.className = "bg-green-50 rounded-2xl p-8 flex flex-col justify-center items-center text-center border border-green-100";
                 statusLabel.className = "text-sm font-bold text-green-600 uppercase tracking-widest mb-2";
                 bar.className = "bg-green-500 h-full transition-all duration-500";
             }
         }
+
+        function shareResult() {
+            const ratio = document.getElementById('ratio-result').innerText;
+            const status = document.getElementById('status-label').innerText;
+            const text = `My LTV:CAC ratio: ${ratio}x (${status})\nCalculated on FounderCalculators.com/cac-ltv-ratio.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
         window.onload = calculate;
     </script>
 </body>
