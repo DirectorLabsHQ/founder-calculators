@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equity Dilution Calculator | Post-Money Valuation Modeler (2026)</title>
+    <title>Equity Dilution Calculator | Post-Money Valuation Modeler</title>
     <meta name="description" content="Calculate founder dilution for Seed and Series A rounds. Model post-money valuation, investment stakes, and option pool expansion effects on ownership.">
     <link rel="canonical" href="https://foundercalculators.com/equity-dilution.html">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,21 +16,7 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#ops" class="standard-link">Operations</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-                <a href="contact.html" class="standard-link">Contact</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
@@ -52,14 +38,16 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div class="input-card border rounded-xl p-3">
                             <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Current Ownership (%)</label>
-                            <input type="number" id="currentOwn" value="100" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                            <input type="number" id="currentOwn" value="100" min="0" max="100" step="0.1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
                         </div>
                         <div class="input-card border rounded-xl p-3">
                             <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">New Option Pool (%)</label>
-                            <input type="number" id="pool" value="10" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                            <input type="number" id="pool" value="10" min="0" max="30" step="0.5" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
                         </div>
                     </div>
-                    <p class="text-[11px] text-slate-400 italic leading-tight">Note: New Option Pool percentages are typically calculated on a **post-money** basis, diluting existing shareholders before the new investor. This tool models that "top-off" effect.</p>
+                    <p class="text-[11px] text-slate-400 italic leading-tight">
+                        Note: Option pools are typically created on a **post-money** basis, diluting existing shareholders before the investor. This tool models that common "top-off" effect.
+                    </p>
                 </div>
 
                 <div class="bg-indigo-950 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl relative overflow-hidden">
@@ -76,9 +64,38 @@
                             <span>OTHERS</span>
                         </div>
                     </div>
+
+                    <p class="text-xs text-indigo-300 mt-6">
+                        Based on standard VC term sheet structures
+                    </p>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Update Dilution Model</button>
+
+            <!-- Live update hint + share button -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <p class="text-sm text-slate-500 italic text-center">
+                    Updates instantly as you type
+                </p>
+                <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
+                    Share Result
+                </button>
+            </div>
+
+            <p class="text-center text-sm text-slate-600 mt-6">
+                Want to model multi-round dilution? → <a href="index.html#finance" class="text-indigo-600 hover:underline">Explore more finance tools</a>
+            </p>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Dilution results copied! Paste into cap table notes, investor deck, or X thread.
+        </div>
+
+        <!-- Founder Reality Check -->
+        <div class="bg-amber-50 p-6 rounded-xl border-l-4 border-amber-500 mb-10">
+            <p class="text-amber-900 font-semibold">
+                Reality check: Most founders end up owning 10–20% at exit after multiple rounds.  
+                The goal isn’t avoiding dilution — it’s growing the value of your slice.
+            </p>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
@@ -87,11 +104,9 @@
                 Every time you raise capital, you issue new shares. This increases the total number of shares in the company, meaning your "slice of the pie" becomes a smaller percentage of a (hopefully) much larger pie.
             </p>
 
-            
-
             <h3 class="text-2xl font-bold mt-8">Pre-Money vs. Post-Money</h3>
             <p>
-                The <strong>Pre-Money Valuation</strong> is what the company is worth before the check hits the bank. The <strong>Post-Money Valuation</strong> is simply that value plus the new cash. 
+                The <strong>Pre-Money Valuation</strong> is what the company is worth before the new money comes in. The <strong>Post-Money Valuation</strong> is simply that value plus the investment.
             </p>
             <div class="bg-slate-100 p-6 rounded-xl font-mono text-sm space-y-2 border-l-4 border-indigo-500">
                 <p>Post-Money = Pre-Money + Investment</p>
@@ -100,35 +115,32 @@
 
             <h3 class="text-2xl font-bold mt-10">The "Hidden" Dilution: Option Pool Shuffle</h3>
             <p>
-                Most lead investors require an <strong>Employee Stock Option Pool (ESOP)</strong> to be created or increased <em>before</em> they invest. This is often referred to as the "Option Pool Shuffle." 
-            </p>
-            <p>
-                Because the pool is created from the "Pre-money" cap table, the dilution falls entirely on the founders, not the new investor. For example, if an investor asks for a 10% post-money pool, your ownership might drop by 12-13% once the investment is also factored in.
+                Most investors require an <strong>Employee Stock Option Pool (ESOP)</strong> to be created or topped up <em>before</em> they invest. This dilution typically falls on existing shareholders (especially founders), not the new investor. A 10% post-money pool can effectively dilute founders by 12–15% once the investment closes.
             </p>
 
-            <h3 class="text-2xl font-bold mt-10">Typical Dilution by Round</h3>
+            <h3 class="text-2xl font-bold mt-10">Common Dilution Ranges by Round</h3>
             <table class="min-w-full text-sm">
                 <thead>
                     <tr class="border-b">
                         <th class="text-left py-2">Funding Stage</th>
-                        <th class="text-left py-2">Typical Dilution</th>
+                        <th class="text-left py-2">Common Founder Dilution</th>
                         <th class="text-left py-2">Investor Target Stake</th>
                     </tr>
                 </thead>
                 <tbody class="text-slate-600">
                     <tr class="border-b">
                         <td class="py-2 font-bold text-slate-900">Pre-Seed</td>
-                        <td class="py-2">5% - 10%</td>
+                        <td class="py-2">5–15%</td>
                         <td class="py-2">Accelerators / Angels</td>
                     </tr>
                     <tr class="border-b">
                         <td class="py-2 font-bold text-slate-900">Seed Round</td>
-                        <td class="py-2">15% - 25%</td>
+                        <td class="py-2">15–25%</td>
                         <td class="py-2">Lead Seed Funds</td>
                     </tr>
                     <tr>
                         <td class="py-2 font-bold text-slate-900">Series A</td>
-                        <td class="py-2">20% - 30%</td>
+                        <td class="py-2">20–30%</td>
                         <td class="py-2">Venture Capital firms</td>
                     </tr>
                 </tbody>
@@ -137,7 +149,7 @@
             <div class="mt-12 p-8 bg-indigo-50 rounded-2xl border border-indigo-100">
                 <h4 class="text-indigo-900 font-bold mt-0 italic text-lg text-center">"It's better to own 10% of a unicorn than 100% of a zero."</h4>
                 <p class="text-indigo-800 mb-0 text-sm text-center">
-                    Dilution is a natural part of scaling. Focus on the <strong>Value of your Stake</strong> (Post-Money × Ownership %) rather than just the percentage itself.
+                    Dilution is a natural part of scaling. Focus on the <strong>value of your stake</strong> (Post-Money × Ownership %) rather than just the percentage itself.
                 </p>
             </div>
         </article>
@@ -157,15 +169,10 @@
 
             const postMoney = preMoney + investment;
             
-            // Investor stake
+            // Correct sequence: pool dilutes first
+            const afterPoolOwnership = currentOwn * (1 - optionPool);
             const investorStake = postMoney > 0 ? (investment / postMoney) : 0;
-            
-            // The founder dilution happens in two steps in a typical term sheet:
-            // 1. Investor takes their cut of the post-money
-            // 2. Option pool is carved out of the pre-money but expressed as % of post-money
-            // New Founder Ownership = Current % * (1 - Investor Stake - Option Pool Stake)
-            
-            let newOwn = currentOwn * (1 - investorStake - optionPool);
+            let newOwn = afterPoolOwnership * (1 - investorStake);
             if (newOwn < 0) newOwn = 0;
 
             // Formatter
@@ -178,8 +185,22 @@
             // UI Updates
             document.getElementById('own-result').innerText = newOwn.toFixed(1) + "%";
             document.getElementById('post-money-label').innerText = "Post-money: " + currencyFormatter.format(postMoney);
-            document.getElementById('ownership-bar').style.width = newOwn + "%";
+            document.getElementById('ownership-bar').style.width = Math.min(100, Math.max(0, newOwn)) + "%";
         }
+
+        function shareResult() {
+            const ownership = document.getElementById('own-result').innerText;
+            const postMoney = document.getElementById('post-money-label').innerText;
+            const text = `My post-round ownership: ${ownership} (${postMoney})\nCalculated on FounderCalculators.com/equity-dilution.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
         window.onload = calculate;
     </script>
 </body>
