@@ -25,26 +25,17 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#ops" class="standard-link">Operations</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-                <a href="contact.html" class="standard-link">Contact</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Burn Rate & Runway Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Determine exactly how much time your startup has to reach profitability or raise your next round.</p>
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Startup Burn Rate & Runway Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-4">
+                Determine exactly how much time your startup has to reach profitability or raise your next round.
+            </p>
+            <p class="text-base text-slate-700 max-w-2xl mx-auto mb-6 font-medium">
+                Burn rate is how much cash your startup loses per month (after revenue). Runway is how long you can operate before cash runs out.
+            </p>
             
             <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm text-slate-700 max-w-2xl mx-auto text-left leading-relaxed">
                 <strong>Disclaimer:</strong> This tool is for educational purposes and does not constitute financial or investment advice. Cash runway is a snapshot in time; real-world expenses often fluctuate based on seasonal costs and hiring.
@@ -77,18 +68,20 @@
                     <div class="absolute bottom-0 left-0 w-full h-3 bg-slate-800" role="progressbar" aria-label="Runway Survival Progress" aria-valuenow="12.5" aria-valuemin="0" aria-valuemax="24">
                         <div id="runway-progress" class="h-full bg-blue-500" style="width: 50%;"></div>
                     </div>
+                    <p class="text-xs text-slate-500 mt-2 z-10 italic">Visual scale capped at 24 months for comparison</p>
                 </div>
             </div>
             <button onclick="calculate()" class="w-full mt-8 py-4 btn-primary rounded-xl font-bold text-lg shadow-lg">Recalculate Survival Timeline</button>
+            <p class="text-center text-sm text-slate-600 mt-4">
+                Want to know if you're Default Alive? → <a href="breakeven-analysis.html" class="text-blue-600 hover:underline">Breakeven Calculator</a>
+            </p>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
             <h2 class="text-3xl font-extrabold text-slate-900 mb-6">Mastering the Startup Survival Timeline</h2>
             <p>
-                In the 2026 venture capital landscape, <strong>runway management</strong> is the ultimate differentiator between founders who survive and those who stall. By understanding your net burn rate, you gain the clarity needed to make difficult decisions about hiring, marketing, and pivot strategies.
+                In the current funding environment, <strong>runway management</strong> is the ultimate differentiator between founders who survive and those who stall. By understanding your net burn rate, you gain the clarity needed to make difficult decisions about hiring, marketing, and pivot strategies.
             </p>
-
-            
 
             <h3 class="text-2xl font-bold mt-8">Strategic Scenario Planning</h3>
             <p>
@@ -189,7 +182,7 @@
             </div>
         </div>
         <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
-            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+            <p class="text-xs uppercase tracking-widest opacity-50">© 2026 FounderCalculators. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -212,13 +205,13 @@
                 progressEl.style.backgroundColor = "#10b981"; // Green
                 progressContainer.setAttribute('aria-valuenow', 24);
             } else {
-                const runway = (cash / netBurn).toFixed(1);
-                resultEl.innerText = runway;
+                const runway = cash / netBurn;
+                resultEl.innerText = runway.toFixed(1);
                 burnEl.innerText = "Net Burn: $" + netBurn.toLocaleString() + " / mo";
                 progressContainer.setAttribute('aria-valuenow', runway);
                 
                 // Visual progress: 24 months is considered "100%" for indicator
-                let percentage = (parseFloat(runway) / 24) * 100;
+                let percentage = (runway / 24) * 100;
                 percentage = Math.min(Math.max(percentage, 5), 100);
                 progressEl.style.width = percentage + "%";
                 
