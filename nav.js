@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="px-4 py-2 border-b border-slate-100 mt-2">
                 <p class="font-bold text-slate-900 uppercase text-xs tracking-wider">Guides & Benchmarks</p>
               </div>
-              <a href="/guides/guides.html" class="block px-4 py-2 hover:bg-slate-50 text-blue-600 font-semibold">All Guides</a>
+              <a href="guides.html" class="block px-4 py-2 hover:bg-slate-50 text-blue-600 font-semibold">All Guides</a>
 
               <div class="px-4 py-3 border-t border-slate-100 mt-2">
                 <a href="/index.html" class="text-blue-600 hover:underline text-sm block text-center">View All Calculators →</a>
