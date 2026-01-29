@@ -19,6 +19,12 @@
         .standard-link:hover { color: #2563eb; text-decoration: underline; }
         #breakeven-chart { transition: all 0.5s ease; }
     </style>
+<!-- Load AdSense from shared file -->
+<script>
+  fetch('/head-ads.html')
+    .then(r => r.text())
+    .then(html => document.head.innerHTML += html);
+</script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
@@ -206,3 +212,4 @@
     </script>
 </body>
 </html>
+
