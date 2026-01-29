@@ -6,6 +6,13 @@
     <title>Employee Fully Burdened Cost Calculator | 2026 Hiring Model</title>
     <meta name="description" content="Calculate the true cost of an employee in 2026. Model payroll taxes, health benefits, 401k matching, and overhead to understand your real hiring burn rate.">
     <link rel="canonical" href="https://foundercalculators.com/employee-cost.html">
+    
+    <meta property="og:title" content="Employee Fully Burdened Cost Calculator">
+    <meta property="og:description" content="See the real annual cost of hiring, including taxes, benefits, and overhead.">
+    <meta property="og:url" content="https://foundercalculators.com/employee-cost.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .standard-link { transition: color 0.2s; }
@@ -16,51 +23,42 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#ops" class="standard-link">Operations</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-                <a href="contact.html" class="standard-link">Contact</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Employee Fully Burdened Cost Tool</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Don't just budget for salary. Calculate the taxes, insurance, and equipment that drive your real burn.</p>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Don't just budget for salary. Calculate the taxes, insurance, and equipment that drive your real burn.</p>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div class="space-y-6">
                     <div class="input-card border rounded-xl p-4 bg-slate-50/50">
-                        <label class="block text-sm font-bold text-slate-700 mb-1">Annual Base Salary ($)</label>
-                        <input type="number" id="salary" value="120000" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Annual Base Salary ($)</label>
+                        <input type="number" id="salary" value="120000" min="0" step="1000" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4">
                         <div class="input-card border rounded-xl p-3">
-                            <label class="block text-[10px] font-bold text-slate-500 uppercase">Payroll Taxes (%)</label>
-                            <input type="number" id="tax" value="9" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Employer Payroll Taxes (%)</label>
+                            <input type="number" id="tax" value="9" min="0" max="20" step="0.1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
                         </div>
                         <div class="input-card border rounded-xl p-3">
-                            <label class="block text-[10px] font-bold text-slate-500 uppercase">Benefits/Insurance (%)</label>
-                            <input type="number" id="benefits" value="12" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Benefits/Insurance (%)</label>
+                            <input type="number" id="benefits" value="12" min="0" max="50" step="0.1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
                         </div>
                     </div>
 
                     <div class="input-card border rounded-xl p-3">
-                        <label class="block text-sm font-bold text-slate-700 mb-1">Annual Fixed Overhead ($) <span class="text-slate-400 font-normal">(Software, Desk, Travel)</span></label>
-                        <input type="number" id="overhead" value="5000" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Annual Fixed Overhead ($)</label>
+                        <input type="number" id="overhead" value="5000" min="0" step="100" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        <p class="text-xs text-slate-400 mt-1">Software, desk, travel, recruiting fees, etc.</p>
                     </div>
+
+                    <p class="text-sm text-slate-500 italic mt-4 text-center">
+                        Updates instantly as you type
+                    </p>
                 </div>
 
                 <div class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white relative overflow-hidden shadow-2xl">
@@ -69,7 +67,7 @@
                     <p class="text-lg font-medium text-slate-400 z-10" id="monthly-burn">Monthly Burn: $0</p>
                     
                     <div class="w-full mt-8 z-10">
-                        <div class="flex justify-between text-[10px] uppercase font-bold tracking-tighter mb-1 text-slate-500">
+                        <div class="flex justify-between text-xs uppercase font-bold tracking-tighter mb-1 text-slate-500">
                             <span>Base Salary</span>
                             <span>Burdened Cost</span>
                         </div>
@@ -77,23 +75,28 @@
                             <div id="salary-bar" class="h-full bg-blue-500" style="width: 70%;"></div>
                             <div id="burden-bar" class="h-full bg-indigo-400" style="width: 30%;"></div>
                         </div>
-                        <p class="text-[10px] text-slate-500 mt-2 italic text-center" id="burden-multiplier">Burden Multiplier: 1.25x</p>
+                        <p class="text-xs text-slate-500 mt-2 italic text-center" id="burden-multiplier">Burden Multiplier: 1.25x</p>
                     </div>
+
+                    <p class="text-xs text-slate-400 mt-6">
+                        Illustrative only. Not financial advice.
+                    </p>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-10 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Generate Hiring Model</button>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Employee cost breakdown copied! Paste into hiring plan or financial model.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
             <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Understanding the "Full Burden" Rate</h2>
             <p>
-                The biggest mistake first-time founders make is assuming a <strong>$100,000 salary</strong> costs the company $100,000. In reality, that hire will likely cost your startup between <strong>$125,000 and $140,000</strong> per year. This gap is known as the "Employee Burden."
+                The biggest mistake first-time founders make is assuming a <strong>$100,000 salary</strong> costs the company $100,000. In reality, that hire will typically cost your startup between <strong>$125,000 and $140,000</strong> per year. This gap is known as the "Employee Burden."
             </p>
 
-            
-
             <h3 class="text-2xl font-bold mt-8">What Makes Up the Burden?</h3>
-            <p>For a US-based employee in 2026, the burden is typically split into three primary buckets:</p>
+            <p>For a US-based employee in the current environment, the burden is typically split into three primary buckets:</p>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
                 <div class="p-6 border border-slate-200 rounded-xl bg-white shadow-sm">
@@ -118,7 +121,7 @@
             <div class="bg-indigo-50 p-8 rounded-2xl border-l-4 border-indigo-500 my-10">
                 <h4 class="text-indigo-900 font-bold mt-0">The 1.3x Rule of Thumb</h4>
                 <p class="text-indigo-800 mb-0">
-                    If you're in a hurry, a safe "rule of thumb" in 2026 is to multiply any base salary by <strong>1.3</strong>. This covers most taxes and decent benefits for a mid-market startup.
+                    If you're in a hurry, a safe "rule of thumb" in the current environment is to multiply any base salary by <strong>1.3</strong>. This covers most taxes and decent benefits for a mid-market startup.
                 </p>
             </div>
 
@@ -134,9 +137,32 @@
         </article>
     </main>
 
-    <footer class="bg-white border-t py-16 text-slate-500 text-center">
-        <p class="font-bold text-slate-900">FounderCalculators.com</p>
-        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    <footer class="bg-white border-t py-16 text-slate-500">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div>
+                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+                <p class="text-sm">Empowering founders through data-driven financial modeling.</p>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="about.html" class="standard-link">About Us</a></li>
+                    <li><a href="contact.html" class="standard-link">Contact Support</a></li>
+                    <li><a href="index.html#finance" class="standard-link">Financial Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
+                    <li><a href="disclaimer.html" class="standard-link">Earnings Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script>
@@ -163,12 +189,26 @@
             document.getElementById('burden-multiplier').innerText = "Burden Multiplier: " + multiplier + "x";
 
             // Visual Bar Update
-            const salaryPercent = (salary / totalAnnual) * 100;
+            const salaryPercent = totalAnnual > 0 ? (salary / totalAnnual) * 100 : 0;
             const burdenPercent = 100 - salaryPercent;
             
             document.getElementById('salary-bar').style.width = salaryPercent + "%";
             document.getElementById('burden-bar').style.width = burdenPercent + "%";
         }
+
+        function shareResult() {
+            const total = document.getElementById('total-cost').innerText;
+            const monthly = document.getElementById('monthly-burn').innerText;
+            const text = `My employee fully burdened cost: ${total} annually (${monthly})\nCalculated on FounderCalculators.com/employee-cost.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
         window.onload = calculate;
     </script>
 </body>
