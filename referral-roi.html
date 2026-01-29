@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referral Program ROI Calculator | Lower Your Blended CAC (2026)</title>
+    <title>Referral Program ROI Calculator | Lower Your Blended CAC</title>
     <meta name="description" content="Calculate the ROI of your customer referral program. Model double-sided incentives, compare against paid CAC, and project your blended acquisition savings.">
     <link rel="canonical" href="https://foundercalculators.com/referral-roi.html">
+    
+    <meta property="og:title" content="Referral Program ROI Calculator">
+    <meta property="og:description" content="Model how referral incentives reduce your blended CAC and drive organic growth.">
+    <meta property="og:url" content="https://foundercalculators.com/referral-roi.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .standard-link { transition: color 0.2s; }
@@ -16,24 +23,12 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Referral Program ROI Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Stop overpaying for ads. Model how a referral loop reduces your Customer Acquisition Cost (CAC).</p>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Stop overpaying for ads. Model how a referral loop reduces your Customer Acquisition Cost (CAC).</p>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
@@ -41,30 +36,30 @@
                 <div class="space-y-5">
                     <div class="input-card border rounded-xl p-4 bg-slate-50/50">
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Current Paid CAC ($)</label>
-                        <input type="number" id="paidCac" value="200" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
+                        <input type="number" id="paidCac" value="200" min="0" step="10" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4">
                         <div class="input-card border rounded-xl p-3">
-                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Referrer Reward ($)</label>
-                            <input type="number" id="rewardGiver" value="25" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Referrer Reward ($)</label>
+                            <input type="number" id="rewardGiver" value="25" min="0" step="5" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
                         </div>
                         <div class="input-card border rounded-xl p-3">
-                            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Referee Discount ($)</label>
-                            <input type="number" id="rewardReceiver" value="25" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Referee Discount ($)</label>
+                            <input type="number" id="rewardReceiver" value="25" min="0" step="5" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
                         </div>
                     </div>
 
                     <div class="input-card border rounded-xl p-3">
                         <label class="block text-sm font-bold text-slate-700 mb-1">Customer Participation Rate (%)</label>
-                        <input type="number" id="participation" value="15" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
-                        <p class="text-[10px] text-slate-400 mt-1">Percentage of existing customers who successfully refer a new user.</p>
+                        <input type="number" id="participation" value="15" min="0" max="100" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        <p class="text-xs text-slate-400 mt-1">Percentage of existing customers who successfully refer a new user. Updates instantly as you type.</p>
                     </div>
                 </div>
 
                 <div class="bg-pink-600 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white shadow-2xl relative overflow-hidden">
                     <div class="relative z-10 w-full">
-                        <span class="text-xs font-bold text-pink-200 uppercase tracking-widest mb-2 block">Savings per Referral</span>
+                        <span class="text-xs font-bold text-pink-200 uppercase tracking-widest mb-2 block">Max Savings per Referral</span>
                         <div class="text-6xl font-black mb-2" id="savings-result">$150</div>
                         <p class="text-pink-100 font-medium mb-6" id="efficiency-label">75% cheaper than ads</p>
                         
@@ -76,25 +71,30 @@
                             <div class="w-full h-2 bg-pink-800 rounded-full overflow-hidden">
                                 <div id="savings-bar" class="h-full bg-white" style="width: 15%;"></div>
                             </div>
-                            <p class="text-[10px] text-pink-200 italic">White bar shows reduction in total company CAC</p>
+                            <p class="text-xs text-pink-200 italic mt-2">(white bar shows reduction in total company CAC)</p>
                         </div>
+
+                        <p class="text-xs text-pink-200 mt-6">
+                            Illustrative only. Not financial advice.
+                        </p>
                     </div>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-10 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-0.5">Project Referral Lift</button>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Referral ROI copied! Paste into growth deck or investor update.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
             <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">The Economics of Referral Programs</h2>
             <p>
-                In an era where digital ad costs (CPMs) are rising by 15-20% annually, a referral program isn't just a "nice to have"—it is a critical <strong>CAC-reduction engine</strong>. 
+                In an era where digital ad costs (CPMs) are rising steadily, a referral program isn't just a "nice to have"—it is a critical <strong>CAC-reduction engine</strong>. 
             </p>
-
-            
 
             <h3 class="text-2xl font-bold mt-8">Why "Double-Sided" Rewards Win</h3>
             <p>
-                The most effective programs in 2026 utilize double-sided incentives. This removes the "social friction" of referring. If a user feels they are "selling" to a friend for their own gain, they hesitate. If they feel they are <strong>giving their friend a gift</strong> (the referee discount) while being thanked by the company (the referrer reward), participation rates skyrocket.
+                The most effective programs utilize double-sided incentives. This removes the "social friction" of referring. If a user feels they are "selling" to a friend for their own gain, they hesitate. If they feel they are <strong>giving their friend a gift</strong> (the referee discount) while being thanked by the company (the referrer reward), participation rates increase significantly.
             </p>
 
             <h3 class="text-2xl font-bold mt-10">Understanding Blended CAC</h3>
@@ -105,22 +105,22 @@
                 Blended CAC = (Paid Spend + Referral Rewards) / (Paid Users + Referral Users)
             </div>
             <p class="mt-4">
-                Even a modest 10% participation rate can lower your blended CAC significantly, making your business more attractive to investors and extending your runway.
+                Even a modest 10% participation rate can lower your blended CAC meaningfully, making your business more attractive to investors and extending your runway.
             </p>
 
             <div class="bg-indigo-50 p-8 rounded-2xl border-l-4 border-indigo-500 my-10">
-                <h4 class="text-indigo-900 font-bold mt-0">Referral Benchmark (2026)</h4>
+                <h4 class="text-indigo-900 font-bold mt-0">Referral Benchmark</h4>
                 <p class="text-indigo-800 mb-0">
-                    High-performing B2B SaaS companies see 15-20% of new revenue from referrals. Consumer (B2C) apps can often hit 30-40% if the product has a high "social utility" (like a split-the-bill app or a fitness tracker).
+                    High-performing B2B SaaS companies often see 15-20% of new revenue from referrals. Consumer (B2C) apps can frequently hit 30-40% if the product has high "social utility" (like a split-the-bill app or a fitness tracker).
                 </p>
             </div>
 
             <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Growth & ROI Tools</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a href="viral-coefficient.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                <a href="viral-coefficient.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-pink-600 font-semibold no-underline flex justify-between items-center">
                     Viral Coefficient Loop →
                 </a>
-                <a href="cac-ltv-ratio.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
+                <a href="cac-ltv-ratio.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-pink-600 font-semibold no-underline flex justify-between items-center">
                     CAC to LTV Ratio →
                 </a>
             </div>
@@ -142,8 +142,8 @@
             const totalReferralCost = rewardGiver + rewardReceiver;
             const savingsPerCustomer = paidCac - totalReferralCost;
             
-            // Efficiency %
-            const efficiency = paidCac > 0 ? (savingsPerCustomer / paidCac) * 100 : 0;
+            // Efficiency % (guard against negative)
+            const efficiency = paidCac > 0 ? Math.max(0, (savingsPerCustomer / paidCac) * 100) : 0;
             
             // Blended CAC Calculation
             // Assume 100 paid customers as a baseline
@@ -161,7 +161,20 @@
             
             // Bar calculation: How much of the paid CAC was shaved off?
             const reductionPercent = paidCac > 0 ? ((paidCac - blendedCac) / paidCac) * 100 : 0;
-            document.getElementById('savings-bar').style.width = reductionPercent + "%";
+            document.getElementById('savings-bar').style.width = Math.min(100, reductionPercent) + "%";
+        }
+
+        function shareResult() {
+            const savings = document.getElementById('savings-result').innerText;
+            const blended = document.getElementById('blended-cac').innerText;
+            const text = `My referral program ROI: ${savings} max savings per referral (New Blended CAC: ${blended})\nCalculated on FounderCalculators.com/referral-roi.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
         }
 
         window.onload = calculate;
