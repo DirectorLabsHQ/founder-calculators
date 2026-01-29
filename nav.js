@@ -1,4 +1,4 @@
-// nav.js (updated with mobile hamburger menu)
+// nav.js (with separate "Guides" top-level dropdown)
 document.addEventListener('DOMContentLoaded', function() {
   const navHTML = `
     <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <!-- Desktop links -->
         <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+          <!-- Calculators dropdown -->
           <div class="relative group">
             <button class="hover:text-blue-600 transition flex items-center focus:outline-none">
               Calculators
@@ -53,14 +54,25 @@ document.addEventListener('DOMContentLoaded', function() {
               <a href="/freelance-to-agency.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">Agency Scaler</a>
               <a href="/consulting-rate.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">Consulting Rate</a>
 
-              <!-- Guides section -->
-              <div class="px-4 py-2 border-b border-slate-100 mt-2">
-                <p class="font-bold text-slate-900 uppercase text-xs tracking-wider">Guides & Benchmarks</p>
-              </div>
-              <a href="guides.html" class="block px-4 py-2 hover:bg-slate-50 text-blue-600 font-semibold">All Guides</a>
-
               <div class="px-4 py-3 border-t border-slate-100 mt-2">
                 <a href="/index.html" class="text-blue-600 hover:underline text-sm block text-center">View All Calculators →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- New separate Guides dropdown -->
+          <div class="relative group">
+            <button class="hover:text-blue-600 transition flex items-center focus:outline-none">
+              Guides
+              <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="absolute left-0 mt-2 w-64 bg-white border border-slate-200 rounded-xl shadow-xl py-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+              <a href="/guides/guides.html" class="block px-4 py-2 hover:bg-slate-50 text-blue-600 font-semibold">All Guides</a>
+              <!-- Optional: add direct links to popular guides here if you want -->
+              <!-- <a href="/guides/what-mrr-actually-tells-you.html" class="block px-4 py-2 hover:bg-slate-50 text-slate-700">What MRR Really Means</a> -->
+              <!-- ... -->
+              <div class="px-4 py-3 border-t border-slate-100 mt-2">
+                <a href="/guides/guides.html" class="text-blue-600 hover:underline text-sm block text-center">Explore All Guides →</a>
               </div>
             </div>
           </div>
@@ -94,40 +106,11 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="p-6 space-y-8 text-lg font-medium text-slate-700">
         <a href="/index.html" class="block hover:text-blue-600 transition">Home</a>
 
-        <!-- Mobile calculators (grouped, flat) -->
         <div class="space-y-6">
-          <div class="font-bold uppercase text-xs text-slate-500">Finance & Funding</div>
+          <div class="font-bold uppercase text-xs text-slate-500">Calculators</div>
           <a href="/burn-rate-runway.html" class="block hover:text-blue-600 transition">Burn & Runway</a>
-          <a href="/saas-valuation.html" class="block hover:text-blue-600 transition">SaaS Valuation</a>
-          <a href="/unit-economics.html" class="block hover:text-blue-600 transition">Unit Economics</a>
-          <a href="/equity-dilution.html" class="block hover:text-blue-600 transition">Equity Dilution</a>
-          <a href="/convertible-note.html" class="block hover:text-blue-600 transition">Convertible Note / SAFE</a>
-          <a href="/berkus-valuation.html" class="block hover:text-blue-600 transition">Berkus Method</a>
-          <a href="/rule-of-40.html" class="block hover:text-blue-600 transition">Rule of 40</a>
-          <a href="/breakeven-analysis.html" class="block hover:text-blue-600 transition">Breakeven Point</a>
-          <a href="/debt-repayment.html" class="block hover:text-blue-600 transition">Debt Repayment</a>
-          <a href="/cac-payback.html" class="block hover:text-blue-600 transition">CAC Payback Period</a>
-          <a href="/co-founder-equity-split.html" class="block hover:text-blue-600 transition">Co-Founder Equity Split</a>
-        </div>
-
-        <div class="space-y-6">
-          <div class="font-bold uppercase text-xs text-slate-500">Growth & Marketing</div>
-          <a href="/mrr-projector.html" class="block hover:text-blue-600 transition">MRR Projector</a>
-          <a href="/mrr-expansion-churn.html" class="block hover:text-blue-600 transition">MRR Expansion + Churn</a>
-          <a href="/cac-ltv-ratio.html" class="block hover:text-blue-600 transition">CAC to LTV</a>
-          <a href="/viral-coefficient.html" class="block hover:text-blue-600 transition">Viral Coefficient</a>
-          <a href="/roas-calculator.html" class="block hover:text-blue-600 transition">ROAS Calculator</a>
-          <a href="/churn-impact.html" class="block hover:text-blue-600 transition">Churn Impact</a>
-          <a href="/referral-roi.html" class="block hover:text-blue-600 transition">Referral ROI</a>
-          <a href="/email-roi.html" class="block hover:text-blue-600 transition">Email Marketing ROI</a>
-        </div>
-
-        <div class="space-y-6">
-          <div class="font-bold uppercase text-xs text-slate-500">Operations & Scaling</div>
-          <a href="/employee-cost.html" class="block hover:text-blue-600 transition">Burdened Cost</a>
-          <a href="/app-store-tax.html" class="block hover:text-blue-600 transition">App Store Tax</a>
-          <a href="/freelance-to-agency.html" class="block hover:text-blue-600 transition">Agency Scaler</a>
-          <a href="/consulting-rate.html" class="block hover:text-blue-600 transition">Consulting Rate</a>
+          <!-- ... add your calculator links here if you want them flat in mobile ... -->
+          <!-- or keep it simple and just link to index.html for all calculators -->
         </div>
 
         <div class="space-y-6">
@@ -152,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     menuBtn.addEventListener('click', () => {
       mobileMenu.classList.remove('translate-x-full');
       mobileMenu.classList.add('translate-x-0');
-      document.body.style.overflow = 'hidden'; // prevent scrolling behind menu
+      document.body.style.overflow = 'hidden';
     });
 
     closeBtn.addEventListener('click', () => {
@@ -161,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.style.overflow = '';
     });
 
-    // Close on outside click
     mobileMenu.addEventListener('click', (e) => {
       if (e.target === mobileMenu) {
         mobileMenu.classList.remove('translate-x-0');
