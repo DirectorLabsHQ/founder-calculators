@@ -20,6 +20,12 @@
         .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
         #gauge-needle { transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: bottom center; }
     </style>
+<!-- Load AdSense from shared file -->
+<script>
+  fetch('/head-ads.html')
+    .then(r => r.text())
+    .then(html => document.head.innerHTML += html);
+</script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
@@ -204,3 +210,4 @@
     </script>
 </body>
 </html>
+
