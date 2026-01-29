@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulting & Freelance Rate Calculator | Professional Pricing Tool (2026)</title>
+    <title>Consulting & Freelance Rate Calculator | Professional Pricing Tool</title>
     <meta name="description" content="Calculate your ideal hourly or project consulting rate. Factor in self-employment taxes, business overhead, and desired annual income.">
     <link rel="canonical" href="https://foundercalculators.com/consulting-rate.html">
+    
+    <meta property="og:title" content="Consulting & Freelance Rate Calculator">
+    <meta property="og:description" content="Determine the hourly rate needed to meet your income goals while covering taxes and overhead.">
+    <meta property="og:url" content="https://foundercalculators.com/consulting-rate.html">
+    <meta property="og:site_name" content="FounderCalculators">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .standard-link { transition: color 0.2s; }
@@ -16,25 +23,11 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
-    <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl tracking-tight text-slate-900">
-                Founder<span class="text-blue-600">Calculators</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="index.html#ops" class="standard-link">Operations</a>
-                <a href="index.html#finance" class="standard-link">Finance</a>
-                <a href="index.html#growth" class="standard-link">Growth</a>
-                <div class="h-4 w-px bg-slate-200 mx-2"></div>
-                <a href="about.html" class="standard-link">About</a>
-                <a href="contact.html" class="standard-link">Contact</a>
-            </div>
-        </div>
-    </nav>
+    <script src="/nav.js"></script>
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Consulting Rate Calculator</h1>
+            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">Consulting Rate Calculator</h1>
             <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Determine the hourly rate required to sustain your lifestyle while covering business costs and taxes.</p>
             
             <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm text-slate-700 max-w-2xl mx-auto text-left leading-relaxed">
@@ -47,47 +40,62 @@
                 <div class="space-y-6">
                     <div class="input-group">
                         <label class="block text-sm font-bold text-slate-700 mb-1">Target Annual Take-Home ($)</label>
-                        <input type="number" id="targetSalary" value="150000" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
-                        <p class="text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-tight">Your desired post-expense income</p>
+                        <input type="number" id="targetSalary" value="150000" min="0" step="1000" oninput="calculate()" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
+                        <p class="text-xs text-slate-400 mt-1">Your desired post-expense income. Updates instantly as you type.</p>
                     </div>
                     <div class="input-group">
                         <label class="block text-sm font-bold text-slate-700 mb-1">Target Billable Hours / Week</label>
-                        <input type="number" id="billableHours" value="25" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
-                        <p class="text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-tight" id="hours-warning">Healthy range: 20-30 hours</p>
+                        <input type="number" id="billableHours" value="25" min="5" max="50" step="1" oninput="calculate()" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
+                        <p class="text-xs text-slate-400 mt-1" id="hours-warning">Healthy range: 20-30 hours</p>
                     </div>
                     <div class="input-group">
-                        <label class="block text-sm font-bold text-slate-700 mb-1">Business Overhead & Tax (%)</label>
-                        <input type="number" id="overhead" value="30" oninput="calculate()" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
-                        <p class="text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-tight">Self-employment tax + software + health insurance</p>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Total Overhead & Taxes (%)</label>
+                        <input type="number" id="overhead" value="30" min="0" max="100" step="1" oninput="calculate()" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
+                        <p class="text-xs text-slate-400 mt-1">Self-employment tax + software + health insurance</p>
                     </div>
                 </div>
 
                 <div id="result-card" class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white relative overflow-hidden shadow-2xl transition-colors duration-500">
                     <span class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2 z-10" id="result-label">Recommended Hourly Rate</span>
-                    <div class="text-6xl font-black mb-2 z-10" id="rate-result" aria-label="Ideal hourly consulting rate">$188</div>
-                    <p class="text-lg font-medium text-slate-400 z-10" id="weekly-rev">Weekly Target: $4,700</p>
+                    <div class="text-6xl font-black mb-2 z-10" id="rate-result">$188</div>
+                    <p class="text-lg font-medium text-slate-400 z-10" id="weekly-rev">Weekly Revenue Target: $4,700</p>
                     
                     <div class="w-full mt-8 z-10">
-                        <div class="flex justify-between text-[10px] uppercase font-bold tracking-tighter mb-1 text-slate-500">
+                        <div class="flex justify-between text-xs uppercase font-bold tracking-tighter mb-1 text-slate-500">
                             <span id="capacity-label">Workload Intensity</span>
                             <span id="capacity-percent">63%</span>
                         </div>
                         <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
                             <div id="capacity-bar" class="h-full bg-blue-500" style="width: 63%;"></div>
                         </div>
+                        <p class="text-xs text-slate-400 mt-2 italic text-center">
+                            (Assumes 40-hour total work week; rest is admin/sales time)
+                        </p>
                     </div>
+
+                    <p class="text-xs text-slate-400 mt-6">
+                        Illustrative only. Not financial advice.
+                    </p>
                 </div>
             </div>
-            <button onclick="calculate()" class="w-full mt-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-lg shadow-lg transition">Update My Pricing Strategy</button>
+
+            <!-- Share button -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
+                    Share Rate Model
+                </button>
+            </div>
+        </div>
+
+        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
+            Consulting rate model copied! Paste into proposal, pitch deck, or client discussion.
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
             <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">The Burdened Rate: Why $50/hr is Not Enough</h2>
             <p>
-                In 2026, the freelance and consulting market is more competitive than ever. Many new consultants make the mistake of setting an hourly rate based on their former corporate salary. If you earned $100k as an employee, you might think $50/hour is sufficient. <strong>It isn't.</strong>
+                In the current environment, the freelance and consulting market is more competitive than ever. Many new consultants make the mistake of setting an hourly rate based on their former corporate salary. If you earned $100k as an employee, you might think $50/hour is sufficient. <strong>It usually isn't.</strong>
             </p>
-
-            
 
             <h3 class="text-2xl font-bold mt-8">Accounting for the "Consultant Tax"</h3>
             <p>
@@ -142,14 +150,14 @@
         <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
             <div>
                 <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
-                <p class="text-sm">Providing professional-grade financial modeling for modern founders and consultants.</p>
+                <p class="text-sm">Empowering founders through data-driven financial modeling.</p>
             </div>
             <div>
                 <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
                 <ul class="text-sm space-y-2">
                     <li><a href="about.html" class="standard-link">About Us</a></li>
-                    <li><a href="contact.html" class="standard-link">Contact</a></li>
-                    <li><a href="index.html#ops" class="standard-link">All Calculators</a></li>
+                    <li><a href="contact.html" class="standard-link">Contact Support</a></li>
+                    <li><a href="index.html#ops" class="standard-link">Operations Tools</a></li>
                 </ul>
             </div>
             <div>
@@ -157,6 +165,7 @@
                 <ul class="text-sm space-y-2">
                     <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
                     <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
+                    <li><a href="disclaimer.html" class="standard-link">Earnings Disclaimer</a></li>
                 </ul>
             </div>
         </div>
@@ -168,9 +177,12 @@
     <script>
         function calculate() {
             const salary = parseFloat(document.getElementById('targetSalary').value) || 0;
-            const hoursPerWeek = parseFloat(document.getElementById('billableHours').value) || 1;
+            let hoursPerWeek = parseFloat(document.getElementById('billableHours').value) || 1;
             const overheadPercent = (parseFloat(document.getElementById('overhead').value) / 100) || 0;
             
+            // Guard: minimum 5 hours to avoid weird edge cases
+            hoursPerWeek = Math.max(5, hoursPerWeek);
+
             // Formula: (Target Salary * (1 + Overhead)) / (Weekly Hours * 52 weeks)
             const totalRevenueNeeded = salary * (1 + overheadPercent);
             const hourlyRate = totalRevenueNeeded / (hoursPerWeek * 52);
@@ -190,6 +202,9 @@
             const bar = document.getElementById('capacity-bar');
             const percentLabel = document.getElementById('capacity-percent');
             const hoursWarning = document.getElementById('hours-warning');
+
+            // Reset label color before branching
+            label.style.color = "";
 
             resultDisplay.innerText = currencyFormat.format(hourlyRate);
             weeklyDisplay.innerText = "Weekly Revenue Target: " + currencyFormat.format(weeklyTarget);
@@ -229,6 +244,20 @@
                 hoursWarning.classList.add("text-slate-400");
             }
         }
+
+        function shareResult() {
+            const rate = document.getElementById('rate-result').innerText;
+            const weekly = document.getElementById('weekly-rev').innerText;
+            const text = `My consulting rate: ${rate} hourly (${weekly})\nCalculated on FounderCalculators.com/consulting-rate.html`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('share-notice').classList.remove('hidden');
+                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+            }).catch(() => {
+                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            });
+        }
+
         window.onload = calculate;
     </script>
 </body>
