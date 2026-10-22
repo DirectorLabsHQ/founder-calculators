@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SaaS Valuation Calculator (2026 Benchmarks) | FounderCalculators</title>
-    <meta name="description" content="Estimate your SaaS company's valuation based on ARR, growth rate, and 2026 market multiples. Benchmarked for seed to Series B stages including retention impact.">
+    <title>SaaS Valuation Calculator – ARR Multiple Estimate (2026)</title>
+    <meta name="description" content="Free SaaS valuation calculator: enter ARR, growth and NRR to estimate your company's value as an ARR multiple, using 2026 private-market benchmarks.">
     <link rel="canonical" href="https://foundercalculators.com/saas-valuation.html">
-    
-    <meta property="og:title" content="SaaS Valuation Calculator (2026 Benchmarks)">
-    <meta property="og:description" content="Get a realistic 2026 valuation estimate for your SaaS business using ARR, growth, and NRR.">
+
+    <meta property="og:title" content="SaaS Valuation Calculator – ARR Multiple Estimate (2026)">
+    <meta property="og:description" content="Estimate your SaaS company's value from ARR, growth and net revenue retention, with 2026 private-market benchmarks.">
     <meta property="og:url" content="https://foundercalculators.com/saas-valuation.html">
     <meta property="og:site_name" content="FounderCalculators">
     <meta property="og:type" content="website">
@@ -32,13 +32,13 @@
 
     <main class="max-w-4xl mx-auto px-6 py-10 md:py-12">
         <div class="mb-10 text-center">
-            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">2026 Venture Benchmarks</span>
-            <h1 class="text-4xl md:text-5xl font-extrabold mt-4 mb-4 tracking-tight">SaaS Valuation Calculator (2026 Benchmarks)</h1>
+            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Updated October 2026</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold mt-4 mb-4 tracking-tight">SaaS Valuation Calculator</h1>
             <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-4">
-                Estimate your company's enterprise value using ARR, growth rate, and net retention.
+                Estimate what your SaaS company could be worth as a multiple of ARR, based on growth and net revenue retention.
             </p>
-            <p class="text-base text-slate-700 max-w-3xl mx-auto mb-6 font-medium">
-                Valuation multiples in SaaS reflect revenue quality, growth velocity, and capital efficiency — not just top-line ARR.
+            <p class="text-base text-slate-700 max-w-3xl mx-auto font-medium">
+                Enter three numbers and get a value range built from 2026 private-market benchmarks.
             </p>
         </div>
 
@@ -47,158 +47,173 @@
                 <!-- Inputs -->
                 <div class="space-y-6">
                     <div class="input-card border rounded-2xl p-5 bg-slate-50/50 transition">
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Annual Recurring Revenue (ARR) ($)</label>
+                        <label for="arr" class="block text-sm font-bold text-slate-700 mb-2">Annual Recurring Revenue (ARR) ($)</label>
                         <input type="number" id="arr" value="1000000" min="0" step="10000" oninput="calculate()"
                                class="w-full p-4 text-2xl font-semibold outline-none text-blue-700 border-b border-slate-300 focus:border-blue-500">
                     </div>
-                    
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div class="input-card border rounded-2xl p-5">
-                            <label class="block text-sm font-bold text-slate-700 mb-2">YoY Growth Rate (%)</label>
-                            <input type="number" id="growth" value="100" min="0" max="500" step="5" oninput="calculate()"
+                            <label for="growth" class="block text-sm font-bold text-slate-700 mb-2">YoY Growth Rate (%)</label>
+                            <input type="number" id="growth" value="40" min="0" max="500" step="5" oninput="calculate()"
                                    class="w-full p-4 text-xl font-bold outline-none">
                         </div>
                         <div class="input-card border rounded-2xl p-5">
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Net Revenue Retention (NRR %)</label>
-                            <input type="number" id="nrr" value="110" min="0" max="200" step="5" oninput="calculate()"
+                            <label for="nrr" class="block text-sm font-bold text-slate-700 mb-2">Net Revenue Retention (NRR %)</label>
+                            <input type="number" id="nrr" value="105" min="0" max="200" step="5" oninput="calculate()"
                                    class="w-full p-4 text-xl font-bold outline-none">
                         </div>
                     </div>
                     <p class="text-sm text-slate-500 italic">
-                        NRR >110% has historically added a 15–25% premium to multiples for top-performing SaaS companies.
+                        Not sure of your NRR? See <a href="/guides/nrr-what-it-really-means.html" class="text-blue-600 hover:underline">what NRR really means</a>. Typical private B2B SaaS is around 100–105%.
                     </p>
                 </div>
 
                 <!-- Result -->
-                <div id="val-box" class="rounded-3xl p-8 md:p-10 flex flex-col justify-center items-center text-center text-white bg-gradient-to-br from-slate-900 to-slate-800 shadow-2xl relative overflow-hidden">
-                    <span class="text-sm font-bold uppercase tracking-widest mb-3 block opacity-80">Estimated Private-Market Enterprise Value</span>
-                    <div class="text-6xl md:text-7xl font-black mb-2 tracking-tighter" id="val-result">$10.0M</div>
-                    
-                    <div class="inline-block px-5 py-2 rounded-full bg-white/15 text-base font-medium mb-4" id="multiple-label">
-                        10.0x Multiple
-                    </div>
+                <div id="val-box" class="rounded-3xl p-8 md:p-10 flex flex-col justify-center items-center text-center text-white bg-gradient-to-br from-slate-900 to-slate-800 shadow-2xl">
+                    <span class="text-sm font-bold uppercase tracking-widest mb-3 block opacity-80">Estimated Enterprise Value</span>
+                    <div class="text-6xl md:text-7xl font-black mb-2 tracking-tighter" id="val-result">$4.5M</div>
+                    <p class="text-base text-slate-300 mb-4" id="range-label">Range: $3.4M – $5.6M</p>
 
-                    <p class="text-sm text-slate-300 mb-6" id="valuation-type-note">
-                        This tool estimates private-market enterprise value using revenue multiples.
-                    </p>
+                    <div class="inline-block px-5 py-2 rounded-full bg-white/15 text-base font-medium mb-4" id="multiple-label">
+                        4.5x ARR
+                    </div>
 
                     <div class="grid grid-cols-2 gap-6 pt-6 border-t border-white/20 w-full max-w-xs">
                         <div class="text-left">
-                            <span class="block text-xs uppercase text-slate-400 font-semibold">Market Tier</span>
-                            <span id="tier-label" class="text-lg font-semibold text-blue-400">Top Tier</span>
+                            <span class="block text-xs uppercase text-slate-400 font-semibold">Multiple vs. market</span>
+                            <span id="tier-label" class="text-lg font-semibold text-blue-400">Typical</span>
                         </div>
                         <div class="text-right">
-                            <span class="block text-xs uppercase text-slate-400 font-semibold">Implied ARR</span>
+                            <span class="block text-xs uppercase text-slate-400 font-semibold">ARR</span>
                             <span id="arr-display" class="text-lg font-semibold">$1.0M</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Live update hint + share button -->
             <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <p class="text-sm text-slate-500 italic text-center">
-                    Updates instantly as you type
-                </p>
+                <p class="text-sm text-slate-500 italic text-center">Updates instantly as you type</p>
                 <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-2xl font-medium transition">
-                    Share Result
+                    Copy Result
                 </button>
             </div>
 
-            <div class="text-center mt-6 text-sm text-slate-600">
-                <strong>Estimates are illustrative only.</strong> Actual valuations depend on market conditions, deal structure, investor demand, and many other factors.
+            <div id="share-notice" class="hidden text-center text-sm text-slate-500 mt-4">
+                Result copied to your clipboard.
             </div>
 
-            <p class="text-center text-sm text-slate-600 mt-6">
-                Want to see how growth + profitability balance? → <a href="rule-of-40.html" class="text-blue-600 hover:underline">Rule of 40 Calculator</a>
-            </p>
-        </div>
-
-        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
-            Valuation copied! Paste into pitch deck, investor email, or Notion.
-        </div>
-
-        <!-- Quick Example -->
-        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 md:p-8 mb-12">
-            <h3 class="text-xl font-bold mb-4 text-slate-900">Quick Example</h3>
-            <p class="text-slate-700">
-                ARR: $1M<br>
-                Growth: 80%<br>
-                NRR: 115%<br><br>
-                → Typically 9–11x multiple (≈ $9M–$11M valuation) for a high-quality SaaS business in the current environment.
+            <p class="text-center mt-6 text-sm text-slate-600">
+                <strong>Estimates only, not financial or investment advice.</strong> This is a rule-of-thumb model, not a formal valuation. Real deals depend on margins, customer concentration, market conditions and negotiation. For a transaction, consult a qualified advisor.
             </p>
         </div>
 
         <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6 tracking-tight">How SaaS Companies Are Valued Today</h2>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">How This SaaS Valuation Calculator Works</h2>
             <p>
-                In the current funding environment, SaaS valuation has shifted toward <strong>capital efficiency</strong> and <strong>revenue quality</strong>. High-growth at any cost is no longer rewarded — strong Net Revenue Retention (NRR), predictable revenue, and healthy margins now command premium multiples.
+                Private SaaS companies are usually valued as a multiple of ARR (annual recurring revenue). This calculator picks a starting multiple from your growth rate, adjusts it for net revenue retention, and shows a range of 25% below to 25% above the result, because real multiples vary widely deal to deal.
             </p>
+            <p class="mt-4"><strong>Formula:</strong> Enterprise value = ARR × base multiple (by growth) × NRR adjustment</p>
 
-            <h3 class="text-2xl font-bold mt-10">The Three Core Valuation Drivers</h3>
-            <ol class="list-decimal pl-6 space-y-3">
-                <li><strong>Growth Rate (YoY):</strong> Still the biggest lever — 100%+ growth has historically supported 12x–20x+ multiples for top-tier companies.</li>
-                <li><strong>Net Revenue Retention (NRR):</strong> The strongest signal of product-market fit. 120%+ NRR typically adds 15–30% to the multiple.</li>
-                <li><strong>Rule of 40 / Efficiency:</strong> Companies scoring >40 (growth % + profit margin %) consistently trade at higher multiples than pure growth plays.</li>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8 not-prose">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-slate-200 rounded-xl text-sm shadow-sm">
+                        <thead class="bg-slate-50">
+                            <tr><th class="px-4 py-3 text-left font-semibold">YoY growth</th><th class="px-4 py-3 text-left font-semibold">Base multiple</th></tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr><td class="px-4 py-3">Under 10%</td><td class="px-4 py-3">2.5×</td></tr>
+                            <tr class="bg-slate-50"><td class="px-4 py-3">10–24%</td><td class="px-4 py-3">3.5×</td></tr>
+                            <tr><td class="px-4 py-3">25–49%</td><td class="px-4 py-3">4.5×</td></tr>
+                            <tr class="bg-slate-50"><td class="px-4 py-3">50–99%</td><td class="px-4 py-3">6×</td></tr>
+                            <tr><td class="px-4 py-3">100%+</td><td class="px-4 py-3">8×</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-slate-200 rounded-xl text-sm shadow-sm">
+                        <thead class="bg-slate-50">
+                            <tr><th class="px-4 py-3 text-left font-semibold">NRR</th><th class="px-4 py-3 text-left font-semibold">Adjustment</th></tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr><td class="px-4 py-3">120% or more</td><td class="px-4 py-3">+20%</td></tr>
+                            <tr class="bg-slate-50"><td class="px-4 py-3">110–119%</td><td class="px-4 py-3">+10%</td></tr>
+                            <tr><td class="px-4 py-3">100–109%</td><td class="px-4 py-3">none</td></tr>
+                            <tr class="bg-slate-50"><td class="px-4 py-3">90–99%</td><td class="px-4 py-3">−10%</td></tr>
+                            <tr><td class="px-4 py-3">Below 90%</td><td class="px-4 py-3">−25%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-10">Worked Example</h3>
+            <p>
+                A SaaS company has $1,000,000 ARR, grows 80% year over year, and has 115% NRR.
+            </p>
+            <ol class="list-decimal pl-6 space-y-2">
+                <li>80% growth falls in the 50–99% tier, so the base multiple is 6×.</li>
+                <li>115% NRR earns a +10% adjustment, so 6 × 1.10 = 6.6×.</li>
+                <li>Midpoint value: $1,000,000 × 6.6 = <strong>$6.6M</strong>.</li>
+                <li>Range (±25%): about <strong>$5.0M to $8.3M</strong>.</li>
             </ol>
 
-            <h3 class="text-2xl font-bold mt-12">Typical ARR Multiples by Growth Tier</h3>
-            <div class="overflow-x-auto my-8">
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-14 mb-4 tracking-tight">2026 SaaS Valuation Benchmarks</h2>
+            <p>
+                Multiples have fallen sharply from the 2021 peak. These are the figures this calculator is calibrated against, as reported in 2026 industry summaries of the underlying studies. Methodologies differ, so check the original publications before relying on any single number.
+            </p>
+            <div class="overflow-x-auto my-6 not-prose">
                 <table class="min-w-full bg-white border border-slate-200 rounded-xl text-sm shadow-sm">
-                    <thead>
-                        <tr class="bg-slate-50">
-                            <th class="px-6 py-4 text-left font-semibold">Growth Tier</th>
-                            <th class="px-6 py-4 text-left font-semibold">YoY Growth</th>
-                            <th class="px-6 py-4 text-left font-semibold">Typical ARR Multiple</th>
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold">Benchmark</th>
+                            <th class="px-4 py-3 text-left font-semibold">Reported figure</th>
+                            <th class="px-4 py-3 text-left font-semibold">Source</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
-                        <tr>
-                            <td class="px-6 py-4 font-medium">Stable / Legacy</td>
-                            <td class="px-6 py-4">0–20%</td>
-                            <td class="px-6 py-4">3–6×</td>
-                        </tr>
-                        <tr class="bg-slate-50">
-                            <td class="px-6 py-4 font-medium">Market Average</td>
-                            <td class="px-6 py-4">20–50%</td>
-                            <td class="px-6 py-4">6–9×</td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 font-medium">High Growth</td>
-                            <td class="px-6 py-4">50–100%</td>
-                            <td class="px-6 py-4">9–13×</td>
-                        </tr>
-                        <tr class="bg-slate-50">
-                            <td class="px-6 py-4 font-medium">Hyper Growth</td>
-                            <td class="px-6 py-4">100%+</td>
-                            <td class="px-6 py-4">13–20x+</td>
-                        </tr>
+                        <tr><td class="px-4 py-3">Private SaaS, lower middle market</td><td class="px-4 py-3">Median ~4.5× ARR (range ~3–7×)</td><td class="px-4 py-3">Livmo, via 2026 industry summaries</td></tr>
+                        <tr class="bg-slate-50"><td class="px-4 py-3">Companies with $0–5M ARR</td><td class="px-4 py-3">Median ~3.3×</td><td class="px-4 py-3">Aventis Advisors</td></tr>
+                        <tr><td class="px-4 py-3">Companies with $5–10M ARR</td><td class="px-4 py-3">Median ~4×</td><td class="px-4 py-3">Aventis Advisors</td></tr>
+                        <tr class="bg-slate-50"><td class="px-4 py-3">Bootstrapped, $3–20M ARR</td><td class="px-4 py-3">Median ~4.8× ARR</td><td class="px-4 py-3">SaaS Capital (2025 survey)</td></tr>
+                        <tr><td class="px-4 py-3">Venture-backed, $3–20M ARR</td><td class="px-4 py-3">Median ~5.3× ARR</td><td class="px-4 py-3">SaaS Capital (2025 survey)</td></tr>
+                        <tr class="bg-slate-50"><td class="px-4 py-3">Top-tier private (NRR above 120%, passes Rule of 40)</td><td class="px-4 py-3">~7–9× ARR</td><td class="px-4 py-3">2026 industry summaries</td></tr>
+                        <tr><td class="px-4 py-3">Median growth, bootstrapped $3–20M ARR</td><td class="px-4 py-3">~15% YoY; NRR ~103%</td><td class="px-4 py-3">SaaS Capital (2026 survey)</td></tr>
                     </tbody>
                 </table>
             </div>
+            <p class="text-sm text-slate-500">
+                Two things to keep in mind: smaller companies (under about $1M ARR) often trade below these medians, and AI-native SaaS companies have been reported at far higher multiples than traditional SaaS, which this calculator does not model.
+            </p>
 
-            <div class="bg-blue-50 p-8 rounded-2xl border-l-4 border-blue-500 my-10">
-                <h4 class="text-blue-900 font-bold italic mb-2">Quick Insight</h4>
-                <p class="text-blue-800 mb-4">
-                    Companies with NRR >120% and Rule of 40 >50 are currently seeing the highest premiums — even if growth is slightly lower than hyper-scale peers.
-                </p>
-                <a href="rule-of-40.html" class="text-blue-700 font-bold hover:underline">Calculate your Rule of 40 score →</a>
-            </div>
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-14 mb-4 tracking-tight">What Moves a SaaS Multiple</h2>
+            <ul class="list-disc pl-6 space-y-3">
+                <li><strong>Growth rate:</strong> faster, durable growth earns a higher multiple. See <a href="/guides/from-50k-to-250k-mrr.html" class="text-blue-600 hover:underline">what changes from $50k to $250k MRR</a>.</li>
+                <li><strong>Net revenue retention:</strong> customers who stay and expand are the strongest quality signal. Compare yours with <a href="/guides/healthy-churn-benchmarks-by-saas-stage.html" class="text-blue-600 hover:underline">churn benchmarks by stage</a>.</li>
+                <li><strong>Efficiency:</strong> a good <a href="/rule-of-40.html" class="text-blue-600 hover:underline">Rule of 40</a> score and a healthy <a href="/guides/cac-payback-meaning.html" class="text-blue-600 hover:underline">CAC payback period</a> support a premium.</li>
+                <li><strong>Scale and risk:</strong> larger ARR, low customer concentration and clean financials all reduce a buyer's risk.</li>
+            </ul>
 
-            <h3 class="text-2xl font-bold mt-10">Related Tools</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-                <a href="rule-of-40.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition flex items-center justify-between">
-                    Rule of 40 Calculator →
-                </a>
-                <a href="mrr-projector.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition flex items-center justify-between">
-                    MRR Growth Projector →
-                </a>
-                <a href="burn-rate-runway.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition flex items-center justify-between">
-                    Burn Rate & Runway →
-                </a>
-                <a href="unit-economics.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition flex items-center justify-between">
-                    Unit Economics →
-                </a>
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-14 mb-4 tracking-tight">SaaS Valuation FAQ</h2>
+            <h3 class="text-xl font-bold mt-6">What is a good ARR multiple for a SaaS company?</h3>
+            <p>For private SaaS in 2026, roughly 3–7× ARR is typical, with a median around 4–5×. Top performers with high growth, strong retention and good efficiency have been reported at 7–9×.</p>
+
+            <h3 class="text-xl font-bold mt-6">Is this valuation or enterprise value?</h3>
+            <p>It estimates enterprise value, which is the value of the business before debt and cash. Equity value to shareholders is enterprise value minus debt plus cash.</p>
+
+            <h3 class="text-xl font-bold mt-6">Why is my estimate lower than what I read online?</h3>
+            <p>Many older articles quote 2021 multiples of 10× or more. Multiples have compressed since then, and public-company multiples are usually higher than what small private companies receive.</p>
+
+            <h3 class="text-xl font-bold mt-6">Does this work for early-stage startups with little revenue?</h3>
+            <p>Not well. Below about $1M ARR, valuations depend more on team, market and traction than on a revenue multiple. Try the <a href="/berkus-valuation.html" class="text-blue-600 hover:underline">Berkus Method calculator</a> for pre-revenue companies.</p>
+
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-14 mb-4 tracking-tight">Related Tools</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 not-prose">
+                <a href="/rule-of-40.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">Rule of 40 Calculator →</a>
+                <a href="/mrr-projector.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">MRR Growth Projector →</a>
+                <a href="/mrr-expansion-churn.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">MRR Expansion + Churn →</a>
+                <a href="/burn-rate-runway.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">Burn Rate &amp; Runway →</a>
+                <a href="/equity-dilution.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">Equity Dilution Calculator →</a>
+                <a href="/guides.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">All Founder Guides →</a>
             </div>
         </article>
     </main>
@@ -212,16 +227,18 @@
             <div>
                 <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
                 <ul class="text-sm space-y-2">
-                    <li><a href="about.html" class="hover:text-blue-600 transition">About</a></li>
-                    <li><a href="contact.html" class="hover:text-blue-600 transition">Contact</a></li>
+                    <li><a href="/index.html" class="hover:text-blue-600 transition">All Calculators</a></li>
+                    <li><a href="/guides.html" class="hover:text-blue-600 transition">Guides &amp; Benchmarks</a></li>
+                    <li><a href="/about.html" class="hover:text-blue-600 transition">About</a></li>
+                    <li><a href="/contact.html" class="hover:text-blue-600 transition">Contact</a></li>
                 </ul>
             </div>
             <div>
                 <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
                 <ul class="text-sm space-y-2">
-                    <li><a href="privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a></li>
-                    <li><a href="terms.html" class="hover:text-blue-600 transition">Terms of Service</a></li>
-                    <li><a href="disclaimer.html" class="hover:text-blue-600 transition">Earnings Disclaimer</a></li>
+                    <li><a href="/privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a></li>
+                    <li><a href="/terms.html" class="hover:text-blue-600 transition">Terms of Service</a></li>
+                    <li><a href="/disclaimer.html" class="hover:text-blue-600 transition">Earnings Disclaimer</a></li>
                 </ul>
             </div>
         </div>
@@ -231,76 +248,84 @@
     </footer>
 
     <script>
+        function baseMultiple(g) {
+            if (g >= 100) return 8;
+            if (g >= 50) return 6;
+            if (g >= 25) return 4.5;
+            if (g >= 10) return 3.5;
+            return 2.5;
+        }
+
+        function nrrFactor(n) {
+            if (n >= 120) return 1.2;
+            if (n >= 110) return 1.1;
+            if (n >= 100) return 1.0;
+            if (n >= 90) return 0.9;
+            return 0.75;
+        }
+
+        function fmt(v) {
+            if (v >= 1000000) return "$" + (v / 1000000).toFixed(1) + "M";
+            return "$" + Math.round(v / 1000) + "K";
+        }
+
         function calculate() {
             const arr = parseFloat(document.getElementById('arr').value) || 0;
             const growth = parseFloat(document.getElementById('growth').value) || 0;
-            const nrr = parseFloat(document.getElementById('nrr').value) || 100;
+            let nrr = parseFloat(document.getElementById('nrr').value);
+            if (isNaN(nrr)) nrr = 100;
 
-            const valBox = document.getElementById('val-box');
             const valResult = document.getElementById('val-result');
+            const rangeLabel = document.getElementById('range-label');
             const multipleLabel = document.getElementById('multiple-label');
             const tierLabel = document.getElementById('tier-label');
             const arrDisplay = document.getElementById('arr-display');
 
-            // Reset gradients
-            valBox.classList.remove('from-emerald-900', 'to-emerald-800', 'from-slate-900', 'to-slate-800', 'from-slate-800', 'to-slate-700');
+            arrDisplay.innerText = fmt(arr);
 
             if (arr <= 0) {
-                valResult.innerText = "Pre-Revenue";
+                valResult.innerText = "—";
+                rangeLabel.innerText = "Enter your ARR to see an estimate";
                 multipleLabel.classList.add('hidden');
-                tierLabel.innerText = "Pre-Seed / Idea Stage";
-                tierLabel.className = "text-lg font-semibold text-slate-400";
-                valBox.classList.add('from-slate-800', 'to-slate-700');
-                arrDisplay.innerText = "$0.0M";
+                tierLabel.innerText = "—";
                 return;
             }
 
-            // Baseline multiple
-            let multiple = 4;
-            if (growth >= 150) multiple = 14;
-            else if (growth >= 100) multiple = 10;
-            else if (growth >= 50) multiple = 7;
-            else if (growth >= 25) multiple = 5.5;
-
-            // NRR adjustment
-            if (nrr >= 120) multiple *= 1.25;
-            else if (nrr >= 110) multiple *= 1.15;
-            else if (nrr < 90) multiple *= 0.75;
-
+            const multiple = baseMultiple(growth) * nrrFactor(nrr);
             const val = arr * multiple;
 
-            // Display
-            valResult.innerText = "$" + (val / 1_000_000).toFixed(1) + "M";
-            multipleLabel.innerText = multiple.toFixed(1) + "x Multiple";
+            valResult.innerText = fmt(val);
+            rangeLabel.innerText = "Range: " + fmt(val * 0.75) + " – " + fmt(val * 1.25);
+            multipleLabel.innerText = multiple.toFixed(1) + "x ARR";
             multipleLabel.classList.remove('hidden');
-            arrDisplay.innerText = "$" + (arr / 1_000_000).toFixed(1) + "M";
 
-            // Tier & gradient
-            if (multiple >= 12) {
-                tierLabel.innerText = "Unicorn Track";
+            if (multiple >= 8) {
+                tierLabel.innerText = "Top tier";
                 tierLabel.className = "text-lg font-semibold text-emerald-400";
-                valBox.classList.add('from-emerald-900', 'to-emerald-800');
-            } else if (multiple >= 8) {
-                tierLabel.innerText = "Top Tier";
+            } else if (multiple >= 5.5) {
+                tierLabel.innerText = "Above typical";
                 tierLabel.className = "text-lg font-semibold text-blue-400";
-                valBox.classList.add('from-slate-900', 'to-slate-800');
+            } else if (multiple >= 3) {
+                tierLabel.innerText = "Typical";
+                tierLabel.className = "text-lg font-semibold text-blue-400";
             } else {
-                tierLabel.innerText = "Market Average";
+                tierLabel.innerText = "Below typical";
                 tierLabel.className = "text-lg font-semibold text-slate-400";
-                valBox.classList.add('from-slate-800', 'to-slate-700');
             }
         }
 
         function shareResult() {
             const val = document.getElementById('val-result').innerText;
-            const multiple = document.getElementById('multiple-label').innerText || '';
-            const text = `My SaaS valuation estimate: ${val}${multiple ? ' at ' + multiple : ''}\nCalculated on FounderCalculators.com/saas-valuation.html`;
-            
+            const range = document.getElementById('range-label').innerText;
+            const multiple = document.getElementById('multiple-label').innerText;
+            const text = "SaaS valuation estimate: " + val + " (" + multiple + "). " + range + "\nCalculated at foundercalculators.com/saas-valuation.html";
+
+            const notice = document.getElementById('share-notice');
             navigator.clipboard.writeText(text).then(() => {
-                document.getElementById('share-notice').classList.remove('hidden');
-                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+                notice.classList.remove('hidden');
+                setTimeout(() => notice.classList.add('hidden'), 4000);
             }).catch(() => {
-                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+                window.open("https://x.com/intent/tweet?text=" + encodeURIComponent(text), '_blank');
             });
         }
 
@@ -308,5 +333,3 @@
     </script>
 </body>
 </html>
-
-
