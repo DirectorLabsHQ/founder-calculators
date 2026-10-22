@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="text" id="guideSearch" placeholder="Search guides..." class="w-full p-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
               </div>
               <div id="guidesList" class="px-4 py-2 space-y-2">
-                <a href="/guides/guides.html" class="block px-2 py-1 hover:bg-slate-50 text-blue-600 font-semibold">All Guides</a>
+                <a href="/guides.html" class="block px-2 py-1 hover:bg-slate-50 text-blue-600 font-semibold">All Guides</a>
                 <a href="/guides/what-mrr-actually-tells-you.html" class="block px-2 py-1 hover:bg-slate-50 text-slate-700">What MRR Actually Tells You</a>
                 <a href="/guides/healthy-churn-benchmarks.html" class="block px-2 py-1 hover:bg-slate-50 text-slate-700">Healthy Churn Benchmarks</a>
                 <a href="/guides/ltv-cac-real-math.html" class="block px-2 py-1 hover:bg-slate-50 text-slate-700">How to Interpret LTV:CAC</a>
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <a href="/guides/gross-margin-benchmarks-by-industry.html" class="block px-2 py-1 hover:bg-slate-50 text-slate-700">Gross Margin by Industry 2026</a>
               </div>
               <div class="px-4 py-3 border-t border-slate-100 mt-2">
-                <a href="/guides/guides.html" class="text-blue-600 hover:underline text-sm block text-center">Explore All Guides →</a>
+                <a href="/guides.html" class="text-blue-600 hover:underline text-sm block text-center">Explore All Guides →</a>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <div class="space-y-6">
           <div class="font-bold uppercase text-xs text-slate-500">Guides & Benchmarks</div>
-          <a href="/guides/guides.html" class="block hover:text-blue-600 transition">All Guides</a>
+          <a href="guides.html" class="block hover:text-blue-600 transition">All Guides</a>
         </div>
 
         <a href="/about.html" class="block hover:text-blue-600 transition">About</a>
