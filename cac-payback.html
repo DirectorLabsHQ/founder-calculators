@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAC Payback Period Calculator | SaaS Efficiency Tool</title>
-    <meta name="description" content="Calculate how many months it takes to recover your customer acquisition cost (CAC). Model payback period based on monthly gross profit per customer.">
-    <link rel="canonical" href="https://foundercalculators.com/cac-payback.html">
-    
-    <meta property="og:title" content="CAC Payback Period Calculator">
-    <meta property="og:description" content="See how long it takes to break even on customer acquisition spend.">
-    <meta property="og:url" content="https://foundercalculators.com/cac-payback.html">
+    <title>SaaS Valuation Calculator – ARR Multiple Estimate (2026)</title>
+    <meta name="description" content="Free SaaS valuation calculator: enter ARR, growth and NRR to estimate your company's value as an ARR multiple, using 2026 private-market benchmarks.">
+    <link rel="canonical" href="https://foundercalculators.com/saas-valuation.html">
+
+    <meta property="og:title" content="SaaS Valuation Calculator – ARR Multiple Estimate (2026)">
+    <meta property="og:description" content="Estimate your SaaS company's value from ARR, growth and net revenue retention, with 2026 private-market benchmarks.">
+    <meta property="og:url" content="https://foundercalculators.com/saas-valuation.html">
     <meta property="og:site_name" content="FounderCalculators">
     <meta property="og:type" content="website">
 
@@ -18,7 +18,9 @@
         .standard-link { transition: color 0.2s; }
         .standard-link:hover { color: #2563eb; text-decoration: underline; }
         .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
-        #payback-bar { transition: width 0.8s ease-out; }
+        input[type="number"] { -moz-appearance: textfield; }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3979959488510560"
      crossorigin="anonymous">
@@ -28,188 +30,302 @@
 
     <script src="/nav.js"></script>
 
-    <main class="max-w-4xl mx-auto px-6 py-12">
+    <main class="max-w-4xl mx-auto px-6 py-10 md:py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight text-slate-900">CAC Payback Period Calculator</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">How many months does it take to recover your customer acquisition cost? Benchmark against SaaS standards.</p>
+            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Updated October 2026</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold mt-4 mb-4 tracking-tight">SaaS Valuation Calculator</h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-4">
+                Estimate what your SaaS company could be worth as a multiple of ARR, based on growth and net revenue retention.
+            </p>
+            <p class="text-base text-slate-700 max-w-3xl mx-auto font-medium">
+                Enter three numbers and get a value range built from 2026 private-market benchmarks.
+            </p>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div class="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 mb-12 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12">
+                <!-- Inputs -->
                 <div class="space-y-6">
-                    <div class="input-card border rounded-xl p-4 bg-slate-50/50">
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Customer Acquisition Cost (CAC) ($)</label>
-                        <input type="number" id="cac" value="1200" min="0" step="50" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
-                    </div>
-                    
-                    <div class="input-card border rounded-xl p-4">
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Monthly Gross Profit per Customer ($)</label>
-                        <input type="number" id="monthlyProfit" value="100" min="0" step="10" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-slate-900">
-                        <p class="text-xs text-slate-400 mt-1">ARPU × Gross Margin (e.g., $150 ARPU × 67% margin = $100).</p>
+                    <div class="input-card border rounded-2xl p-5 bg-slate-50/50 transition">
+                        <label for="arr" class="block text-sm font-bold text-slate-700 mb-2">Annual Recurring Revenue (ARR) ($)</label>
+                        <input type="number" id="arr" value="1000000" min="0" step="10000" oninput="calculate()"
+                               class="w-full p-4 text-2xl font-semibold outline-none text-blue-700 border-b border-slate-300 focus:border-blue-500">
                     </div>
 
-                    <div class="input-card border rounded-xl p-4 bg-slate-50/50">
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Target Payback Period (Months)</label>
-                        <input type="number" id="targetMonths" value="12" min="1" max="36" step="1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
-                        <p class="text-xs text-slate-400 mt-1">Common benchmarks: <12 months = healthy, >18 months = risky.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="input-card border rounded-2xl p-5">
+                            <label for="growth" class="block text-sm font-bold text-slate-700 mb-2">YoY Growth Rate (%)</label>
+                            <input type="number" id="growth" value="40" min="0" max="500" step="5" oninput="calculate()"
+                                   class="w-full p-4 text-xl font-bold outline-none">
+                        </div>
+                        <div class="input-card border rounded-2xl p-5">
+                            <label for="nrr" class="block text-sm font-bold text-slate-700 mb-2">Net Revenue Retention (NRR %)</label>
+                            <input type="number" id="nrr" value="105" min="0" max="200" step="5" oninput="calculate()"
+                                   class="w-full p-4 text-xl font-bold outline-none">
+                        </div>
                     </div>
-
-                    <p class="text-sm text-slate-500 italic mt-4 text-center">
-                        Updates instantly as you type
+                    <p class="text-sm text-slate-500 italic">
+                        Not sure of your NRR? See <a href="/guides/nrr-what-it-really-means.html" class="text-blue-600 hover:underline">what NRR really means</a>. Typical private B2B SaaS is around 100–105%.
                     </p>
                 </div>
 
-                <div id="payback-card" class="rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl relative overflow-hidden bg-white border border-slate-200">
-                    <span class="text-xs font-bold uppercase tracking-widest mb-2 block" id="status-label">Payback Period</span>
-                    <div class="text-7xl font-black mb-4 text-slate-900" id="months-result">12 mo</div>
-                    <p class="text-sm font-medium mb-6" id="status-text">Healthy</p>
-                    
-                    <div class="w-full mt-4">
-                        <div class="flex justify-between text-xs font-bold text-slate-500 uppercase mb-1">
-                            <span>Progress Toward Target</span>
-                            <span id="progress-percent">100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
-                            <div id="payback-bar" class="h-full bg-blue-500 transition-all duration-500" style="width: 100%;"></div>
-                        </div>
+                <!-- Result -->
+                <div id="val-box" class="rounded-3xl p-8 md:p-10 flex flex-col justify-center items-center text-center text-white bg-gradient-to-br from-slate-900 to-slate-800 shadow-2xl">
+                    <span class="text-sm font-bold uppercase tracking-widest mb-3 block opacity-80">Estimated Enterprise Value</span>
+                    <div class="text-6xl md:text-7xl font-black mb-2 tracking-tighter" id="val-result">$4.5M</div>
+                    <p class="text-base text-slate-300 mb-4" id="range-label">Range: $3.4M – $5.6M</p>
+
+                    <div class="inline-block px-5 py-2 rounded-full bg-white/15 text-base font-medium mb-4" id="multiple-label">
+                        4.5x ARR
                     </div>
 
-                    <p class="text-xs text-slate-600 mt-6" id="zero-warning" style="display:none;">
-                        No payback possible (monthly profit = 0)
-                    </p>
-
-                    <p class="text-xs text-slate-600 mt-6">
-                        Illustrative only. Not financial advice.
-                    </p>
+                    <div class="grid grid-cols-2 gap-6 pt-6 border-t border-white/20 w-full max-w-xs">
+                        <div class="text-left">
+                            <span class="block text-xs uppercase text-slate-400 font-semibold">Multiple vs. market</span>
+                            <span id="tier-label" class="text-lg font-semibold text-blue-400">Typical</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="block text-xs uppercase text-slate-400 font-semibold">ARR</span>
+                            <span id="arr-display" class="text-lg font-semibold">$1.0M</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Share button -->
-            <div class="mt-8 flex justify-center">
-                <button onclick="shareResult()" class="px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">
-                    Share Payback Model
+            <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <p class="text-sm text-slate-500 italic text-center">Updates instantly as you type</p>
+                <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-2xl font-medium transition">
+                    Copy Result
                 </button>
             </div>
+
+            <div id="share-notice" class="hidden text-center text-sm text-slate-500 mt-4">
+                Result copied to your clipboard.
+            </div>
+
+            <p class="text-center mt-6 text-sm text-slate-600">
+                <strong>Estimates only, not financial or investment advice.</strong> This is a rule-of-thumb model, not a formal valuation. Real deals depend on margins, customer concentration, market conditions and negotiation. For a transaction, consult a qualified advisor.
+            </p>
         </div>
 
-        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
-            CAC payback model copied! Paste into investor deck or financial model.
-        </div>
-
-        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">What is CAC Payback Period?</h2>
+        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12 [&_p]:mb-4 [&_ul]:mb-4 [&_ol]:mb-4">
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">How This SaaS Valuation Calculator Works</h2>
             <p>
-                CAC Payback Period measures how many months it takes for a customer to generate enough gross profit to recover the cost of acquiring them. It’s one of the most watched SaaS efficiency metrics by investors.
+                Private SaaS companies are usually valued as a multiple of ARR (annual recurring revenue). This calculator picks a starting multiple from your growth rate, adjusts it for net revenue retention, and shows a range of 25% below to 25% above the result, because real multiples vary widely deal to deal.
+            </p>
+            <p class="mt-4"><strong>Formula:</strong> Enterprise value = ARR × base multiple (by growth) × NRR adjustment</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8 not-prose">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-slate-200 rounded-xl text-sm shadow-sm">
+                        <thead class="bg-slate-50">
+                            <tr><th class="px-4 py-3 text-left font-semibold">YoY growth</th><th class="px-4 py-3 text-left font-semibold">Base multiple</th></tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr><td class="px-4 py-3">Under 10%</td><td class="px-4 py-3">2.5×</td></tr>
+                            <tr class="bg-slate-50"><td class="px-4 py-3">10–24%</td><td class="px-4 py-3">3.5×</td></tr>
+                            <tr><td class="px-4 py-3">25–49%</td><td class="px-4 py-3">4.5×</td></tr>
+                            <tr class="bg-slate-50"><td class="px-4 py-3">50–99%</td><td class="px-4 py-3">6×</td></tr>
+                            <tr><td class="px-4 py-3">100%+</td><td class="px-4 py-3">8×</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-slate-200 rounded-xl text-sm shadow-sm">
+                        <thead class="bg-slate-50">
+                            <tr><th class="px-4 py-3 text-left font-semibold">NRR</th><th class="px-4 py-3 text-left font-semibold">Adjustment</th></tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr><td class="px-4 py-3">120% or more</td><td class="px-4 py-3">+20%</td></tr>
+                            <tr class="bg-slate-50"><td class="px-4 py-3">110–119%</td><td class="px-4 py-3">+10%</td></tr>
+                            <tr><td class="px-4 py-3">100–109%</td><td class="px-4 py-3">none</td></tr>
+                            <tr class="bg-slate-50"><td class="px-4 py-3">90–99%</td><td class="px-4 py-3">−10%</td></tr>
+                            <tr><td class="px-4 py-3">Below 90%</td><td class="px-4 py-3">−25%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-10">Worked Example</h3>
+            <p>
+                A SaaS company has $1,000,000 ARR, grows 80% year over year, and has 115% NRR.
+            </p>
+            <ol class="list-decimal pl-6 space-y-2">
+                <li>80% growth falls in the 50–99% tier, so the base multiple is 6×.</li>
+                <li>115% NRR earns a +10% adjustment, so 6 × 1.10 = 6.6×.</li>
+                <li>Midpoint value: $1,000,000 × 6.6 = <strong>$6.6M</strong>.</li>
+                <li>Range (±25%): about <strong>$5.0M to $8.3M</strong>.</li>
+            </ol>
+
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-14 mb-4 tracking-tight">2026 SaaS Valuation Benchmarks</h2>
+            <p>
+                Multiples have fallen sharply from the 2021 peak. These are the figures this calculator is calibrated against, as reported in 2026 industry summaries of the underlying studies. Methodologies differ, so check the original publications before relying on any single number.
+            </p>
+            <div class="overflow-x-auto my-6 not-prose">
+                <table class="min-w-full bg-white border border-slate-200 rounded-xl text-sm shadow-sm">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold">Benchmark</th>
+                            <th class="px-4 py-3 text-left font-semibold">Reported figure</th>
+                            <th class="px-4 py-3 text-left font-semibold">Source</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr><td class="px-4 py-3">Private SaaS, lower middle market</td><td class="px-4 py-3">Median ~4.5× ARR (range ~3–7×)</td><td class="px-4 py-3">Livmo, via 2026 industry summaries</td></tr>
+                        <tr class="bg-slate-50"><td class="px-4 py-3">Companies with $0–5M ARR</td><td class="px-4 py-3">Median ~3.3×</td><td class="px-4 py-3">Aventis Advisors</td></tr>
+                        <tr><td class="px-4 py-3">Companies with $5–10M ARR</td><td class="px-4 py-3">Median ~4×</td><td class="px-4 py-3">Aventis Advisors</td></tr>
+                        <tr class="bg-slate-50"><td class="px-4 py-3">Bootstrapped, $3–20M ARR</td><td class="px-4 py-3">Median ~4.8× ARR</td><td class="px-4 py-3">SaaS Capital (2025 survey)</td></tr>
+                        <tr><td class="px-4 py-3">Venture-backed, $3–20M ARR</td><td class="px-4 py-3">Median ~5.3× ARR</td><td class="px-4 py-3">SaaS Capital (2025 survey)</td></tr>
+                        <tr class="bg-slate-50"><td class="px-4 py-3">Top-tier private (NRR above 120%, passes Rule of 40)</td><td class="px-4 py-3">~7–9× ARR</td><td class="px-4 py-3">2026 industry summaries</td></tr>
+                        <tr><td class="px-4 py-3">Median growth, bootstrapped $3–20M ARR</td><td class="px-4 py-3">~15% YoY; NRR ~103%</td><td class="px-4 py-3">SaaS Capital (2026 survey)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-sm text-slate-500">
+                Two things to keep in mind: smaller companies (under about $1M ARR) often trade below these medians, and AI-native SaaS companies have been reported at far higher multiples than traditional SaaS, which this calculator does not model.
             </p>
 
-            <h3 class="text-2xl font-bold mt-8">Why It Matters</h3>
-            <p>
-                A short payback period means your business can reinvest cash quickly and grow faster with less external capital. A long payback period signals higher risk — especially if burn is high.
-            </p>
-            <ul>
-                <li><strong>&lt; 12 months:</strong> Healthy / attractive to investors</li>
-                <li><strong>12–18 months:</strong> Acceptable for many growth-stage SaaS</li>
-                <li><strong>&gt; 18 months:</strong> Risky — often requires pricing, margin, or CAC optimization</li>
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-14 mb-4 tracking-tight">What Moves a SaaS Multiple</h2>
+            <ul class="list-disc pl-6 space-y-3">
+                <li><strong>Growth rate:</strong> faster, durable growth earns a higher multiple. See <a href="/guides/from-50k-to-250k-mrr.html" class="text-blue-600 hover:underline">what changes from $50k to $250k MRR</a>.</li>
+                <li><strong>Net revenue retention:</strong> customers who stay and expand are the strongest quality signal. Compare yours with <a href="/guides/healthy-churn-benchmarks-by-saas-stage.html" class="text-blue-600 hover:underline">churn benchmarks by stage</a>.</li>
+                <li><strong>Efficiency:</strong> a good <a href="/rule-of-40.html" class="text-blue-600 hover:underline">Rule of 40</a> score and a healthy <a href="/guides/cac-payback-meaning.html" class="text-blue-600 hover:underline">CAC payback period</a> support a premium.</li>
+                <li><strong>Scale and risk:</strong> larger ARR, low customer concentration and clean financials all reduce a buyer's risk.</li>
             </ul>
 
-            <h3 class="text-2xl font-bold mt-10">Quick Formula</h3>
-            <div class="bg-slate-100 p-6 rounded-xl font-mono text-sm border-l-4 border-blue-500">
-                Payback Period (months) = CAC / Monthly Gross Profit per Customer
-            </div>
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-14 mb-4 tracking-tight">SaaS Valuation FAQ</h2>
+            <h3 class="text-xl font-bold mt-6">What is a good ARR multiple for a SaaS company?</h3>
+            <p>For private SaaS in 2026, roughly 3–7× ARR is typical, with a median around 4–5×. Top performers with high growth, strong retention and good efficiency have been reported at 7–9×.</p>
 
-            <div class="bg-indigo-50 p-8 rounded-2xl border-l-4 border-indigo-500 my-10">
-                <h4 class="text-indigo-900 font-bold mt-0">Rule of Thumb (2026)</h4>
-                <p class="text-indigo-800 mb-0">
-                    Most top-tier SaaS companies target <strong>&lt;12 months</strong> payback. If you're >18 months, focus on increasing ARPU, improving gross margins, or lowering CAC before aggressive scaling.
-                </p>
-            </div>
+            <h3 class="text-xl font-bold mt-6">Is this valuation or enterprise value?</h3>
+            <p>It estimates enterprise value, which is the value of the business before debt and cash. Equity value to shareholders is enterprise value minus debt plus cash.</p>
 
-            <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Related SaaS Tools</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a href="cac-ltv-ratio.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
-                    CAC to LTV Ratio →
-                </a>
-                <a href="unit-economics.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
-                    Unit Economics Guide →
-                </a>
+            <h3 class="text-xl font-bold mt-6">Why is my estimate lower than what I read online?</h3>
+            <p>Many older articles quote 2021 multiples of 10× or more. Multiples have compressed since then, and public-company multiples are usually higher than what small private companies receive.</p>
+
+            <h3 class="text-xl font-bold mt-6">Does this work for early-stage startups with little revenue?</h3>
+            <p>Not well. Below about $1M ARR, valuations depend more on team, market and traction than on a revenue multiple. Try the <a href="/berkus-valuation.html" class="text-blue-600 hover:underline">Berkus Method calculator</a> for pre-revenue companies.</p>
+
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-14 mb-4 tracking-tight">Related Tools</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 not-prose">
+                <a href="/rule-of-40.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">Rule of 40 Calculator →</a>
+                <a href="/mrr-projector.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">MRR Growth Projector →</a>
+                <a href="/mrr-expansion-churn.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">MRR Expansion + Churn →</a>
+                <a href="/burn-rate-runway.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">Burn Rate &amp; Runway →</a>
+                <a href="/equity-dilution.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">Equity Dilution Calculator →</a>
+                <a href="/guides.html" class="p-5 bg-white border border-slate-200 rounded-xl hover:shadow-md transition">All Founder Guides →</a>
             </div>
         </article>
     </main>
 
-    <footer class="bg-white border-t py-16 text-slate-500 text-center">
-        <p class="font-bold text-slate-900">FounderCalculators.com</p>
-        <p class="text-xs uppercase tracking-widest opacity-50 mt-2">&copy; 2026 All Rights Reserved.</p>
+    <footer class="bg-white border-t py-16 text-slate-500 mt-12">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div>
+                <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
+                <p class="text-sm">Practical math for founders building sustainable companies.</p>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="/index.html" class="hover:text-blue-600 transition">All Calculators</a></li>
+                    <li><a href="/guides.html" class="hover:text-blue-600 transition">Guides &amp; Benchmarks</a></li>
+                    <li><a href="/about.html" class="hover:text-blue-600 transition">About</a></li>
+                    <li><a href="/contact.html" class="hover:text-blue-600 transition">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
+                <ul class="text-sm space-y-2">
+                    <li><a href="/privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a></li>
+                    <li><a href="/terms.html" class="hover:text-blue-600 transition">Terms of Service</a></li>
+                    <li><a href="/disclaimer.html" class="hover:text-blue-600 transition">Earnings Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
+            <p class="text-xs uppercase tracking-widest opacity-50">© 2026 FounderCalculators. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script>
+        function baseMultiple(g) {
+            if (g >= 100) return 8;
+            if (g >= 50) return 6;
+            if (g >= 25) return 4.5;
+            if (g >= 10) return 3.5;
+            return 2.5;
+        }
+
+        function nrrFactor(n) {
+            if (n >= 120) return 1.2;
+            if (n >= 110) return 1.1;
+            if (n >= 100) return 1.0;
+            if (n >= 90) return 0.9;
+            return 0.75;
+        }
+
+        function fmt(v) {
+            if (v >= 1000000) return "$" + (v / 1000000).toFixed(1) + "M";
+            return "$" + Math.round(v / 1000) + "K";
+        }
+
         function calculate() {
-            const cac = parseFloat(document.getElementById('cac').value) || 0;
-            const monthlyProfit = parseFloat(document.getElementById('monthlyProfit').value) || 0;
-            const targetMonths = parseFloat(document.getElementById('targetMonths').value) || 12;
+            const arr = parseFloat(document.getElementById('arr').value) || 0;
+            const growth = parseFloat(document.getElementById('growth').value) || 0;
+            let nrr = parseFloat(document.getElementById('nrr').value);
+            if (isNaN(nrr)) nrr = 100;
 
-            let paybackMonths = 0;
-            let statusText = "Healthy";
-            let statusLabel = "Payback Period";
-            let progressPercent = 0;
+            const valResult = document.getElementById('val-result');
+            const rangeLabel = document.getElementById('range-label');
+            const multipleLabel = document.getElementById('multiple-label');
+            const tierLabel = document.getElementById('tier-label');
+            const arrDisplay = document.getElementById('arr-display');
 
-            if (monthlyProfit > 0) {
-                paybackMonths = cac / monthlyProfit;
-                progressPercent = Math.min(100, (targetMonths / paybackMonths) * 100);
-            } else if (monthlyProfit === 0) {
-                paybackMonths = "—";
-                statusText = "No payback possible (monthly profit = 0)";
-                progressPercent = 0;
+            arrDisplay.innerText = fmt(arr);
+
+            if (arr <= 0) {
+                valResult.innerText = "—";
+                rangeLabel.innerText = "Enter your ARR to see an estimate";
+                multipleLabel.classList.add('hidden');
+                tierLabel.innerText = "—";
+                return;
             }
 
-            // UI Updates
-            document.getElementById('months-result').innerText = typeof paybackMonths === 'number' ? paybackMonths.toFixed(1) + " mo" : paybackMonths;
-            document.getElementById('progress-percent').innerText = Math.round(progressPercent) + "% of target";
+            const multiple = baseMultiple(growth) * nrrFactor(nrr);
+            const val = arr * multiple;
 
-            const bar = document.getElementById('payback-bar');
-            bar.style.width = progressPercent + "%";
+            valResult.innerText = fmt(val);
+            rangeLabel.innerText = "Range: " + fmt(val * 0.75) + " – " + fmt(val * 1.25);
+            multipleLabel.innerText = multiple.toFixed(1) + "x ARR";
+            multipleLabel.classList.remove('hidden');
 
-            const card = document.getElementById('payback-card');
-            const statusLbl = document.getElementById('status-label');
-            const statusTxt = document.getElementById('status-text');
-            const zeroWarning = document.getElementById('zero-warning');
-
-            zeroWarning.style.display = (monthlyProfit === 0) ? "block" : "none";
-
-            if (monthlyProfit > 0) {
-                if (paybackMonths <= 12) {
-                    card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-emerald-50 border border-emerald-100";
-                    statusLbl.innerText = "Healthy Payback";
-                    statusTxt.innerText = "Strong efficiency";
-                    bar.className = "h-full bg-emerald-500 transition-all duration-500";
-                } else if (paybackMonths <= 18) {
-                    card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-amber-50 border border-amber-100";
-                    statusLbl.innerText = "Caution Zone";
-                    statusTxt.innerText = "Acceptable but optimize";
-                    bar.className = "h-full bg-amber-500 transition-all duration-500";
-                } else {
-                    card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-rose-50 border border-rose-100";
-                    statusLbl.innerText = "Risky Payback";
-                    statusTxt.innerText = "Needs attention";
-                    bar.className = "h-full bg-rose-500 transition-all duration-500";
-                }
+            if (multiple >= 8) {
+                tierLabel.innerText = "Top tier";
+                tierLabel.className = "text-lg font-semibold text-emerald-400";
+            } else if (multiple >= 5.5) {
+                tierLabel.innerText = "Above typical";
+                tierLabel.className = "text-lg font-semibold text-blue-400";
+            } else if (multiple >= 3) {
+                tierLabel.innerText = "Typical";
+                tierLabel.className = "text-lg font-semibold text-blue-400";
             } else {
-                card.className = "rounded-2xl p-8 flex flex-col justify-center items-center text-center transition-all duration-500 shadow-2xl bg-gray-50 border border-gray-200";
-                statusLbl.innerText = "No Payback";
-                statusTxt.innerText = "Monthly profit = 0";
-                bar.className = "h-full bg-gray-400 transition-all duration-500";
+                tierLabel.innerText = "Below typical";
+                tierLabel.className = "text-lg font-semibold text-slate-400";
             }
         }
 
         function shareResult() {
-            const months = document.getElementById('months-result').innerText;
-            const status = document.getElementById('status-text').innerText;
-            const text = `My CAC payback period: ${months} (${status})\nCalculated on FounderCalculators.com/cac-payback.html`;
-            
+            const val = document.getElementById('val-result').innerText;
+            const range = document.getElementById('range-label').innerText;
+            const multiple = document.getElementById('multiple-label').innerText;
+            const text = "SaaS valuation estimate: " + val + " (" + multiple + "). " + range + "\nCalculated at foundercalculators.com/saas-valuation.html";
+
+            const notice = document.getElementById('share-notice');
             navigator.clipboard.writeText(text).then(() => {
-                document.getElementById('share-notice').classList.remove('hidden');
-                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+                notice.classList.remove('hidden');
+                setTimeout(() => notice.classList.add('hidden'), 4000);
             }).catch(() => {
-                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+                window.open("https://x.com/intent/tweet?text=" + encodeURIComponent(text), '_blank');
             });
         }
 
