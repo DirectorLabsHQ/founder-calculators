@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Fully Burdened Cost Calculator | 2026 Hiring Model</title>
-    <meta name="description" content="Calculate the true cost of an employee in 2026. Model payroll taxes, health benefits, 401k matching, and overhead to understand your real hiring burn rate.">
+    <title>Payroll Burden Calculator – True Cost of an Employee (2026)</title>
+    <meta name="description" content="Free payroll burden calculator for US employers. Enter salary to see 2026 payroll taxes, health insurance, 401(k) match and overhead, and the fully burdened cost.">
     <link rel="canonical" href="https://foundercalculators.com/employee-cost.html">
-    
-    <meta property="og:title" content="Employee Fully Burdened Cost Calculator">
-    <meta property="og:description" content="See the real annual cost of hiring, including taxes, benefits, and overhead.">
+
+    <meta property="og:title" content="Payroll Burden Calculator – True Cost of an Employee (2026)">
+    <meta property="og:description" content="See the real annual cost of a US hire, including 2026 payroll taxes, benefits and overhead.">
     <meta property="og:url" content="https://foundercalculators.com/employee-cost.html">
     <meta property="og:site_name" content="FounderCalculators">
     <meta property="og:type" content="website">
@@ -18,7 +18,7 @@
         .standard-link { transition: color 0.2s; }
         .standard-link:hover { color: #2563eb; text-decoration: underline; }
         .input-card:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
-        #composition-bar { transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        #salary-bar, #burden-bar { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3979959488510560"
      crossorigin="anonymous">
@@ -30,112 +30,170 @@
 
     <main class="max-w-4xl mx-auto px-6 py-12">
         <div class="mb-10 text-center">
-            <h1 class="text-4xl font-extrabold mb-4 tracking-tight">Employee Fully Burdened Cost Tool</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">Don't just budget for salary. Calculate the taxes, insurance, and equipment that drive your real burn.</p>
+            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">US employers · 2026 rates</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold mt-4 mb-4 tracking-tight">Payroll Burden Calculator</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Find the true annual cost of a US employee: salary plus employer payroll taxes, health insurance, retirement match and overhead.</p>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="space-y-6">
+                <!-- Inputs -->
+                <div class="space-y-5">
                     <div class="input-card border rounded-xl p-4 bg-slate-50/50">
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Annual Base Salary ($)</label>
+                        <label for="salary" class="block text-xs font-bold text-slate-700 uppercase mb-1">Annual Base Salary ($)</label>
                         <input type="number" id="salary" value="120000" min="0" step="1000" oninput="calculate()" class="w-full bg-transparent text-xl font-semibold outline-none text-blue-600">
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="input-card border rounded-xl p-3">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Employer Payroll Taxes (%)</label>
-                            <input type="number" id="tax" value="9" min="0" max="20" step="0.1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
-                        </div>
-                        <div class="input-card border rounded-xl p-3">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Benefits/Insurance (%)</label>
-                            <input type="number" id="benefits" value="12" min="0" max="50" step="0.1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
-                        </div>
                     </div>
 
                     <div class="input-card border rounded-xl p-3">
-                        <label class="block text-sm font-bold text-slate-700 mb-1">Annual Fixed Overhead ($)</label>
+                        <label for="health" class="block text-xs font-bold text-slate-500 uppercase mb-1">Employer Health Insurance ($/year)</label>
+                        <input type="number" id="health" value="7900" min="0" step="100" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        <p class="text-xs text-slate-400 mt-1">2025 average employer share: about $7,900 for single coverage, $20,100 for family.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-card border rounded-xl p-3">
+                            <label for="match" class="block text-xs font-bold text-slate-500 uppercase mb-1">401(k) Match (% of salary)</label>
+                            <input type="number" id="match" value="3" min="0" max="15" step="0.5" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        </div>
+                        <div class="input-card border rounded-xl p-3">
+                            <label for="insurance" class="block text-xs font-bold text-slate-500 uppercase mb-1">Workers' Comp &amp; Other Insurance (%)</label>
+                            <input type="number" id="insurance" value="1" min="0" max="15" step="0.1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-card border rounded-xl p-3">
+                            <label for="sutaRate" class="block text-xs font-bold text-slate-500 uppercase mb-1">State Unemployment Rate (%)</label>
+                            <input type="number" id="sutaRate" value="2.7" min="0" max="15" step="0.1" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        </div>
+                        <div class="input-card border rounded-xl p-3">
+                            <label for="sutaBase" class="block text-xs font-bold text-slate-500 uppercase mb-1">State Taxable Wage Base ($)</label>
+                            <input type="number" id="sutaBase" value="9000" min="0" step="500" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 -mt-2">Your state sets these two numbers. The values above are placeholders, so look up your state's rate.</p>
+
+                    <div class="input-card border rounded-xl p-3">
+                        <label for="overhead" class="block text-xs font-bold text-slate-500 uppercase mb-1">Other Annual Overhead ($)</label>
                         <input type="number" id="overhead" value="5000" min="0" step="100" oninput="calculate()" class="w-full bg-transparent font-medium outline-none">
-                        <p class="text-xs text-slate-400 mt-1">Software, desk, travel, recruiting fees, etc.</p>
+                        <p class="text-xs text-slate-400 mt-1">Laptop, software seats, desk, recruiting fees, training.</p>
                     </div>
-
-                    <p class="text-sm text-slate-500 italic mt-4 text-center">
-                        Updates instantly as you type
-                    </p>
                 </div>
 
-                <div class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center text-white relative overflow-hidden shadow-2xl">
-                    <span class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2 z-10">True Annual Cost</span>
-                    <div class="text-5xl font-black mb-2 z-10" id="total-cost">$0</div>
-                    <p class="text-lg font-medium text-slate-400 z-10" id="monthly-burn">Monthly Burn: $0</p>
-                    
-                    <div class="w-full mt-8 z-10">
-                        <div class="flex justify-between text-xs uppercase font-bold tracking-tighter mb-1 text-slate-500">
-                            <span>Base Salary</span>
-                            <span>Burdened Cost</span>
-                        </div>
+                <!-- Result -->
+                <div class="bg-slate-900 rounded-2xl p-8 flex flex-col justify-center text-white shadow-2xl">
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2 text-center">True Annual Cost</span>
+                    <div class="text-5xl font-black mb-2 text-center" id="total-cost">$147,165</div>
+                    <p class="text-lg font-medium text-slate-400 text-center" id="monthly-burn">Monthly cost: $12,264</p>
+
+                    <div class="w-full mt-6">
                         <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden flex">
-                            <div id="salary-bar" class="h-full bg-blue-500" style="width: 70%;"></div>
-                            <div id="burden-bar" class="h-full bg-indigo-400" style="width: 30%;"></div>
+                            <div id="salary-bar" class="h-full bg-blue-500" style="width: 81.5%;"></div>
+                            <div id="burden-bar" class="h-full bg-indigo-400" style="width: 18.5%;"></div>
                         </div>
-                        <p class="text-xs text-slate-500 mt-2 italic text-center" id="burden-multiplier">Burden Multiplier: 1.25x</p>
+                        <p class="text-xs text-slate-400 mt-2 text-center" id="burden-multiplier">Burden multiplier: 1.23x</p>
                     </div>
 
-                    <p class="text-xs text-slate-400 mt-6">
-                        Illustrative only. Not financial advice.
-                    </p>
+                    <dl class="mt-6 pt-5 border-t border-white/20 text-sm space-y-2">
+                        <div class="flex justify-between"><dt class="text-slate-400">Base salary</dt><dd id="r-salary">$120,000</dd></div>
+                        <div class="flex justify-between"><dt class="text-slate-400">Social Security (6.2%)</dt><dd id="r-ss">$7,440</dd></div>
+                        <div class="flex justify-between"><dt class="text-slate-400">Medicare (1.45%)</dt><dd id="r-med">$1,740</dd></div>
+                        <div class="flex justify-between"><dt class="text-slate-400">FUTA + state unemployment</dt><dd id="r-unemp">$285</dd></div>
+                        <div class="flex justify-between"><dt class="text-slate-400">Health insurance</dt><dd id="r-health">$7,900</dd></div>
+                        <div class="flex justify-between"><dt class="text-slate-400">401(k) match</dt><dd id="r-match">$3,600</dd></div>
+                        <div class="flex justify-between"><dt class="text-slate-400">Workers' comp &amp; other</dt><dd id="r-ins">$1,200</dd></div>
+                        <div class="flex justify-between"><dt class="text-slate-400">Other overhead</dt><dd id="r-over">$5,000</dd></div>
+                    </dl>
                 </div>
             </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <p class="text-sm text-slate-500 italic text-center">Updates instantly as you type</p>
+                <button onclick="shareResult()" class="w-full sm:w-auto px-8 py-4 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl font-medium transition">Copy Result</button>
+            </div>
+            <div id="share-notice" class="hidden text-center text-sm text-slate-500 mt-4">Result copied to your clipboard.</div>
+
+            <p class="text-center mt-6 text-sm text-slate-600">
+                <strong>Estimates for US employers only. Not tax, legal or financial advice.</strong> Rates change every year and vary by state and employer. Confirm figures with your payroll provider or accountant.
+            </p>
         </div>
 
-        <div id="share-notice" class="hidden text-center text-sm text-slate-500 mb-8">
-            Employee cost breakdown copied! Paste into hiring plan or financial model.
-        </div>
-
-        <article class="prose prose-slate lg:prose-lg max-w-none border-t pt-12">
-            <h2 class="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">Understanding the "Full Burden" Rate</h2>
+        <article class="max-w-none border-t pt-12 text-slate-700 [&_p]:mb-4 [&_ul]:mb-4 [&_ol]:mb-4">
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">How This Payroll Burden Calculator Works</h2>
             <p>
-                The biggest mistake first-time founders make is assuming a <strong>$100,000 salary</strong> costs the company $100,000. In reality, that hire will typically cost your startup between <strong>$125,000 and $140,000</strong> per year. This gap is known as the "Employee Burden."
+                A payroll burden (or fully burdened cost) is everything an employer pays for a worker beyond base salary. This calculator adds up the main US components, using the actual 2026 payroll tax rules instead of a flat percentage, so the result is accurate for both a $60,000 hire and a $250,000 one.
             </p>
-
-            <h3 class="text-2xl font-bold mt-8">What Makes Up the Burden?</h3>
-            <p>For a US-based employee in the current environment, the burden is typically split into three primary buckets:</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
-                <div class="p-6 border border-slate-200 rounded-xl bg-white shadow-sm">
-                    <h4 class="font-bold text-blue-600 mt-0 text-sm">1. Statutory Taxes</h4>
-                    <p class="text-xs text-slate-600">FICA (Social Security & Medicare), FUTA (Federal Unemployment), and state-specific unemployment taxes. These usually total around <strong>8-10%</strong>.</p>
-                </div>
-                <div class="p-6 border border-slate-200 rounded-xl bg-white shadow-sm">
-                    <h4 class="font-bold text-blue-600 mt-0 text-sm">2. Voluntary Benefits</h4>
-                    <p class="text-xs text-slate-600">Health insurance premiums, 401(k) matching, and life insurance. Expect to pay <strong>$10k-$20k</strong> per head or roughly 10-15% of salary.</p>
-                </div>
-                <div class="p-6 border border-slate-200 rounded-xl bg-white shadow-sm">
-                    <h4 class="font-bold text-blue-600 mt-0 text-sm">3. G&A Overhead</h4>
-                    <p class="text-xs text-slate-600">The laptop, the Slack seat, the Zoom license, and recruiting fees. This is often the "hidden" burn that kills startup runways.</p>
-                </div>
+            <div class="bg-slate-100 p-6 rounded-xl font-mono text-sm border-l-4 border-blue-500 mb-6 space-y-2">
+                <div>Social Security = 6.2% × salary, up to $184,500</div>
+                <div>Medicare = 1.45% × salary (no cap)</div>
+                <div>FUTA = 0.6% × first $7,000 (that is $42)</div>
+                <div>State unemployment = state rate × salary, up to the state wage base</div>
+                <div>Total cost = salary + taxes + health + 401(k) match + insurance + overhead</div>
             </div>
 
-            <h3 class="text-2xl font-bold mt-10">How to Use This for Runway Planning</h3>
-            <p>
-                When building your <strong>hiring plan</strong> for investors, always use the fully burdened number. If you tell a VC you are hiring 10 engineers at $150k each, you must account for the ~$1.9M actual cash outlay, not the $1.5M base salary total. Failing to do this can result in a "phantom" $400,000 burn that shortens your runway by 2-3 months.
+            <h3 class="text-2xl font-bold text-slate-900 mt-8 mb-3">2026 US Employer Payroll Taxes</h3>
+            <div class="overflow-x-auto mb-4">
+                <table class="min-w-full bg-white border border-slate-200 rounded-xl text-sm shadow-sm">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold">Tax</th>
+                            <th class="px-4 py-3 text-left font-semibold">Employer rate</th>
+                            <th class="px-4 py-3 text-left font-semibold">Wage limit</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr><td class="px-4 py-3">Social Security</td><td class="px-4 py-3">6.2%</td><td class="px-4 py-3">First $184,500 (maximum $11,439)</td></tr>
+                        <tr class="bg-slate-50"><td class="px-4 py-3">Medicare</td><td class="px-4 py-3">1.45%</td><td class="px-4 py-3">No limit. The extra 0.9% above $200,000 is paid by the employee only.</td></tr>
+                        <tr><td class="px-4 py-3">FUTA (federal unemployment)</td><td class="px-4 py-3">6.0%, reduced to 0.6% with the state credit</td><td class="px-4 py-3">First $7,000</td></tr>
+                        <tr class="bg-slate-50"><td class="px-4 py-3">State unemployment (SUTA)</td><td class="px-4 py-3">Varies by state and employer</td><td class="px-4 py-3">Varies. For example $30,600 in Colorado and $14,500 in Delaware in 2026.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-sm text-slate-500">
+                Rates and limits are as summarized for 2026 by payroll providers (OnPay, QuickBooks) from IRS and Social Security Administration figures. Employer contributions to a 401(k) are generally not subject to FICA. Some states and cities add their own payroll taxes, such as paid family leave, which this calculator does not include.
             </p>
 
-            <div class="bg-indigo-50 p-8 rounded-2xl border-l-4 border-indigo-500 my-10">
-                <h4 class="text-indigo-900 font-bold mt-0">The 1.3x Rule of Thumb</h4>
-                <p class="text-indigo-800 mb-0">
-                    If you're in a hurry, a safe "rule of thumb" in the current environment is to multiply any base salary by <strong>1.3</strong>. This covers most taxes and decent benefits for a mid-market startup.
-                </p>
-            </div>
+            <h3 class="text-2xl font-bold text-slate-900 mt-8 mb-3">Health Insurance Costs</h3>
+            <p>
+                The KFF 2025 Employer Health Benefits Survey found average annual premiums of $9,325 for single coverage and $26,993 for family coverage. Workers paid on average $1,440 and $6,850 of those, which leaves employers paying roughly $7,900 and $20,100. These are averages across firms with 10 or more workers. Premiums have risen about 5–6% a year recently, so 2026 costs are likely higher.
+            </p>
 
-            <h3 class="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">Hiring Resources</h3>
+            <h3 class="text-2xl font-bold text-slate-900 mt-8 mb-3">Worked Example</h3>
+            <p>A $100,000 hire with single health coverage, a 3% 401(k) match, 1% for workers' comp and other insurance, $5,000 of overhead, and the placeholder state unemployment values:</p>
+            <ol class="list-decimal pl-6 space-y-2">
+                <li>Social Security $6,200 + Medicare $1,450 + FUTA $42 + state unemployment $243 = <strong>$7,935</strong> in payroll taxes.</li>
+                <li>Health $7,900 + 401(k) match $3,000 + other insurance $1,000 = <strong>$11,900</strong> in benefits and insurance.</li>
+                <li>Plus $5,000 of overhead, the true cost is about <strong>$124,835</strong>, a 1.25x multiplier.</li>
+                <li>With family coverage instead of single, the cost rises to about <strong>$137,035</strong> (1.37x).</li>
+            </ol>
+            <p>
+                So a hiring plan built on salary alone misses roughly $25,000–$37,000 per hire in this case. Ten such hires leave a gap of about $250,000–$370,000 a year in your <a href="/burn-rate-runway.html" class="text-blue-600 hover:underline">burn rate and runway</a> model.
+            </p>
+
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-12 mb-4 tracking-tight">What This Calculator Leaves Out</h2>
+            <ul class="list-disc pl-6 space-y-3">
+                <li><strong>Bonuses, commissions and equity:</strong> these add payroll taxes and, in some cases, accounting costs.</li>
+                <li><strong>State and local payroll taxes:</strong> paid family leave, disability insurance and city taxes vary widely.</li>
+                <li><strong>Payroll software and HR fees:</strong> usually small per head, but not zero.</li>
+                <li><strong>Contractors and non-US staff:</strong> different rules apply. Misclassifying an employee as a contractor can create tax liability, so check with an advisor.</li>
+            </ul>
+
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-12 mb-4 tracking-tight">Payroll Burden FAQ</h2>
+            <h3 class="text-xl font-bold text-slate-900 mt-6 mb-2">What is a typical burden multiplier?</h3>
+            <p>For US employees, a multiplier of roughly 1.2x to 1.4x is common, depending mostly on health coverage and overhead. The calculator shows your actual number, which is better than a rule of thumb.</p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-6 mb-2">Why does the burden percentage fall as salary rises?</h3>
+            <p>Social Security stops at $184,500, and health insurance and unemployment taxes are mostly fixed amounts, so they become a smaller share of a larger salary.</p>
+
+            <h3 class="text-xl font-bold text-slate-900 mt-6 mb-2">Should I use this number in my startup financial model?</h3>
+            <p>Yes. Investors expect hiring plans to use fully burdened costs. Pair it with the <a href="/burn-rate-runway.html" class="text-blue-600 hover:underline">burn rate calculator</a> and check how new hires affect your <a href="/cac-payback.html" class="text-blue-600 hover:underline">CAC payback</a>.</p>
+
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-12 mb-4 tracking-tight">Related Tools</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a href="burn-rate-runway.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
-                    Burn Rate & Runway →
-                </a>
-                <a href="equity-dilution.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold no-underline flex justify-between items-center">
-                    ESOP Dilution Tool →
-                </a>
+                <a href="/burn-rate-runway.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold">Burn Rate &amp; Runway →</a>
+                <a href="/equity-dilution.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold">Equity Dilution Calculator →</a>
+                <a href="/unit-economics.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold">Unit Economics →</a>
+                <a href="/guides.html" class="p-4 bg-white border border-slate-200 rounded-xl hover:shadow-md transition text-blue-600 font-semibold">All Founder Guides →</a>
             </div>
         </article>
     </main>
@@ -144,71 +202,93 @@
         <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
             <div>
                 <p class="font-bold mb-4 text-slate-900 text-lg">FounderCalculators.com</p>
-                <p class="text-sm">Empowering founders through data-driven financial modeling.</p>
+                <p class="text-sm">Practical math for founders building sustainable companies.</p>
             </div>
             <div>
                 <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Resources</p>
                 <ul class="text-sm space-y-2">
-                    <li><a href="about.html" class="standard-link">About Us</a></li>
-                    <li><a href="contact.html" class="standard-link">Contact Support</a></li>
-                    <li><a href="index.html#finance" class="standard-link">Financial Tools</a></li>
+                    <li><a href="/index.html" class="standard-link">All Calculators</a></li>
+                    <li><a href="/guides.html" class="standard-link">Guides &amp; Benchmarks</a></li>
+                    <li><a href="/about.html" class="standard-link">About</a></li>
+                    <li><a href="/contact.html" class="standard-link">Contact</a></li>
                 </ul>
             </div>
             <div>
                 <p class="font-bold mb-4 text-slate-900 uppercase text-xs tracking-widest">Legal</p>
                 <ul class="text-sm space-y-2">
-                    <li><a href="privacy.html" class="standard-link">Privacy Policy</a></li>
-                    <li><a href="terms.html" class="standard-link">Terms of Service</a></li>
-                    <li><a href="disclaimer.html" class="standard-link">Earnings Disclaimer</a></li>
+                    <li><a href="/privacy.html" class="standard-link">Privacy Policy</a></li>
+                    <li><a href="/terms.html" class="standard-link">Terms of Service</a></li>
+                    <li><a href="/disclaimer.html" class="standard-link">Earnings Disclaimer</a></li>
                 </ul>
             </div>
         </div>
         <div class="mt-12 pt-8 border-t border-slate-100 text-center px-6">
-            <p class="text-xs uppercase tracking-widest opacity-50">&copy; 2026 FounderCalculators. All Rights Reserved.</p>
+            <p class="text-xs uppercase tracking-widest opacity-50">© 2026 FounderCalculators. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script>
+        // 2026 US federal parameters
+        const SS_RATE = 0.062, SS_BASE = 184500;
+        const MEDICARE_RATE = 0.0145;
+        const FUTA_NET_RATE = 0.006, FUTA_BASE = 7000; // 6.0% less the 5.4% state credit
+
+        const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+        function val(id) {
+            return parseFloat(document.getElementById(id).value) || 0;
+        }
+
+        function set(id, text) {
+            document.getElementById(id).innerText = text;
+        }
+
         function calculate() {
-            const salary = parseFloat(document.getElementById('salary').value) || 0;
-            const taxRate = parseFloat(document.getElementById('tax').value) / 100 || 0;
-            const benefitRate = parseFloat(document.getElementById('benefits').value) / 100 || 0;
-            const overhead = parseFloat(document.getElementById('overhead').value) || 0;
+            const salary = val('salary');
+            const health = val('health');
+            const matchPct = val('match') / 100;
+            const insPct = val('insurance') / 100;
+            const sutaRate = val('sutaRate') / 100;
+            const sutaBase = val('sutaBase');
+            const overhead = val('overhead');
 
-            const totalBurden = (salary * taxRate) + (salary * benefitRate) + overhead;
-            const totalAnnual = salary + totalBurden;
-            const multiplier = salary > 0 ? (totalAnnual / salary).toFixed(2) : "1.00";
+            const ss = SS_RATE * Math.min(salary, SS_BASE);
+            const medicare = MEDICARE_RATE * salary;
+            const unemployment = FUTA_NET_RATE * Math.min(salary, FUTA_BASE) + sutaRate * Math.min(salary, sutaBase);
+            const match = salary * matchPct;
+            const insurance = salary * insPct;
 
-            // Formatter
-            const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                maximumFractionDigits: 0
-            });
+            const total = salary + ss + medicare + unemployment + health + match + insurance + overhead;
+            const multiplier = salary > 0 ? (total / salary).toFixed(2) : "1.00";
 
-            // UI Updates
-            document.getElementById('total-cost').innerText = formatter.format(totalAnnual);
-            document.getElementById('monthly-burn').innerText = "Monthly Burn: " + formatter.format(totalAnnual / 12);
-            document.getElementById('burden-multiplier').innerText = "Burden Multiplier: " + multiplier + "x";
+            set('total-cost', usd.format(total));
+            set('monthly-burn', "Monthly cost: " + usd.format(total / 12));
+            set('burden-multiplier', "Burden multiplier: " + multiplier + "x");
+            set('r-salary', usd.format(salary));
+            set('r-ss', usd.format(ss));
+            set('r-med', usd.format(medicare));
+            set('r-unemp', usd.format(unemployment));
+            set('r-health', usd.format(health));
+            set('r-match', usd.format(match));
+            set('r-ins', usd.format(insurance));
+            set('r-over', usd.format(overhead));
 
-            // Visual Bar Update
-            const salaryPercent = totalAnnual > 0 ? (salary / totalAnnual) * 100 : 0;
-            const burdenPercent = 100 - salaryPercent;
-            
-            document.getElementById('salary-bar').style.width = salaryPercent + "%";
-            document.getElementById('burden-bar').style.width = burdenPercent + "%";
+            const salaryPct = total > 0 ? (salary / total) * 100 : 0;
+            document.getElementById('salary-bar').style.width = salaryPct + "%";
+            document.getElementById('burden-bar').style.width = (100 - salaryPct) + "%";
         }
 
         function shareResult() {
             const total = document.getElementById('total-cost').innerText;
-            const monthly = document.getElementById('monthly-burn').innerText;
-            const text = `My employee fully burdened cost: ${total} annually (${monthly})\nCalculated on FounderCalculators.com/employee-cost.html`;
-            
+            const mult = document.getElementById('burden-multiplier').innerText;
+            const text = "Fully burdened employee cost: " + total + " per year (" + mult + ").\nCalculated at foundercalculators.com/employee-cost.html";
+            const notice = document.getElementById('share-notice');
+
             navigator.clipboard.writeText(text).then(() => {
-                document.getElementById('share-notice').classList.remove('hidden');
-                setTimeout(() => document.getElementById('share-notice').classList.add('hidden'), 5000);
+                notice.classList.remove('hidden');
+                setTimeout(() => notice.classList.add('hidden'), 4000);
             }).catch(() => {
-                window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+                window.open("https://x.com/intent/tweet?text=" + encodeURIComponent(text), '_blank');
             });
         }
 
@@ -216,5 +296,3 @@
     </script>
 </body>
 </html>
-
-
